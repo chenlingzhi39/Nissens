@@ -15,6 +15,7 @@ public class StraightSearchPresenter extends BasePresenter{
 StraightSearchView straightSearchView;
 
     public StraightSearchPresenter(StraightSearchView straightSearchView) {
+        super();
         this.straightSearchView = straightSearchView;
     }
 
@@ -26,13 +27,13 @@ StraightSearchView straightSearchView;
     @Override
     protected void onAllSuccess(Object o) {
         OEDataResult result=(OEDataResult)o;
-    if(result.equals("1")){
+    if(result.getResult().equals("1")){
         straightSearchView.showResult(result.getData());
     }else straightSearchView.showEmptyView("");
     }
 
     @Override
     protected void onFail() {
-
+   straightSearchView.showToastError();
     }
 }

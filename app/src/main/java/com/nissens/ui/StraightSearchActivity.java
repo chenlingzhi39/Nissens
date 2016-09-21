@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.nissens.R;
 import com.nissens.adapter.QuickSearchAdapter;
 import com.nissens.adapter.RecyclerArrayAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
+import com.nissens.app.MyApplication;
 import com.nissens.base.BaseActivity;
 import com.nissens.base.BasePresenter;
 import com.nissens.bean.OEData;
@@ -45,15 +47,13 @@ import de.greenrobot.dao.QuickSearchDao;
         contentViewId = R.layout.activity_straight_search,
         toolbarTitle = R.string.straight_search
 )
-public class StraightSearchActivity extends BaseActivity implements StraightSearchView{
+public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView{
     @BindView(R.id.quick_search_list)
     RecyclerView listView;
     @BindView(R.id.content)
     EditText editTextSearch;
     @BindView(R.id.search)
     ImageButton search;
-    private DaoSession mDaoSession;
-    private SQLiteDatabase db;
     private QuickSearchAdapter quickSearchAdapter;
     private QuickSearchDao quickSearchDao;
 
@@ -62,15 +62,11 @@ public class StraightSearchActivity extends BaseActivity implements StraightSear
         super.onCreate(savedInstanceState);
         mPresenter=getChildPresenter();
         ButterKnife.bind(this);
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DB_NAME, null);
-        db = helper.getWritableDatabase();
-        // 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。
-        DaoMaster daoMaster = new DaoMaster(db);
-        mDaoSession = daoMaster.newSession();
-        quickSearchDao = mDaoSession.getQuickSearchDao();
+
+        quickSearchDao = MyApplication.getInstance().getDaoSession().getQuickSearchDao();
         String textColumn = QuickSearchDao.Properties.Id.columnName;
         String orderBy = textColumn + " DESC";
-        Cursor cursor =  db.query(quickSearchDao.getTablename(), quickSearchDao.getAllColumns(), null, null, null, null, orderBy);
+        Cursor cursor = MyApplication.getInstance().getDb().query(quickSearchDao.getTablename(), quickSearchDao.getAllColumns(), null, null, null, null, orderBy);
         if (cursor != null) {
             quickSearchAdapter = new QuickSearchAdapter(this);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -105,11 +101,7 @@ public class StraightSearchActivity extends BaseActivity implements StraightSear
                             for (int i = 0; i < quickSearchAdapter.getData().size(); i++) {
                                 if (quickSearchAdapter.getData().get(i).getContent().equals(editTextSearch.getText().toString())) {
                                     if(i==0){
-                                        Map<String, String> params=new HashMap<>();
-                                        params.put("UserID",Constants.USER_ID);
-                                        params.put("EncryptCode",Constants.ENCRYPT_CODE);
-                                        params.put("OriginalFactoryID",editTextSearch.getText().toString());
-                                        mPresenter.requestDate(params, BasePresenter.RequestMode.FRIST);
+
                                         return true;
                                     }
                                     quickSearchDao.delete(quickSearchAdapter.getData().get(i));
@@ -125,6 +117,12 @@ public class StraightSearchActivity extends BaseActivity implements StraightSear
 
 
                         }
+                        Map<String, String> params=new HashMap<>();
+                        params.put("UserID",Constants.USER_ID);
+                        params.put("EncryptCode",Constants.ENCRYPT_CODE);
+                        params.put("PageIndex","0");
+                        params.put("OriginalFactoryID",editTextSearch.getText().toString());
+                        mPresenter.requestDate(params, BasePresenter.RequestMode.FRIST);
                         return true;
                     }
                     return false;
@@ -156,7 +154,12 @@ public class StraightSearchActivity extends BaseActivity implements StraightSear
 
 
             }
-
+        Map<String, String> params=new HashMap<>();
+        params.put("UserID",Constants.USER_ID);
+        params.put("EncryptCode",Constants.ENCRYPT_CODE);
+        params.put("PageIndex","0");
+        params.put("OriginalFactoryID",editTextSearch.getText().toString());
+        mPresenter.requestDate(params, BasePresenter.RequestMode.FRIST);
     }
     @Override
     protected StraightSearchPresenter getChildPresenter() {
@@ -200,11 +203,11 @@ public class StraightSearchActivity extends BaseActivity implements StraightSear
 
     @Override
     public void showToastError() {
-
+        Log.i("sr","show_error");
     }
 
     @Override
     public void showResult(List<OEData> oeDatas) {
-
+        Log.i("sr","show_result");
     }
 }
