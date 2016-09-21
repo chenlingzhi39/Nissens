@@ -1,6 +1,8 @@
 package com.nissens.bean;
 
 
+import java.util.Map;
+
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -10,35 +12,35 @@ import rx.Observable;
  */
 public interface ApiService {
     @POST("/login")
-    Observable<User> login(@Query("UserID") String name, @Query("EncryptCode") String password);
+    Observable<User> login(Map<String, String> params);
 
     @POST("/queryOriginalPartOEData")
-    Observable<OEDataResult> queryOriginalPartOEData(@Query("UserID") String name, @Query("EncryptCode") String password);
+    Observable<OEDataResult> queryOriginalPartOEData(Map<String, String> params);
 
     @POST("/queryBrandPartOEData")
-    Observable<OEDataResult> queryBrandPartOEData(@Query("UserID") String name, @Query("EncryptCode") String password);
+    Observable<OEDataResult> queryBrandPartOEData(Map<String, String> params);
 
     @POST("/queryBlendCarByBrandPartId")
-    Observable<CarResult> queryBlendCarByBrandPartId(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("PageIndex")String pageIndex,@Query("ItemsPerPage")String itemsPerPage,@Query("FactoryID")String factoryId);
+    Observable<CarResult> queryBlendCarByBrandPartId(Map<String, String> params);
 
     @POST("/queryBrandBusiness")
-    Observable<BrandBusinessResult> queryBrandBusiness(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("BrandBusinessID")String brandBusinessID,@Query("BrandBusinessName") String brandBusinessName);
+    Observable<BrandBusinessResult> queryBrandBusiness(Map<String, String> params);
 
     @POST("/queryBrandSeries")
-    Observable<BrandSeriesResult> queryBrandSeries(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("BrandBusinessID")String brandBusinessID,@Query("BrandBusinessName") String brandBusinessName,@Query("SeriesID")String seriesId,@Query("SeriesName")String SeriesName);
+    Observable<BrandSeriesResult> queryBrandSeries(Map<String, String> params);
 
     @POST("/queryBrandPartDataInFuzzyMode")
-    Observable<BrandPartResult> queryBrandPartDataInFuzzyMode(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("BrandBusinessID")String brandBusinessID,@Query("BrandBusinessName")String brandBusinessName);
+    Observable<BrandPartResult> queryBrandPartDataInFuzzyMode(Map<String, String> params);
 
     @POST("/queryBrandOrganization")
-    Observable<BrandOrganizationResult> queryBrandOrganization(@Query("UserID") String name, @Query("EncryptCode") String password);
+    Observable<BrandOrganizationResult> queryBrandOrganization(Map<String, String> params);
 
     @POST("/queryBrandIntroduction")
-    Observable<BrandIntroductionResult> queryBrandIntroduction(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("BrandBusinessID")String brandBusinessID,@Query("BrandBusinessName")String brandBusinessName);
+    Observable<BrandIntroductionResult> queryBrandIntroduction(Map<String, String> params);
 
     @POST("/queryCompanyIntroduction")
-    Observable<CampanyIntroductionResult> queryCompanyIntroduction(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("BrandBusinessID")String brandBusinessID,@Query("BrandBusinessName")String brandBusinessName);
+    Observable<CampanyIntroductionResult> queryCompanyIntroduction(Map<String, String> params);
 
     @POST("/queryCarDataByLYVin")
-    Observable<CarSingleResult> queryCarDataByLYVin(@Query("UserID") String name, @Query("EncryptCode") String password,@Query("vin")String vin);
+    Observable<CarSingleResult> queryCarDataByLYVin(Map<String, String> params);
 }

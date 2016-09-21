@@ -1,4 +1,4 @@
-package com.nissens.base.basePresenter;
+package com.nissens.base;
 
 import com.nissens.app.MyApplication;
 import com.nissens.bean.ApiService;

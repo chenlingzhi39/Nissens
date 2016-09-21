@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Nissens</string>
+    <string name="main_title">Nissens Part Finder</string>
+    <string name="straight_search">straight search</string>
+    <string name="search_by_car">search by car</string>
+    <string name="nissens_distribution_agency">nissens distribution agency</string>
+    <string name="search_by_type">search by type</string>
+    <string name="please_input_search_content">please input search content</string>
+    <string name="no_result">no result</string>
 </resources>

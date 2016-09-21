@@ -1,6 +1,6 @@
 package com.nissens.dagger;
 
-import com.nissens.base.basePresenter.BasePresenter;
+import com.nissens.base.BasePresenter;
 
 import javax.inject.Singleton;
 
