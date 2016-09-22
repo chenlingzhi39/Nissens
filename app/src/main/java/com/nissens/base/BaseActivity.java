@@ -80,8 +80,19 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-    protected T getChildPresenter() {
-        return null;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPresenter != null) {
+            mPresenter.onResume();
+        }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+        }
+    }
 }

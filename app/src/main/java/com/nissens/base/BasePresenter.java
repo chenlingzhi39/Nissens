@@ -1,78 +1,17 @@
 package com.nissens.base;
 
-import com.nissens.app.MyApplication;
-import com.nissens.bean.ApiService;
-
-import java.util.Map;
-
-
-import javax.inject.Inject;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 /**
- * Created by PC-20160514 on 2016/9/18.
+ * ClassName: BasePresenter<p>
+ * Author:oubowu<p>
+ * Fuction: 代理的基类<p>
+ * CreateDate:2016/2/14 1:45<p>
+ * UpdateUser:<p>
+ * UpdateDate:<p>
  */
-public abstract class BasePresenter {
-    @Inject
-    ApiService mService;
-    Subscription mSubscription;
+public interface BasePresenter {
 
-    protected RequestMode mode = RequestMode.FRIST;
-    public BasePresenter() {
-        MyApplication.getComponent().inject(this);
-    }
-    public enum RequestMode {
-        FRIST, LOAD_MORE, REFRESH
-    }
-    @SuppressWarnings("unchecked")
-    public void requestDate(Map<String, String> params, RequestMode mode) {
-        if (null == getObservable(params)) {
-            throw new IllegalArgumentException("no Observable");
-        }
+    void onResume();
 
-        this.mode = mode;
-        mSubscription = getObservable(params).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
-                onFinish();
-            }
+    void onDestroy();
 
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                onFail();
-            }
-
-            @Override
-            public void onNext(Object o) {
-                if (null != o) {
-                    onAllSuccess(o);
-                } else {
-                    onFail();
-                }
-            }
-        });
-    }
-
-    protected void onAllSuccess(Object o) {
-    }
-
-    protected ApiService getService() {
-        return mService;
-    }
-
-    protected void onFinish() {
-
-    }
-
-    protected abstract void onFail();
-
-
-    protected abstract Observable getObservable(Map<String, String> params);
 }
