@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +62,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          }
         else{
-            getSupportActionBar().setTitle("");
             TextView title = (TextView) findViewById(R.id.title);
             title.setText(getResources().getString(mToolbarTitle));
         }
@@ -79,6 +79,12 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        if (mMenuId != -1)
+            getMenuInflater().inflate(mMenuId, menu);
+        return super.onCreateOptionsMenu(menu);
     }
     @Override
     protected void onResume() {
