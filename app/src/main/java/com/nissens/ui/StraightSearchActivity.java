@@ -137,9 +137,9 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (editTextSearch.getText().toString().length() == 0) {
-                    clearSearch.setImageResource(R.mipmap.ic_keyboard_voice);
+                    clearSearch.setVisibility(View.GONE);
                 } else {
-                    clearSearch.setImageResource(R.mipmap.ic_close);
+                   clearSearch.setVisibility(View.VISIBLE);
                 }
             }
 
