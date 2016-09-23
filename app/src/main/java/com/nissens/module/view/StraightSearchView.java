@@ -10,4 +10,7 @@ import java.util.List;
  */
 public interface StraightSearchView extends BaseView{
     void addData(List<OEData> oeDataList);
+    void showError();
+    void showEmpty();
 }
+

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
+import com.nissens.manager.SystemBarTintManager;
 import com.nissens.ui.MainActivity;
 
 /**
@@ -49,6 +50,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
         initToolbar();
         if(mToolbarTitle!=-1)
             setToolbarTitle(mToolbarTitle);
+        SystemBarTintManager systemBarTintManager=new SystemBarTintManager(this);
+        systemBarTintManager.setStatusBarTintEnabled(true);
+        systemBarTintManager.setStatusBarTintResource(R.color.colorPrimary);
     }
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,6 +66,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          }
         else{
+            getSupportActionBar().setTitle("");
             TextView title = (TextView) findViewById(R.id.title);
             title.setText(getResources().getString(mToolbarTitle));
         }

@@ -15,6 +15,6 @@ public class OEDataAdapter extends RecyclerArrayAdapter<OEData>{
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return new OEDataViewHolder(parent);
     }
 }

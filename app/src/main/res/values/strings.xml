@@ -8,4 +8,6 @@
     <string name="please_input_search_content">please input search content</string>
     <string name="no_result">no result</string>
     <string name="search">search</string>
+    <string name="network_error">network error</string>
+
 </resources>

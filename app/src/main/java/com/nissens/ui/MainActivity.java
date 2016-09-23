@@ -32,10 +32,12 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, StraightSearchActivity.class));
                 break;
             case R.id.car:
+                startActivity(new Intent(MainActivity.this,SearchByCarActivity.class));
                 break;
             case R.id.agency:
                 break;
             case R.id.type:
+                startActivity(new Intent(MainActivity.this,SearchByTypeActivity.class));
                 break;
         }
     }

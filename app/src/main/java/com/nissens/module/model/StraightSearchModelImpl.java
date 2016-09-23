@@ -33,6 +33,11 @@ public class StraightSearchModelImpl implements StraightSearchModel<List<OEData>
         return apiService.queryOriginalPartOEData(map).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
+            public void onStart() {
+             callback.beforeRequest();
+            }
+
+            @Override
             public void onCompleted() {
              callback.requestComplete();
             }

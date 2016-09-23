@@ -1,18 +1,21 @@
 package com.nissens.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,16 +23,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nissens.R;
+import com.nissens.adapter.OEDataAdapter;
 import com.nissens.adapter.QuickSearchAdapter;
 import com.nissens.adapter.RecyclerArrayAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseActivity;
 import com.nissens.bean.OEData;
+import com.nissens.callback.InputWindowListener;
 import com.nissens.config.Constants;
 import com.nissens.helper.ItemHelper;
 import com.nissens.manager.MyLayoutManager;
@@ -37,6 +43,8 @@ import com.nissens.module.presenter.StraightSearchPresenter;
 import com.nissens.module.presenter.StraightSearchPresenterImpl;
 import com.nissens.util.InitiateSearch;
 import com.nissens.view.StraightSearchView;
+import com.nissens.widget.DividerItemDecoration;
+import com.nissens.widget.IMMListenerRelativeLayout;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -71,13 +79,21 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     @BindView(R.id.card_search)
     CardView cardSearch;
     @BindView(R.id.view_search)
-    RelativeLayout viewSearch;
+    IMMListenerRelativeLayout viewSearch;
     @BindView(R.id.listView)
     RecyclerView listView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.result_list)
+    RecyclerView resultList;
+    @BindView(R.id.empty)
+    TextView empty;
+    @BindView(R.id.error)
+    TextView error;
     private QuickSearchAdapter quickSearchAdapter;
+    private OEDataAdapter oeDataAdapter;
     private QuickSearchDao quickSearchDao;
     private InitiateSearch initiateSearch;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,41 +107,69 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
         switch (item.getItemId()) {
             case R.id.action_search:
                 initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    private void InitiateSearch(){
-        quickSearchDao=  MyApplication.getInstance().getDaoSession().getQuickSearchDao();
+
+    private void InitiateSearch() {
+        viewSearch.setListener(new InputWindowListener() {
+            @Override
+            public void show() {
+
+            }
+
+            @Override
+            public void hide() {
+                Log.i("input","hide");
+                if(cardSearch.getVisibility()==View.VISIBLE)
+                    InitiateSearch.handleToolBar1(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+            }
+        });
+        oeDataAdapter = new OEDataAdapter(this);
+        resultList.setAdapter(oeDataAdapter);
+        resultList.addItemDecoration(new DividerItemDecoration(
+               this, DividerItemDecoration.VERTICAL_LIST));
+        mPresenter = new StraightSearchPresenterImpl(StraightSearchActivity.this);
+        quickSearchDao = MyApplication.getInstance().getDaoSession().getQuickSearchDao();
         String textColumn = QuickSearchDao.Properties.Id.columnName;
         String orderBy = textColumn + " DESC";
-        Cursor cursor =  MyApplication.getInstance().getDb().query(quickSearchDao.getTablename(),quickSearchDao.getAllColumns(),null, null, null, null, orderBy);
-        if(cursor!=null){
-            quickSearchAdapter=new QuickSearchAdapter(this);
+        Cursor cursor = MyApplication.getInstance().getDb().query(quickSearchDao.getTablename(), quickSearchDao.getAllColumns(), null, null, null, null, orderBy);
+        if (cursor != null) {
+            quickSearchAdapter = new QuickSearchAdapter(this);
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                QuickSearch quickSearch=new QuickSearch();
+                QuickSearch quickSearch = new QuickSearch();
                 quickSearchDao.readEntity(cursor, quickSearch, 0);
                 quickSearchAdapter.addAll(quickSearch);
             }
             quickSearchAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    if(position!=0)
-                    { QuickSearch quickSearch=new QuickSearch();
+                    getSupportActionBar().setTitle(quickSearchAdapter.getData().get(position).getContent());
+                    if (position != 0) {
+                        QuickSearch quickSearch = new QuickSearch();
                         quickSearch.setAdd_time(new Date(System.currentTimeMillis()));
                         quickSearch.setContent(quickSearchAdapter.getData().get(position).getContent());
                         quickSearchDao.insert(quickSearch);
                         quickSearchDao.delete(quickSearchAdapter.getData().get(position));
                         quickSearchAdapter.remove(position);
-                        quickSearchAdapter.add(0,quickSearch);}
-
+                        quickSearchAdapter.add(0, quickSearch);
+                    }
+                    initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                    Map<String, String> params = new HashMap<>();
+                    params.put("UserID", Constants.USER_ID);
+                    params.put("EncryptCode", Constants.ENCRYPT_CODE);
+                    params.put("PageIndex", "0");
+                    params.put("OriginalFactoryID", editTextSearch.getText().toString());
+                    mPresenter.requestData(params);
                 }
             });
             listView.setLayoutManager(new MyLayoutManager(this));
             listView.setAdapter(quickSearchAdapter);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemHelper<QuickSearch>(quickSearchDao,quickSearchAdapter));
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemHelper<QuickSearch>(quickSearchDao, quickSearchAdapter));
             itemTouchHelper.attachToRecyclerView(listView);
         }
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -139,7 +183,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                 if (editTextSearch.getText().toString().length() == 0) {
                     clearSearch.setVisibility(View.GONE);
                 } else {
-                   clearSearch.setVisibility(View.VISIBLE);
+                    clearSearch.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -151,17 +195,14 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
         clearSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editTextSearch.getText().toString().length() == 0) {
-
-                } else {
                     editTextSearch.setText("");
                     listView.setVisibility(View.VISIBLE);
                     ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
-                }
             }
         });
+
     }
+
     private void HandleSearch() {
         imageSearchBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,12 +216,18 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (editTextSearch.getText().toString().trim().length() > 0) {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("UserID", Constants.USER_ID);
+                        params.put("EncryptCode", Constants.ENCRYPT_CODE);
+                        params.put("PageIndex", "0");
+                        params.put("OriginalFactoryID", editTextSearch.getText().toString());
+                        mPresenter.requestData(params);
+                        getSupportActionBar().setTitle(editTextSearch.getText().toString());
+
                         for (int i = 0; i < quickSearchAdapter.getData().size(); i++) {
                             if (quickSearchAdapter.getData().get(i).getContent().equals(editTextSearch.getText().toString())) {
-                                if(i==0){
+                                if (i == 0) {
 
-
-                                    initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
                                     return true;
                                 }
                                 quickSearchDao.delete(quickSearchAdapter.getData().get(i));
@@ -193,44 +240,51 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         quickSearch.setContent(editTextSearch.getText().toString());
                         quickSearchDao.insert(quickSearch);
                         quickSearchAdapter.add(0, quickSearch);
-
-
-
                         initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
-
                     }
                     return true;
                 }
                 return false;
             }
         });
+        editTextSearch.requestFocus();
     }
 
     @Override
     public void showResult(List<OEData> oeDatas) {
+        empty.setVisibility(View.GONE);
+        error.setVisibility(View.GONE);
+        oeDataAdapter.addAll(oeDatas);
+    }
 
+    @Override
+    public void showEmpty() {
+        oeDataAdapter.clear();
+        empty.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showError() {
+        oeDataAdapter.clear();
+        error.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showProgress() {
-
+        error.setVisibility(View.GONE);
+        empty.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        progressBar.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.clearSearch)
     public void onClick() {
-        if (editTextSearch.getText().toString().length() == 0) {
-
-        } else {
-            editTextSearch.setText("");
-            listView.setVisibility(View.VISIBLE);
-            ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-
-        }
+        listView.setVisibility(View.VISIBLE);
+        ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
 }

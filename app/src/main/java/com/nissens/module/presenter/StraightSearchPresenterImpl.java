@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class StraightSearchPresenterImpl extends BasePresenterImpl<StraightSearchView,List<OEData>> implements StraightSearchPresenter{
     StraightSearchModel straightSearchModel;
-    public StraightSearchPresenterImpl(StraightSearchView view, Map<String,String> map) {
+    public StraightSearchPresenterImpl(StraightSearchView view) {
         super(view);
         straightSearchModel=new StraightSearchModelImpl();
     }
@@ -26,6 +26,15 @@ public class StraightSearchPresenterImpl extends BasePresenterImpl<StraightSearc
 
     @Override
     public void requestSuccess(List<OEData> data) {
-       mView.showResult(data);
+        if(data.size()==0)
+            mView.showEmpty();
+        else mView.showResult(data);
     }
+
+    @Override
+    public void requestError(String msg) {
+        super.requestError(msg);
+       mView.showError();
+    }
+
 }
