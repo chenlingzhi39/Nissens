@@ -15,15 +15,21 @@ import butterknife.ButterKnife;
 public class OEDataViewHolder extends BaseViewHolder<OEData> {
     @BindView(R.id.name)
     TextView name;
+    @BindView(R.id.id)
+    TextView id;
+    @BindView(R.id.label)
+    TextView label;
 
     public OEDataViewHolder(ViewGroup parent) {
         super(parent, R.layout.item_oedata);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 
     @Override
     public void setData(OEData data) {
-     name.setText(data.getFactoryName());
+        name.setText(data.getOriginalFactoryName());
+        id.setText(getContext().getString(R.string.original_factory_id) + ":" + data.getOriginalFactoryID());
+        label.setText(getContext().getString(R.string.factory_label)+":"+data.getFactoryLabel());
     }
 
 }

@@ -17,7 +17,7 @@ public interface ApiService {
     Observable<User> login(Map<String, String> params);
 
     @POST("queryOriginalPartOEData")
-    Observable<OEDataResult> queryOriginalPartOEData(@QueryMap Map<String, String> params);
+    Observable<OEDataResult> queryOriginalPartOEData(@Query("requestPara")String requestPara);
 
     @POST("queryBrandPartOEData")
     Observable<OEDataResult> queryBrandPartOEData(Map<String, String> params);

@@ -8,5 +8,5 @@ import java.util.Map;
  * Created by PC-20160514 on 2016/9/22.
  */
 public interface StraightSearchPresenter extends BasePresenter{
-void requestData(Map<String,String> map);
+void requestData(String requestData);
 }

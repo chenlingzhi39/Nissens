@@ -10,10 +10,15 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
+import com.nissens.app.MyApplication;
+import com.nissens.dagger.NissensComponent;
 import com.nissens.manager.SystemBarTintManager;
 import com.nissens.ui.MainActivity;
+
+import javax.inject.Inject;
 
 /**
  * Created by PC-20160514 on 2016/9/21.
@@ -32,7 +37,8 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
      */
     private int mToolbarTitle;
     protected T mPresenter;
-
+    public Gson gson;
+    public boolean is_first=true;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +59,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
         SystemBarTintManager systemBarTintManager=new SystemBarTintManager(this);
         systemBarTintManager.setStatusBarTintEnabled(true);
         systemBarTintManager.setStatusBarTintResource(R.color.colorPrimary);
+       gson=new Gson();
     }
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

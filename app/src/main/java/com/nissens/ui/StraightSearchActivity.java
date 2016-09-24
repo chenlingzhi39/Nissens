@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nissens.R;
 import com.nissens.adapter.OEDataAdapter;
 import com.nissens.adapter.QuickSearchAdapter;
@@ -35,6 +36,7 @@ import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseActivity;
 import com.nissens.bean.OEData;
+import com.nissens.bean.OEDataRequest;
 import com.nissens.callback.InputWindowListener;
 import com.nissens.config.Constants;
 import com.nissens.helper.ItemHelper;
@@ -50,6 +52,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,6 +98,8 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     private OEDataAdapter oeDataAdapter;
     private QuickSearchDao quickSearchDao;
     private InitiateSearch initiateSearch;
+    private int page = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,15 +130,17 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
 
             @Override
             public void hide() {
-                Log.i("input","hide");
-                if(cardSearch.getVisibility()==View.VISIBLE)
+                Log.i("input", "hide");
+                if (cardSearch.getVisibility() == View.VISIBLE)
                     InitiateSearch.handleToolBar1(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         oeDataAdapter = new OEDataAdapter(this);
+
         resultList.setAdapter(oeDataAdapter);
+        resultList.setLayoutManager(new LinearLayoutManager(this));
         resultList.addItemDecoration(new DividerItemDecoration(
-               this, DividerItemDecoration.VERTICAL_LIST));
+                this, DividerItemDecoration.VERTICAL_LIST));
         mPresenter = new StraightSearchPresenterImpl(StraightSearchActivity.this);
         quickSearchDao = MyApplication.getInstance().getDaoSession().getQuickSearchDao();
         String textColumn = QuickSearchDao.Properties.Id.columnName;
@@ -148,6 +156,8 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             quickSearchAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
+                    page=1;
+                    oeDataAdapter.clear();
                     getSupportActionBar().setTitle(quickSearchAdapter.getData().get(position).getContent());
                     if (position != 0) {
                         QuickSearch quickSearch = new QuickSearch();
@@ -159,12 +169,13 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         quickSearchAdapter.add(0, quickSearch);
                     }
                     initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
-                    Map<String, String> params = new HashMap<>();
+                 /*   Map<String, String> params = new HashMap<>();
                     params.put("UserID", Constants.USER_ID);
                     params.put("EncryptCode", Constants.ENCRYPT_CODE);
                     params.put("PageIndex", "0");
-                    params.put("OriginalFactoryID", editTextSearch.getText().toString());
-                    mPresenter.requestData(params);
+                    params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
+                    OEDataRequest oeDataRequest = new OEDataRequest("15", page + "");
+                    mPresenter.requestData(gson.toJson(oeDataRequest));
                 }
             });
             listView.setLayoutManager(new MyLayoutManager(this));
@@ -195,9 +206,9 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
         clearSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    editTextSearch.setText("");
-                    listView.setVisibility(View.VISIBLE);
-                    ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                editTextSearch.setText("");
+                listView.setVisibility(View.VISIBLE);
+                ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         });
 
@@ -216,12 +227,15 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (editTextSearch.getText().toString().trim().length() > 0) {
-                        Map<String, String> params = new HashMap<>();
+                      /*  Map<String, String> params = new HashMap<>();
                         params.put("UserID", Constants.USER_ID);
                         params.put("EncryptCode", Constants.ENCRYPT_CODE);
                         params.put("PageIndex", "0");
-                        params.put("OriginalFactoryID", editTextSearch.getText().toString());
-                        mPresenter.requestData(params);
+                        params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
+                        page=1;
+                        oeDataAdapter.clear();
+                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "");
+                        mPresenter.requestData(gson.toJson(oeDataRequest));
                         getSupportActionBar().setTitle(editTextSearch.getText().toString());
 
                         for (int i = 0; i < quickSearchAdapter.getData().size(); i++) {
@@ -252,6 +266,29 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
 
     @Override
     public void showResult(List<OEData> oeDatas) {
+        Log.i("showResult", oeDatas.size() + "");
+        if (is_first) {
+            oeDataAdapter.setError(R.layout.view_more_error).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (oeDataAdapter.getCount() > 0)
+                        oeDataAdapter.resumeMore();
+                }
+            });
+            oeDataAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnLoadMoreListener() {
+                @Override
+                public void onLoadMore() {
+                    if (oeDataAdapter.getCount() > 0)
+                    {   page += 1;
+                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "");
+                        mPresenter.requestData(gson.toJson(oeDataRequest));
+                    }
+                }
+            });
+            oeDataAdapter.setNoMore(R.layout.view_nomore);
+            is_first=false;
+        }
+        resultList.setVisibility(View.VISIBLE);
         empty.setVisibility(View.GONE);
         error.setVisibility(View.GONE);
         oeDataAdapter.addAll(oeDatas);
@@ -259,21 +296,27 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
 
     @Override
     public void showEmpty() {
-        oeDataAdapter.clear();
-        empty.setVisibility(View.VISIBLE);
+        if(oeDataAdapter.getCount()==0)
+        {oeDataAdapter.clear();
+        empty.setVisibility(View.VISIBLE);}
+        else oeDataAdapter.stopMore();
     }
 
     @Override
     public void showError() {
-        oeDataAdapter.clear();
-        error.setVisibility(View.VISIBLE);
+        if(oeDataAdapter.getCount()==0)
+        {oeDataAdapter.clear();
+        error.setVisibility(View.VISIBLE);}
+        else oeDataAdapter.pauseMore();
     }
 
     @Override
     public void showProgress() {
-        error.setVisibility(View.GONE);
+        if(oeDataAdapter.getCount()==0)
+        {error.setVisibility(View.GONE);
         empty.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);}else
+            resultList.setVisibility(View.GONE);
     }
 
     @Override

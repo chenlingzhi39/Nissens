@@ -20,8 +20,8 @@ public class StraightSearchPresenterImpl extends BasePresenterImpl<StraightSearc
     }
 
     @Override
-    public void requestData(Map<String,String> map) {
-        mSubscription=straightSearchModel.requestSearchData(this,map);
+    public void requestData(String requestpPara) {
+        mSubscription=straightSearchModel.requestSearchData(this,requestpPara);
     }
 
     @Override

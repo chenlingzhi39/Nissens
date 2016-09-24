@@ -5,7 +5,7 @@ package com.nissens.bean;
  */
 public class OEData {
     private String OriginalFactoryID,
-            OriginalFactoryNa,
+            OriginalFactoryName,
             FactoryID,
             FactoryName,
             FactoryLabel,
@@ -209,12 +209,12 @@ public class OEData {
         Packaging = packaging;
     }
 
-    public String getOriginalFactoryNa() {
-        return OriginalFactoryNa;
+    public String getOriginalFactoryName() {
+        return OriginalFactoryName;
     }
 
-    public void setOriginalFactoryNa(String originalFactoryNa) {
-        OriginalFactoryNa = originalFactoryNa;
+    public void setOriginalFactoryName(String originalFactoryNa) {
+        OriginalFactoryName = originalFactoryNa;
     }
 
     public String getProduceClass() {

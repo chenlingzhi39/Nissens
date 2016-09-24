@@ -1,11 +1,12 @@
 package com.nissens.dagger;
 
+
 import com.nissens.bean.ApiService;
 import com.nissens.config.Constants;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+
 
 import javax.inject.Singleton;
 

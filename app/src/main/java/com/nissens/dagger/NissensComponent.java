@@ -1,5 +1,6 @@
 package com.nissens.dagger;
 
+import com.nissens.base.BaseActivity;
 import com.nissens.module.model.StraightSearchModelImpl;
 
 import javax.inject.Singleton;

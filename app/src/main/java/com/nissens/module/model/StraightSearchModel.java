@@ -10,5 +10,5 @@ import rx.Subscription;
  * Created by PC-20160514 on 2016/9/22.
  */
 public interface StraightSearchModel<T> {
-    Subscription requestSearchData(RequestCallback<T> callback, Map<String,String> map);
+    Subscription requestSearchData(RequestCallback<T> callback, String requestPara);
 }

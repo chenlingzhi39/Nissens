@@ -29,8 +29,8 @@ public class StraightSearchModelImpl implements StraightSearchModel<List<OEData>
     }
 
     @Override
-    public Subscription requestSearchData(final RequestCallback<List<OEData>> callback, Map<String, String> map) {
-        return apiService.queryOriginalPartOEData(map).subscribeOn(Schedulers.io()).observeOn(
+    public Subscription requestSearchData(final RequestCallback<List<OEData>> callback, String requestPara) {
+        return apiService.queryOriginalPartOEData(requestPara).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
             public void onStart() {
