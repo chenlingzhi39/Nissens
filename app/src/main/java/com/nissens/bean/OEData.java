@@ -1,9 +1,11 @@
 package com.nissens.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by PC-20160514 on 2016/9/18.
  */
-public class OEData {
+public class OEData implements Serializable{
     private String OriginalFactoryID,
             OriginalFactoryName,
             FactoryID,
@@ -39,7 +41,25 @@ public class OEData {
             Capacity,
             IsStopProduction,
             ProductType,
-            ProduceClass;
+            ProduceClass,
+            OedataStatus,
+            PartName;
+
+    public String getPartName() {
+        return PartName;
+    }
+
+    public void setPartName(String partName) {
+        PartName = partName;
+    }
+
+    public String getOedataStatus() {
+        return OedataStatus;
+    }
+
+    public void setOedataStatus(String oedataStatus) {
+        OedataStatus = oedataStatus;
+    }
 
     public String getApplyLabel() {
         return ApplyLabel;

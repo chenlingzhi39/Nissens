@@ -13,4 +13,12 @@
     <string name="factory_label">FactoryLabel</string>
     <string name="no_more">no more</string>
     <string name="more_loading">more loading</string>
+    <string name="standard">standard</string>
+    <string name="normal">normal</string>
+    <string name="factory_id">factory id</string>
+    <string name="car_series">CarSeries</string>
+    <string name="status">status</string>
+    <string name="weight">weight</string>
+    <string name="info">info</string>
+    <string name="agency">agency</string>
 </resources>

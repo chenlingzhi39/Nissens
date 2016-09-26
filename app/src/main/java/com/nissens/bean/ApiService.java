@@ -20,10 +20,10 @@ public interface ApiService {
     Observable<OEDataResult> queryOriginalPartOEData(@Query("requestPara")String requestPara);
 
     @POST("queryBrandPartOEData")
-    Observable<OEDataResult> queryBrandPartOEData(Map<String, String> params);
+    Observable<OEDataResult> queryBrandPartOEData(@Query("requestPara")String requestPara);
 
     @POST("queryBlendCarByBrandPartId")
-    Observable<CarResult> queryBlendCarByBrandPartId(Map<String, String> params);
+    Observable<CarResult> queryBlendCarByBrandPartId(@Query("requestPara")String requestPara);
 
     @POST("queryBrandBusiness")
     Observable<BrandBusinessResult> queryBrandBusiness(Map<String, String> params);

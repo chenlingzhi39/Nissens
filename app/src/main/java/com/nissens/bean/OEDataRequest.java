@@ -3,41 +3,52 @@ package com.nissens.bean;
 /**
  * Created by PC-20160514 on 2016/9/24.
  */
-public class OEDataRequest {
-    private String UserID="terry",
-             EncryptCode="123456",
-              PageIndex,
-              ItemsPerPage,
-              OriginalFactoryID,
-              OriginalFactoryName,
-              PartName,
-              FactoryLabelID,
-              FactoryLabel,
-              CategoryID,
-              Category,
-              ObjectID,
-              MatchBrandID,
-              MatchBrand,
-              FourSPrice,
-              Unit,
-              StandardSpecificationID,
-              StandardSpecification,
-              SpecificationDes,
-              Packaging,
-              Capacity,
-              Length,
-              Width,
-              Height,
-              Weight,
-              CollisionDegree,
-              CollisionSite,
-              Remarks,
-              IsUniversal,
-              IsAccident,
-              IsVulnerable,
-              IsReturn,
-              IsStopProduction,
-              OEDataStatus;
+public class OEDataRequest extends Request {
+    private String
+            PageIndex,
+            ItemsPerPage,
+            OriginalFactoryID,
+            OriginalFactoryName,
+            PartName,
+            FactoryLabelID,
+            FactoryLabel,
+            CategoryID,
+            Category,
+            ObjectID,
+            MatchBrandID,
+            MatchBrand,
+            FourSPrice,
+            Unit,
+            StandardSpecificationID,
+            StandardSpecification,
+            SpecificationDes,
+            Packaging,
+            Capacity,
+            Length,
+            Width,
+            Height,
+            Weight,
+            CollisionDegree,
+            CollisionSite,
+            Remarks,
+            IsUniversal,
+            IsAccident,
+            IsVulnerable,
+            IsReturn,
+            IsStopProduction,
+            OEDataStatus,
+            FactoryID,
+            PartNameID,
+            Brand,
+            Series,
+            QualityClass,
+            QualitySubclass,
+            FactoryPrice,
+            RetailPrice,
+            WholesalePrice,
+            ApplyFactoryLabel,
+            FactoryModel;
+
 
     public String getWidth() {
         return Width;
@@ -53,14 +64,6 @@ public class OEDataRequest {
 
     public void setWeight(String weight) {
         Weight = weight;
-    }
-
-    public String getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(String userID) {
-        UserID = userID;
     }
 
     public String getUnit() {
@@ -263,14 +266,6 @@ public class OEDataRequest {
         FactoryLabel = factoryLabel;
     }
 
-    public String getEncryptCode() {
-        return EncryptCode;
-    }
-
-    public void setEncryptCode(String encryptCode) {
-        EncryptCode = encryptCode;
-    }
-
     public String getCollisionSite() {
         return CollisionSite;
     }
@@ -311,8 +306,9 @@ public class OEDataRequest {
         Capacity = capacity;
     }
 
-    public OEDataRequest(String itemsPerPage, String pageIndex) {
+    public OEDataRequest(String itemsPerPage, String pageIndex, String factoryID) {
         ItemsPerPage = itemsPerPage;
         PageIndex = pageIndex;
+        FactoryID = factoryID;
     }
 }

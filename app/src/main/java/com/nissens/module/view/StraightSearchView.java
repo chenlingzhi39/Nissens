@@ -6,11 +6,10 @@ import com.nissens.bean.OEData;
 import java.util.List;
 
 /**
- * Created by PC-20160514 on 2016/9/22.
+ * Created by PC-20160514 on 2016/9/21.
  */
-public interface StraightSearchView extends BaseView{
-    void addData(List<OEData> oeDataList);
-    void showError();
-    void showEmpty();
+public interface StraightSearchView extends BaseView {
+void showResult(List<OEData> oeDatas);
+void showError();
+void showEmpty();
 }
-

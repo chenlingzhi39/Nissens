@@ -1,14 +1,16 @@
 package com.nissens.module.model;
 
 import com.nissens.app.MyApplication;
+import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
+import com.nissens.bean.Car;
+import com.nissens.bean.CarResult;
 import com.nissens.bean.OEData;
 import com.nissens.bean.OEDataResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,41 +20,40 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by PC-20160514 on 2016/9/22.
+ * Created by PC-20160514 on 2016/9/26.
  */
-public class StraightSearchModelImpl implements StraightSearchModel<List<OEData>>{
+public class AdjustCarModelImpl implements BaseModel<List<Car>>{
     @Inject
     ApiService apiService;
 
-    public StraightSearchModelImpl() {
+    public AdjustCarModelImpl() {
         MyApplication.getComponent().inject(this);
     }
-
     @Override
-    public Subscription requestSearchData(final RequestCallback<List<OEData>> callback, String requestPara) {
-        return apiService.queryBrandPartOEData(requestPara).subscribeOn(Schedulers.io()).observeOn(
+    public Subscription requestSearchData(final RequestCallback<List<Car>> callback, String requestPara) {
+        return apiService.queryBlendCarByBrandPartId(requestPara).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
             public void onStart() {
-             callback.beforeRequest();
+                callback.beforeRequest();
             }
 
             @Override
             public void onCompleted() {
-             callback.requestComplete();
+                callback.requestComplete();
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-            callback.requestError(e.toString());
+                callback.requestError(e.toString());
             }
 
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    ArrayList<OEData> oeDatas=((OEDataResult)o).getData();
-                   callback.requestSuccess(oeDatas);
+                    ArrayList<Car> cars=((CarResult)o).getData();
+                    callback.requestSuccess(cars);
                 } else {
                     callback.requestError("");
                 }
@@ -60,3 +61,4 @@ public class StraightSearchModelImpl implements StraightSearchModel<List<OEData>
         });
     }
 }
+

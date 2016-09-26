@@ -1,51 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/main_background">
     <include layout="@layout/toolbar_with_text"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:text="@string/straight_search"
                 android:id="@+id/straight"
+                android:background="@drawable/straight_search"
+                android:src="@mipmap/straight_search"
+                android:elevation="5dp"
                 />
-            <Button
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/straight_search"
+                    android:layout_marginTop="20dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:text="@string/search_by_car"
-                android:id="@+id/car"/>
+                android:id="@+id/car"
+                android:background="@drawable/search_by_car"
+                android:src="@mipmap/search_by_car"
+                android:elevation="5dp"
+               />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_by_car"
+                    android:layout_marginTop="20dp"/>
+          </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/nissens_distribution_agency"
-                android:id="@+id/agency"
-                />
-            <Button
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="@string/search_by_car"
+                    android:id="@+id/agency"
+                    android:background="@drawable/agency"
+                    android:src="@mipmap/agency"
+                    android:elevation="5dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/agency"
+                    android:layout_marginTop="20dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/search_by_type"
-                android:id="@+id/type"/>
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <ImageButton
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="@string/search_by_car"
+                    android:id="@+id/type"
+                    android:background="@drawable/search_by_type"
+                    android:src="@mipmap/search_by_type"
+                    android:elevation="5dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_by_type"
+                    android:layout_marginTop="20dp"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

@@ -1,6 +1,6 @@
 package com.nissens.dagger;
 
-import com.nissens.base.BaseActivity;
+import com.nissens.module.model.AdjustCarModelImpl;
 import com.nissens.module.model.StraightSearchModelImpl;
 
 import javax.inject.Singleton;
@@ -14,6 +14,7 @@ import dagger.Component;
 @Component(modules = NissensModules.class)
 public interface NissensComponent {
 void inject(StraightSearchModelImpl straightSearchModel);
+void inject(AdjustCarModelImpl baseModel);
     final class NissensInitialize{
         public static NissensComponent init(){
             return DaggerNissensComponent.builder().build();

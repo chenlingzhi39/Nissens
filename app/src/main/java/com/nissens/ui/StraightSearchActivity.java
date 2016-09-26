@@ -1,21 +1,18 @@
 package com.nissens.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -24,10 +21,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.nissens.R;
 import com.nissens.adapter.OEDataAdapter;
 import com.nissens.adapter.QuickSearchAdapter;
@@ -38,22 +33,17 @@ import com.nissens.base.BaseActivity;
 import com.nissens.bean.OEData;
 import com.nissens.bean.OEDataRequest;
 import com.nissens.callback.InputWindowListener;
-import com.nissens.config.Constants;
 import com.nissens.helper.ItemHelper;
 import com.nissens.manager.MyLayoutManager;
 import com.nissens.module.presenter.StraightSearchPresenter;
 import com.nissens.module.presenter.StraightSearchPresenterImpl;
 import com.nissens.util.InitiateSearch;
-import com.nissens.view.StraightSearchView;
+import com.nissens.module.view.StraightSearchView;
 import com.nissens.widget.DividerItemDecoration;
 import com.nissens.widget.IMMListenerRelativeLayout;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +88,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     private OEDataAdapter oeDataAdapter;
     private QuickSearchDao quickSearchDao;
     private InitiateSearch initiateSearch;
-    private int page = 1;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,7 +126,14 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             }
         });
         oeDataAdapter = new OEDataAdapter(this);
-
+        oeDataAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent=new Intent(StraightSearchActivity.this,InfoActivity.class);
+                intent.putExtra("oeData",oeDataAdapter.getData().get(position));
+                startActivity(intent);
+            }
+        });
         resultList.setAdapter(oeDataAdapter);
         resultList.setLayoutManager(new LinearLayoutManager(this));
         resultList.addItemDecoration(new DividerItemDecoration(
@@ -174,7 +171,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                     params.put("EncryptCode", Constants.ENCRYPT_CODE);
                     params.put("PageIndex", "0");
                     params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
-                    OEDataRequest oeDataRequest = new OEDataRequest("15", page + "");
+                    OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",quickSearchAdapter.getItem(position).getContent());
                     mPresenter.requestData(gson.toJson(oeDataRequest));
                 }
             });
@@ -234,7 +231,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
                         page=1;
                         oeDataAdapter.clear();
-                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "");
+                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",editTextSearch.getText().toString());
                         mPresenter.requestData(gson.toJson(oeDataRequest));
                         getSupportActionBar().setTitle(editTextSearch.getText().toString());
 
@@ -280,7 +277,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                 public void onLoadMore() {
                     if (oeDataAdapter.getCount() > 0)
                     {   page += 1;
-                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "");
+                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",getSupportActionBar().getTitle().toString());
                         mPresenter.requestData(gson.toJson(oeDataRequest));
                     }
                 }

@@ -39,6 +39,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
     protected T mPresenter;
     public Gson gson;
     public boolean is_first=true;
+    public int page = 1;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
