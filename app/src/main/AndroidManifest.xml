@@ -8,7 +8,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/BaseTheme.AppTheme">
+        android:theme="@style/BaseTheme.AppTheme"
+        android:screenOrientation="portrait">
         <meta-data android:name="com.amap.api.v2.apikey" android:value="7fd0ad059dc58fe45432a0b458eac6b5">
         </meta-data>
         <activity android:name=".ui.MainActivity"

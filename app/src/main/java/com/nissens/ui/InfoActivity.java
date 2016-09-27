@@ -44,7 +44,7 @@ public class InfoActivity extends BaseActivity {
         oeData=(OEData) getIntent().getExtras().get("oeData");
         viewpager.setAdapter(new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this));
         layoutTab.setupWithViewPager(viewpager);
-        getSupportActionBar().setTitle(oeData.getFactoryName());
+        getSupportActionBar().setTitle(oeData.getPartName());
     }
     public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 

@@ -5,8 +5,38 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity"
     android:orientation="vertical"
-    android:background="@mipmap/main_background">
+    android:background="@mipmap/main_background"
+    >
     <include layout="@layout/toolbar_with_text"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/main_logo"
+        android:layout_below="@+id/mToolbarContainer"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mToolbarContainer"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/main_settings"
+        android:id="@+id/settings"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mToolbarContainer"
+        android:src="@mipmap/main_info"
+        android:id="@+id/info"
+        android:layout_toLeftOf="@+id/settings"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginTop="10dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,17 +56,18 @@
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:text="@string/straight_search"
                 android:id="@+id/straight"
                 android:background="@drawable/straight_search"
                 android:src="@mipmap/straight_search"
                 android:elevation="5dp"
+                android:layout_marginLeft="10dp"
                 />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/straight_search"
-                    android:layout_marginTop="20dp"/>
+                    android:text="@string/search_directly"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,18 +84,21 @@
                 android:background="@drawable/search_by_car"
                 android:src="@mipmap/search_by_car"
                 android:elevation="5dp"
+                android:layout_marginRight="10dp"
                />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/search_by_car"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"/>
           </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -80,12 +114,14 @@
                     android:background="@drawable/agency"
                     android:src="@mipmap/agency"
                     android:elevation="5dp"
+                    android:layout_marginLeft="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/agency"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,12 +138,14 @@
                     android:background="@drawable/search_by_type"
                     android:src="@mipmap/search_by_type"
                     android:elevation="5dp"
+                    android:layout_marginRight="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/search_by_type"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

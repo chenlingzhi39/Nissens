@@ -56,7 +56,7 @@ import de.greenrobot.dao.QuickSearchDao;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_straight_search,
-        toolbarTitle = R.string.straight_search,
+        toolbarTitle = R.string.search_directly,
         menuId = R.menu.menu_straight_search
 )
 public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView {
@@ -155,6 +155,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                 public void onItemClick(int position) {
                     page=1;
                     oeDataAdapter.clear();
+                    resultList.scrollToPosition(0);
                     getSupportActionBar().setTitle(quickSearchAdapter.getData().get(position).getContent());
                     if (position != 0) {
                         QuickSearch quickSearch = new QuickSearch();
@@ -230,6 +231,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         params.put("PageIndex", "0");
                         params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
                         page=1;
+                        resultList.scrollToPosition(0);
                         oeDataAdapter.clear();
                         OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",editTextSearch.getText().toString());
                         mPresenter.requestData(gson.toJson(oeDataRequest));

@@ -10,5 +10,7 @@
     <style name="BaseTheme.AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:clipToPadding">true</item>
     </style>
 </resources>
