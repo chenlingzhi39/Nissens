@@ -52,7 +52,7 @@ public class AdjustCarModelImpl implements BaseModel<List<Car>>{
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    if(((OEDataResult)o).getResult().equals("00"))
+                    if(((CarResult)o).getResult().equals("00"))
                     {ArrayList<Car> cars=((CarResult)o).getData();
                     callback.requestSuccess(cars);}
                     else callback.requestError(((OEDataResult)o).getDescription());

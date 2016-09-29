@@ -5,4 +5,12 @@ package com.nissens.bean;
  */
 public class BrandSeriesXml {
     private String BrandSeriesXml;
+
+    public String getBrandSeriesXml() {
+        return BrandSeriesXml;
+    }
+
+    public void setBrandSeriesXml(String brandSeriesXml) {
+        BrandSeriesXml = brandSeriesXml;
+    }
 }

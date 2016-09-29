@@ -28,8 +28,8 @@ public interface ApiService {
     @POST("queryBrandBusiness")
     Observable<BrandBusinessResult> queryBrandBusiness(Map<String, String> params);
 
-    @POST("queryBrandSeries")
-    Observable<BrandSeriesResult> queryBrandSeries(@Query("requestPara")String requestPara);
+    @POST("queryBrandSeriesXml")
+    Observable<BrandSeriesXmlResult> queryBrandSeries(@Query("requestPara")String requestPara);
 
     @POST("queryBrandPartDataInFuzzyMode")
     Observable<BrandPartResult> queryBrandPartDataInFuzzyMode(Map<String, String> params);
