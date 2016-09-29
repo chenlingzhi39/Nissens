@@ -1,7 +1,5 @@
 package com.nissens.module.model;
 
-import android.util.Log;
-
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
@@ -54,11 +52,10 @@ public class AdjustCarModelImpl implements BaseModel<List<Car>>{
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    Log.i("result",((CarResult)o).getResult());
-                    if(((CarResult)o).getResult().equals("01"))
+                    if(((CarResult)o).getResult().equals("00"))
                     {ArrayList<Car> cars=((CarResult)o).getData();
                     callback.requestSuccess(cars);}
-                    else callback.requestError(((CarResult)o).getDescription());
+                    else callback.requestError(((OEDataResult)o).getDescription());
                 } else {
                     callback.requestError("");
                 }
