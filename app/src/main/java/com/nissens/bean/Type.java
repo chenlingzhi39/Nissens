@@ -1,21 +1,30 @@
 package com.nissens.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by PC-20160514 on 2016/9/29.
  */
-public class Type {
+public class Type implements Serializable{
     private String id,name;
     private List<Type> types;
-
+    private String sortLetters;
     public Type() {
     }
 
     public Type(String name, String id) {
         this.name = name;
         this.id = id;
+    }
+
+    public String getSortLetters() {
+        return sortLetters;
+    }
+
+    public void setSortLetters(String sortLetters) {
+        this.sortLetters = sortLetters;
     }
 
     public String getId() {

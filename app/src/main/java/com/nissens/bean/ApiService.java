@@ -29,7 +29,7 @@ public interface ApiService {
     Observable<BrandBusinessResult> queryBrandBusiness(Map<String, String> params);
 
     @POST("queryBrandSeriesXml")
-    Observable<BrandSeriesXmlResult> queryBrandSeries(@Query("requestPara")String requestPara);
+    Observable<BrandSeriesXmlResult> queryBrandSeriesXml(@Query("requestPara")String requestPara);
 
     @POST("queryBrandPartDataInFuzzyMode")
     Observable<BrandPartResult> queryBrandPartDataInFuzzyMode(Map<String, String> params);
@@ -45,4 +45,8 @@ public interface ApiService {
 
     @POST("queryCarDataByLYVin")
     Observable<CarSingleResult> queryCarDataByLYVin(@Query("requestPara")String requestPara);
+
+    @POST("queryCarBrandXml")
+    Observable<CarBrandXmlResult> queryCarBrandXml(@Query("requestPara")String requestPara);
+
 }

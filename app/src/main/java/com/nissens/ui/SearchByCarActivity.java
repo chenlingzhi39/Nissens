@@ -28,11 +28,9 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_search_by_car,
         toolbarTitle = R.string.search_by_car
 )
-public class SearchByCarActivity extends BaseActivity implements CarSingleView {
+public class SearchByCarActivity extends BaseActivity<CarSinglePresenter> implements CarSingleView {
     @BindView(R.id.search)
     SearchView search;
-    CarSinglePresenter carSinglePresenter;
-    ProgressDialog progressDialog;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.empty)
@@ -46,12 +44,12 @@ public class SearchByCarActivity extends BaseActivity implements CarSingleView {
         ButterKnife.bind(this);
         search.setQueryHint(getString(R.string.please_input_vin));
         search.onActionViewExpanded();
-        carSinglePresenter = new CarSinglePresenterImpl(this);
+        mPresenter = new CarSinglePresenterImpl(this);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 VinRequest vinRequest = new VinRequest("");
-                carSinglePresenter.requestData(gson.toJson(vinRequest));
+                mPresenter.requestData(gson.toJson(vinRequest));
                 return false;
             }
 

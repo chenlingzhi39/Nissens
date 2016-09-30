@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,12 +22,13 @@ import com.nissens.R;
 import com.nissens.adapter.TypeAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
-import com.nissens.bean.BrandSeriesXml;
-import com.nissens.bean.BrandSeriesXmlRequest;
+import com.nissens.bean.Request;
 import com.nissens.bean.Type;
-import com.nissens.module.presenter.SearchByTypePresenter;
-import com.nissens.module.presenter.SearchByTypePresenterImpl;
-import com.nissens.module.view.SearchByTypeView;
+import com.nissens.module.presenter.CarXmlPresenter;
+import com.nissens.module.presenter.CarXmlPresenterImpl;
+import com.nissens.module.view.CarXmlView;
+import com.nissens.pinyin.CharacterParser;
+import com.nissens.pinyin.PinyinComparator;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -40,32 +40,36 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by PC-20160514 on 2016/9/23.
+ * Created by PC-20160514 on 2016/9/30.
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_search_by_type,
-        toolbarTitle = R.string.search_by_type
+        contentViewId = R.layout.activity_select_car,
+        toolbarTitle = R.string.select_car
 )
-public class SearchByTypeActivity extends BaseActivity implements SearchByTypeView,RecyclerViewExpandableItemManager.OnGroupCollapseListener,
-        RecyclerViewExpandableItemManager.OnGroupExpandListener  {
-    SearchByTypePresenter searchByTypePresenter;
+public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements CarXmlView, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+        RecyclerViewExpandableItemManager.OnGroupExpandListener {
+    @BindView(R.id.type_list)
+    RecyclerView mRecyclerView;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.empty)
     TextView empty;
     @BindView(R.id.error)
     TextView error;
-    @BindView(R.id.type_list)
-    RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
+    private CharacterParser characterParser;
+    private PinyinComparator pinyinComparator;
+    List<Type> seperateTypes = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        searchByTypePresenter = new SearchByTypePresenterImpl(this);
-        searchByTypePresenter.requestData(gson.toJson(new BrandSeriesXmlRequest()));
+        characterParser=CharacterParser.getInstance();
+        pinyinComparator=new PinyinComparator();
+        mPresenter = new CarXmlPresenterImpl(this);
+        mPresenter.requestData(gson.toJson(new Request()));
     }
 
     @Override
@@ -74,9 +78,9 @@ public class SearchByTypeActivity extends BaseActivity implements SearchByTypeVi
     }
 
     @Override
-    public void showResult(List<BrandSeriesXml> brandSeriesXmls) {
+    public void showResult(String xml) {
         XmlPullParser parser = Xml.newPullParser();
-        ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(brandSeriesXmls.get(0).getBrandSeriesXml().getBytes());
+        ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(xml.getBytes());
         List<Type> types = null;
         List<Type> subTypes = null;
         Type type = new Type();
@@ -95,8 +99,8 @@ public class SearchByTypeActivity extends BaseActivity implements SearchByTypeVi
                         if (tag.equals("")) {
                             if(i!=0)
                             {tag = parser.getName();
-                            type = new Type(parser.getAttributeValue(0), parser.getName());
-                            subTypes = new ArrayList<>();}else
+                                type = new Type(parser.getAttributeValue(0), parser.getName());
+                                subTypes = new ArrayList<>();}else
                                 i=1;
                         } else {
                             subType = new Type();
@@ -131,9 +135,7 @@ public class SearchByTypeActivity extends BaseActivity implements SearchByTypeVi
         typeAdapter.setOnItemClickListener(new TypeAdapter.OnItemClickListener() {
             @Override
             public void OnClick(Type type) {
-                Intent intent=new Intent(SearchByTypeActivity.this,SelectCarActivity.class);
-                intent.putExtra("type",type);
-                startActivity(intent);
+
             }
         });
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(typeAdapter);       // wrap for expanding
@@ -148,7 +150,6 @@ public class SearchByTypeActivity extends BaseActivity implements SearchByTypeVi
         mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
         mRecyclerView.setItemAnimator(animator);
         mRecyclerView.setHasFixedSize(false);
-
         // additional decorations
         //noinspection StatementWithEmptyBody
         if (supportsViewElevation()) {
@@ -159,7 +160,6 @@ public class SearchByTypeActivity extends BaseActivity implements SearchByTypeVi
         mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(this, R.drawable.list_divider_h), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
-
     }
     private boolean supportsViewElevation() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);

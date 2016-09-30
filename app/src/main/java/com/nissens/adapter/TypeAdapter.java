@@ -1,5 +1,4 @@
 package com.nissens.adapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,32 +11,44 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemVie
 import com.nissens.R;
 import com.nissens.bean.Type;
 import com.nissens.widget.ExpandableItemIndicator;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by PC-20160514 on 2016/9/29.
  */
-public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGroupViewHolder,TypeAdapter.MyChildViewHolder> {
+public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGroupViewHolder, TypeAdapter.MyChildViewHolder>  {
     private List<Type> types;
+    public OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void OnClick(Type type);
+    }
 
     public TypeAdapter(List<Type> types) {
         this.types = types;
     }
+
     private interface Expandable extends ExpandableItemConstants {
     }
+
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
         public TextView mTextView;
+
         public MyBaseViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
         }
     }
+
     public static class MyGroupViewHolder extends MyBaseViewHolder {
         public ExpandableItemIndicator mIndicator;
+
         public MyGroupViewHolder(View v) {
             super(v);
             mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
@@ -63,12 +74,12 @@ public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGro
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
     @Override
@@ -105,12 +116,19 @@ public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGro
                 isExpanded = false;
             }
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
-    }
+        }
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(MyChildViewHolder holder, final int groupPosition, final int childPosition, int viewType) {
         holder.mTextView.setText(types.get(groupPosition).getTypes().get(childPosition).getName());
+        holder.mContainer.setBackgroundResource(R.drawable.bg_item_normal_state);
+        holder.mContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnClick(types.get(groupPosition).getTypes().get(childPosition));
+            }
+        });
     }
 
     @Override
@@ -125,4 +143,5 @@ public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGro
     public void setHasStableIds(boolean hasStableIds) {
         super.setHasStableIds(hasStableIds);
     }
+
 }
