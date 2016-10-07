@@ -46,9 +46,8 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_search_by_type,
         toolbarTitle = R.string.search_by_type
 )
-public class SearchByTypeActivity extends BaseActivity implements SearchByTypeView,RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> implements SearchByTypeView,RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener  {
-    SearchByTypePresenter searchByTypePresenter;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.empty)
@@ -64,8 +63,8 @@ public class SearchByTypeActivity extends BaseActivity implements SearchByTypeVi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        searchByTypePresenter = new SearchByTypePresenterImpl(this);
-        searchByTypePresenter.requestData(gson.toJson(new BrandSeriesXmlRequest()));
+        mPresenter = new SearchByTypePresenterImpl(this);
+        mPresenter.requestData(gson.toJson(new BrandSeriesXmlRequest()));
     }
 
     @Override

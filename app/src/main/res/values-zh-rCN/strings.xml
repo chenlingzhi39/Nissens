@@ -21,7 +21,10 @@
     <string name="status">状态</string>
     <string name="weight">重量</string>
     <string name="info">信息</string>
-    <string name="agency">机构</string>
+    <string name="agency">经销机构</string>
     <string name="please_input_vin">请输入vin码</string>
     <string name="select_car">选择车型</string>
+    <string name="address">地址</string>
+    <string name="tel">电话</string>
+    <string name="please_select_city">请选择城市</string>
 </resources>

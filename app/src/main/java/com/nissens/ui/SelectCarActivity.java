@@ -59,15 +59,11 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
-    private CharacterParser characterParser;
-    private PinyinComparator pinyinComparator;
     List<Type> seperateTypes = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        characterParser=CharacterParser.getInstance();
-        pinyinComparator=new PinyinComparator();
         mPresenter = new CarXmlPresenterImpl(this);
         mPresenter.requestData(gson.toJson(new Request()));
     }

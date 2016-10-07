@@ -46,4 +46,6 @@ dependencies {
     compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.3@aar'){
         transitive=true
     }
+    compile 'cn.qqtheme.framework:WheelPicker:latest.release'
+    compile 'com.alibaba:fastjson:1.1.54.android'
 }
