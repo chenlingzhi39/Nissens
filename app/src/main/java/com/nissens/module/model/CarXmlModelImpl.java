@@ -1,19 +1,16 @@
 package com.nissens.module.model;
+
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.BrandSeriesXml;
 import com.nissens.bean.BrandSeriesXmlResult;
-import com.nissens.bean.OEData;
-import com.nissens.bean.OEDataResult;
+import com.nissens.bean.CarBrandXmlResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.LoggingMXBean;
 
 import javax.inject.Inject;
 
@@ -23,18 +20,20 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by PC-20160514 on 2016/9/28.
+ * Created by PC-20160514 on 2016/9/30.
  */
-public class SearchByTypeModelImpl implements BaseModel<List<BrandSeriesXml>>{
+
+public class CarXmlModelImpl implements BaseModel<String> {
     @Inject
     ApiService apiService;
-    public SearchByTypeModelImpl() {
+
+    public CarXmlModelImpl() {
         MyApplication.getComponent().inject(this);
     }
 
     @Override
-    public Subscription requestSearchData(final RequestCallback<List<BrandSeriesXml>> callback, String requestPara) {
-        return apiService.queryBrandSeriesXml(requestPara).subscribeOn(Schedulers.io()).observeOn(
+    public Subscription requestSearchData(final RequestCallback<String> callback, String requestPara) {
+        return apiService.queryCarBrandXml(requestPara).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
             public void onStart() {
@@ -55,9 +54,9 @@ public class SearchByTypeModelImpl implements BaseModel<List<BrandSeriesXml>>{
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    if(((BrandSeriesXmlResult)o).getResult().equals("00"))
-                    {ArrayList<BrandSeriesXml> brandSeriesXmls=((BrandSeriesXmlResult)o).getData();
-                        callback.requestSuccess(brandSeriesXmls);}
+                    if(((CarBrandXmlResult)o).getResult().equals("00"))
+                    {  Log.i("showResult", ((CarBrandXmlResult)o).getCarBrandXml());
+                        callback.requestSuccess(((CarBrandXmlResult)o).getCarBrandXml());}
                     else callback.requestError(((BrandSeriesXmlResult)o).getDescription());
                 } else {
                     callback.requestError("");

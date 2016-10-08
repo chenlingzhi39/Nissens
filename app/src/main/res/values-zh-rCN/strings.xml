@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">尼盛斯</string>
+    <string name="main_title">尼盛斯配件查询</string>
+    <string name="search_directly">直接搜索</string>
+    <string name="search_by_car">按车型搜索</string>
+    <string name="nissens_distribution_agency">尼盛斯经销机构</string>
+    <string name="search_by_type">按类型查询</string>
+    <string name="please_input_search_content">请输入搜索内容</string>
+    <string name="no_result">没有结果</string>
+    <string name="search">搜索</string>
+    <string name="network_error">网络错误</string>
+    <string name="original_factory_id">原厂ID</string>
+    <string name="factory_label">生产厂家</string>
+    <string name="no_more">没有更多了</string>
+    <string name="more_loading">更多加载中</string>
+    <string name="standard">标准</string>
+    <string name="normal">一般</string>
+    <string name="factory_id">厂家id</string>
+    <string name="car_series">车系</string>
+    <string name="status">状态</string>
+    <string name="weight">重量</string>
+    <string name="info">信息</string>
+    <string name="agency">经销机构</string>
+    <string name="please_input_vin">请输入vin码</string>
+    <string name="select_car">选择车型</string>
+    <string name="address">地址</string>
+    <string name="tel">电话</string>
+    <string name="please_select_city">请选择城市</string>
+</resources>

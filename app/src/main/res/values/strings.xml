@@ -22,4 +22,8 @@
     <string name="info">info</string>
     <string name="agency">agency</string>
     <string name="please_input_vin">please input vin</string>
+    <string name="select_car">select car</string>
+    <string name="address">address</string>
+    <string name="tel">tel</string>
+    <string name="please_select_city">please select city</string>
 </resources>

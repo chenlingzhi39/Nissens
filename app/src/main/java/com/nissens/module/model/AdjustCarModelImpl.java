@@ -1,12 +1,11 @@
 package com.nissens.module.model;
+import android.util.Log;
 
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.Car;
 import com.nissens.bean.CarResult;
-import com.nissens.bean.OEData;
-import com.nissens.bean.OEDataResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
@@ -52,10 +51,11 @@ public class AdjustCarModelImpl implements BaseModel<List<Car>>{
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    if(((CarResult)o).getResult().equals("00"))
+                    System.out.print(((CarResult)o).getResult());
+                    if(((CarResult)o).getResult().equals("01"))
                     {ArrayList<Car> cars=((CarResult)o).getData();
                     callback.requestSuccess(cars);}
-                    else callback.requestError(((OEDataResult)o).getDescription());
+                    else callback.requestError(((CarResult)o).getDescription());
                 } else {
                     callback.requestError("");
                 }

@@ -1,6 +1,5 @@
 package com.nissens.bean;
 
-import java.util.ArrayList;
 
 /**
  * Created by PC-20160514 on 2016/9/18.
