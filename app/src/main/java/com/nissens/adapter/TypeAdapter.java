@@ -25,7 +25,7 @@ public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGro
     }
 
     public interface OnItemClickListener {
-        void OnClick(Type type);
+        void OnClick(Type group,Type child);
     }
 
     public TypeAdapter(List<Type> types) {
@@ -126,7 +126,7 @@ public class TypeAdapter extends AbstractExpandableItemAdapter<TypeAdapter.MyGro
         holder.mContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.OnClick(types.get(groupPosition).getTypes().get(childPosition));
+                onItemClickListener.OnClick(types.get(groupPosition),types.get(groupPosition).getTypes().get(childPosition));
             }
         });
     }

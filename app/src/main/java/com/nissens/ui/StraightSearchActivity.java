@@ -37,8 +37,8 @@ import com.nissens.helper.ItemHelper;
 import com.nissens.manager.MyLayoutManager;
 import com.nissens.module.presenter.StraightSearchPresenter;
 import com.nissens.module.presenter.StraightSearchPresenterImpl;
-import com.nissens.util.InitiateSearch;
 import com.nissens.module.view.StraightSearchView;
+import com.nissens.util.InitiateSearch;
 import com.nissens.widget.DividerItemDecoration;
 import com.nissens.widget.IMMListenerRelativeLayout;
 
@@ -88,7 +88,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     private OEDataAdapter oeDataAdapter;
     private QuickSearchDao quickSearchDao;
     private InitiateSearch initiateSearch;
-
+    private OEDataRequest oeDataRequest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,8 +129,8 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
         oeDataAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent=new Intent(StraightSearchActivity.this,InfoActivity.class);
-                intent.putExtra("oeData",oeDataAdapter.getData().get(position));
+                Intent intent = new Intent(StraightSearchActivity.this, InfoActivity.class);
+                intent.putExtra("oeData", oeDataAdapter.getData().get(position));
                 startActivity(intent);
             }
         });
@@ -138,7 +138,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
         resultList.setLayoutManager(new LinearLayoutManager(this));
         resultList.addItemDecoration(new DividerItemDecoration(
                 this, DividerItemDecoration.VERTICAL_LIST));
-        mPresenter = new StraightSearchPresenterImpl(StraightSearchActivity.this);
+        mPresenter = new StraightSearchPresenterImpl(this);
         quickSearchDao = MyApplication.getInstance().getDaoSession().getQuickSearchDao();
         String textColumn = QuickSearchDao.Properties.Id.columnName;
         String orderBy = textColumn + " DESC";
@@ -153,7 +153,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             quickSearchAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    page=1;
+                    page = 1;
                     oeDataAdapter.clear();
                     resultList.scrollToPosition(0);
                     getSupportActionBar().setTitle(quickSearchAdapter.getData().get(position).getContent());
@@ -172,7 +172,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                     params.put("EncryptCode", Constants.ENCRYPT_CODE);
                     params.put("PageIndex", "0");
                     params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
-                    OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",quickSearchAdapter.getItem(position).getContent());
+                    oeDataRequest = new OEDataRequest("15", page + "", quickSearchAdapter.getItem(position).getContent());
                     mPresenter.requestData(gson.toJson(oeDataRequest));
                 }
             });
@@ -230,10 +230,10 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         params.put("EncryptCode", Constants.ENCRYPT_CODE);
                         params.put("PageIndex", "0");
                         params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
-                        page=1;
+                        page = 1;
                         resultList.scrollToPosition(0);
                         oeDataAdapter.clear();
-                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",editTextSearch.getText().toString());
+                        oeDataRequest = new OEDataRequest("15", page + "", editTextSearch.getText().toString());
                         mPresenter.requestData(gson.toJson(oeDataRequest));
                         getSupportActionBar().setTitle(editTextSearch.getText().toString());
 
@@ -277,15 +277,15 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             oeDataAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnLoadMoreListener() {
                 @Override
                 public void onLoadMore() {
-                    if (oeDataAdapter.getCount() > 0)
-                    {   page += 1;
-                        OEDataRequest oeDataRequest = new OEDataRequest("15", page + "",getSupportActionBar().getTitle().toString());
+                    if (oeDataAdapter.getCount() > 0) {
+                        page += 1;
+                        oeDataRequest = new OEDataRequest("15", page + "", getSupportActionBar().getTitle().toString());
                         mPresenter.requestData(gson.toJson(oeDataRequest));
                     }
                 }
             });
             oeDataAdapter.setNoMore(R.layout.view_nomore);
-            is_first=false;
+            is_first = false;
         }
         resultList.setVisibility(View.VISIBLE);
         empty.setVisibility(View.GONE);
@@ -295,27 +295,28 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
 
     @Override
     public void showEmpty() {
-        if(oeDataAdapter.getCount()==0)
-        {oeDataAdapter.clear();
-        empty.setVisibility(View.VISIBLE);}
-        else oeDataAdapter.stopMore();
+        if (oeDataAdapter.getCount() == 0) {
+            oeDataAdapter.clear();
+            empty.setVisibility(View.VISIBLE);
+        } else oeDataAdapter.stopMore();
     }
 
     @Override
     public void showError() {
-        if(oeDataAdapter.getCount()==0)
-        {oeDataAdapter.clear();
-        error.setVisibility(View.VISIBLE);}
-        else oeDataAdapter.pauseMore();
+        if (oeDataAdapter.getCount() == 0) {
+            oeDataAdapter.clear();
+            error.setVisibility(View.VISIBLE);
+        } else oeDataAdapter.pauseMore();
     }
 
     @Override
     public void showProgress() {
-        if(oeDataAdapter.getCount()==0)
-        {error.setVisibility(View.GONE);
-        empty.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        resultList.setVisibility(View.GONE);}
+        if (oeDataAdapter.getCount() == 0) {
+            error.setVisibility(View.GONE);
+            empty.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            resultList.setVisibility(View.GONE);
+        }
 
     }
 
@@ -324,10 +325,17 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
         progressBar.setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.clearSearch)
-    public void onClick() {
-        listView.setVisibility(View.VISIBLE);
-        ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-    }
 
+    @OnClick({R.id.error, R.id.clearSearch})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.error:
+                mPresenter.requestData(gson.toJson(oeDataRequest));
+                break;
+            case R.id.clearSearch:
+                listView.setVisibility(View.VISIBLE);
+                ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                break;
+        }
+    }
 }

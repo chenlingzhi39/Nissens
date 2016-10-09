@@ -1,6 +1,5 @@
 package com.nissens.ui;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
@@ -20,6 +19,7 @@ import com.nissens.module.view.CarSingleView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by PC-20160514 on 2016/9/23.
@@ -37,7 +37,7 @@ public class SearchByCarActivity extends BaseActivity<CarSinglePresenter> implem
     TextView empty;
     @BindView(R.id.error)
     TextView error;
-
+    VinRequest vinRequest;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ public class SearchByCarActivity extends BaseActivity<CarSinglePresenter> implem
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                VinRequest vinRequest = new VinRequest("");
+                vinRequest = new VinRequest("");
                 mPresenter.requestData(gson.toJson(vinRequest));
                 return false;
             }
@@ -74,11 +74,12 @@ public class SearchByCarActivity extends BaseActivity<CarSinglePresenter> implem
 
     @Override
     public void showProgress() {
-    progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void hideProgress() {progressBar.setVisibility(View.GONE);
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -103,5 +104,10 @@ public class SearchByCarActivity extends BaseActivity<CarSinglePresenter> implem
             }
         });*/
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @OnClick(R.id.error)
+    public void onClick() {
+        mPresenter.requestData(gson.toJson(vinRequest));
     }
 }

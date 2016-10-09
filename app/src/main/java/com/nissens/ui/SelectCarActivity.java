@@ -27,8 +27,6 @@ import com.nissens.bean.Type;
 import com.nissens.module.presenter.CarXmlPresenter;
 import com.nissens.module.presenter.CarXmlPresenterImpl;
 import com.nissens.module.view.CarXmlView;
-import com.nissens.pinyin.CharacterParser;
-import com.nissens.pinyin.PinyinComparator;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -38,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by PC-20160514 on 2016/9/30.
@@ -59,7 +58,7 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
-    List<Type> seperateTypes = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,7 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
         Type type = new Type();
         Type subType;
         String tag = "";
-        int i=0;
+        int i = 0;
         try {
             parser.setInput(tInputStringStream, "UTF-8");
             int eventCode = parser.getEventType();
@@ -93,11 +92,12 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
                         break;
                     case XmlPullParser.START_TAG:
                         if (tag.equals("")) {
-                            if(i!=0)
-                            {tag = parser.getName();
+                            if (i != 0) {
+                                tag = parser.getName();
                                 type = new Type(parser.getAttributeValue(0), parser.getName());
-                                subTypes = new ArrayList<>();}else
-                                i=1;
+                                subTypes = new ArrayList<>();
+                            } else
+                                i = 1;
                         } else {
                             subType = new Type();
                             subType.setId(parser.getName());
@@ -126,12 +126,16 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
         mRecyclerViewExpandableItemManager.expandAll();
         //adapter
-        final TypeAdapter typeAdapter= new TypeAdapter(types);
+        final TypeAdapter typeAdapter = new TypeAdapter(types);
         typeAdapter.setHasStableIds(true);
         typeAdapter.setOnItemClickListener(new TypeAdapter.OnItemClickListener() {
             @Override
-            public void OnClick(Type type) {
-
+            public void OnClick(Type group, Type child) {
+                Intent intent = new Intent(SelectCarActivity.this, OEDatasActivity.class);
+                intent.putExtra("label", child.getName());
+                intent.putExtra("series", getIntent().getStringExtra("series"));
+                startActivity(intent);
+                finish();
             }
         });
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(typeAdapter);       // wrap for expanding
@@ -157,9 +161,11 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
     }
+
     private boolean supportsViewElevation() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
+
     @Override
     public void showError() {
         error.setVisibility(View.VISIBLE);
@@ -185,5 +191,10 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
     @Override
     public void onGroupExpand(int groupPosition, boolean fromUser) {
 
+    }
+
+    @OnClick(R.id.error)
+    public void onClick() {
+        mPresenter.requestData(gson.toJson(new Request()));
     }
 }

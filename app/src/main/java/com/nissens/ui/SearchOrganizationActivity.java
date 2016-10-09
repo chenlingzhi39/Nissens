@@ -14,10 +14,8 @@ import com.nissens.R;
 import com.nissens.adapter.OrganizationAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
-import com.nissens.bean.BrandBusinessRequest;
 import com.nissens.bean.BrandOrganization;
 import com.nissens.bean.BrandOrganizationRequest;
-import com.nissens.bean.Request;
 import com.nissens.module.presenter.OrganizationPresenter;
 import com.nissens.module.presenter.OrganizationPresenterImpl;
 import com.nissens.module.view.OrganizationView;
@@ -51,7 +49,7 @@ public class SearchOrganizationActivity extends BaseActivity<OrganizationPresent
     OrganizationAdapter organizationAdapter;
     @BindView(R.id.select_city)
     Button selectCity;
-
+    private BrandOrganizationRequest brandOrganizationRequest;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,35 +100,43 @@ public class SearchOrganizationActivity extends BaseActivity<OrganizationPresent
         progressBar.setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.select_city)
-    public void onClick() {
-        try {
-            ArrayList<AddressPicker.Province> data = new ArrayList<>();
-            final String json = ConvertUtils.toString(getAssets().open("city.json"));
-            data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
-            AddressPicker picker = new AddressPicker(this, data);
-            picker.setSelectedItem("江苏", "无锡", "惠山");
-            picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
-                @Override
-                public void onAddressPicked(AddressPicker.Province province, AddressPicker.City city, AddressPicker.County county) {
-                    if (county == null) {
-                        selectCity.setText( province.getAreaName()+" "+city.getAreaName());
-                    } else {
-                        if(!province.getAreaName().equals(city.getAreaName()))
-                        selectCity.setText( province.getAreaName()+" "+city.getAreaName());
-                        else  selectCity.setText(city.getAreaName()+" "+county.getAreaName());
-                    }
-                    organizationAdapter.clear();
-                    BrandOrganizationRequest brandOrganizationRequest;
-                    if(!province.getAreaName().equals(city.getAreaName()))
-                     brandOrganizationRequest=new BrandOrganizationRequest(province.getAreaName().substring(0,province.getAreaName().length()-1),city.getAreaName().substring(0,city.getAreaName().length()-1));
-                    else brandOrganizationRequest=new BrandOrganizationRequest(province.getAreaName().substring(0,province.getAreaName().length()-1),county.getAreaName().substring(0,county.getAreaName().length()-1));
-                    mPresenter.requestData(gson.toJson(brandOrganizationRequest));
+
+    @OnClick({R.id.select_city, R.id.error})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.select_city:
+                try {
+                    ArrayList<AddressPicker.Province> data = new ArrayList<>();
+                    final String json = ConvertUtils.toString(getAssets().open("city.json"));
+                    data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
+                    AddressPicker picker = new AddressPicker(this, data);
+                    picker.setSelectedItem("江苏", "无锡", "惠山");
+                    picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
+                        @Override
+                        public void onAddressPicked(AddressPicker.Province province, AddressPicker.City city, AddressPicker.County county) {
+                            if (county == null) {
+                                selectCity.setText(province.getAreaName() + " " + city.getAreaName());
+                            } else {
+                                if (!province.getAreaName().equals(city.getAreaName()))
+                                    selectCity.setText(province.getAreaName() + " " + city.getAreaName());
+                                else selectCity.setText(city.getAreaName() + " " + county.getAreaName());
+                            }
+                            organizationAdapter.clear();
+                            if (!province.getAreaName().equals(city.getAreaName()))
+                                brandOrganizationRequest = new BrandOrganizationRequest(province.getAreaName().substring(0, province.getAreaName().length() - 1), city.getAreaName().substring(0, city.getAreaName().length() - 1));
+                            else
+                                brandOrganizationRequest = new BrandOrganizationRequest(province.getAreaName().substring(0, province.getAreaName().length() - 1), county.getAreaName().substring(0, county.getAreaName().length() - 1));
+                            mPresenter.requestData(gson.toJson(brandOrganizationRequest));
+                        }
+                    });
+                    picker.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
-            picker.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+                break;
+            case R.id.error:
+                mPresenter.requestData(gson.toJson(brandOrganizationRequest));
+                break;
         }
     }
 }

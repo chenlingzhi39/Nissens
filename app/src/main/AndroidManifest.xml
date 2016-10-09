@@ -36,6 +36,8 @@
             android:launchMode="singleTask"/>
         <activity android:name=".ui.SearchOrganizationActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".ui.OEDatasActivity"
+            android:launchMode="singleTask"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序打开网络套接字-->

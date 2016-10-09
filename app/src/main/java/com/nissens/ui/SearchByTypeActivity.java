@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -38,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by PC-20160514 on 2016/9/23.
@@ -46,8 +47,8 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_search_by_type,
         toolbarTitle = R.string.search_by_type
 )
-public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> implements SearchByTypeView,RecyclerViewExpandableItemManager.OnGroupCollapseListener,
-        RecyclerViewExpandableItemManager.OnGroupExpandListener  {
+public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> implements SearchByTypeView, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+        RecyclerViewExpandableItemManager.OnGroupExpandListener {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.empty)
@@ -59,6 +60,8 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
+    private String header;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +84,7 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
         Type type = new Type();
         Type subType;
         String tag = "";
-        int i=0;
+        int i = 0;
         try {
             parser.setInput(tInputStringStream, "UTF-8");
             int eventCode = parser.getEventType();
@@ -92,11 +95,14 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
                         break;
                     case XmlPullParser.START_TAG:
                         if (tag.equals("")) {
-                            if(i!=0)
-                            {tag = parser.getName();
-                            type = new Type(parser.getAttributeValue(0), parser.getName());
-                            subTypes = new ArrayList<>();}else
-                                i=1;
+                            if (i != 0) {
+                                tag = parser.getName();
+                                type = new Type(parser.getAttributeValue(0), parser.getName());
+                                subTypes = new ArrayList<>();
+                            } else {
+                                i = 1;
+                                header = parser.getAttributeValue(0);
+                            }
                         } else {
                             subType = new Type();
                             subType.setId(parser.getName());
@@ -125,14 +131,16 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
         mRecyclerViewExpandableItemManager.expandAll();
         //adapter
-        final TypeAdapter typeAdapter= new TypeAdapter(types);
+        final TypeAdapter typeAdapter = new TypeAdapter(types);
         typeAdapter.setHasStableIds(true);
         typeAdapter.setOnItemClickListener(new TypeAdapter.OnItemClickListener() {
             @Override
-            public void OnClick(Type type) {
-                Intent intent=new Intent(SearchByTypeActivity.this,SelectCarActivity.class);
-                intent.putExtra("type",type);
+            public void OnClick(Type group, Type child) {
+                Intent intent = new Intent(SearchByTypeActivity.this, SelectCarActivity.class);
+                intent.putExtra("series", header + "\t|\t" + group.getName() + "\t|\t" + child.getName());
+                Log.i("series", header + "\t|\t" + group.getName() + "\t|\t" + child.getName());
                 startActivity(intent);
+                finish();
             }
         });
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(typeAdapter);       // wrap for expanding
@@ -160,9 +168,11 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
 
     }
+
     private boolean supportsViewElevation() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
+
     @Override
     public void showError() {
         error.setVisibility(View.VISIBLE);
@@ -188,5 +198,10 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
     @Override
     public void onGroupExpand(int groupPosition, boolean fromUser) {
 
+    }
+
+    @OnClick(R.id.error)
+    public void onClick() {
+        mPresenter.requestData(gson.toJson(new BrandSeriesXmlRequest()));
     }
 }

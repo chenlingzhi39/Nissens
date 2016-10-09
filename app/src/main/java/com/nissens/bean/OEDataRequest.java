@@ -311,4 +311,11 @@ public class OEDataRequest extends Request {
         PageIndex = pageIndex;
         FactoryID = factoryID;
     }
+
+    public OEDataRequest(String itemsPerPage, String pageIndex, String applyFactoryLabel, String series) {
+        ItemsPerPage = itemsPerPage;
+        PageIndex = pageIndex;
+        ApplyFactoryLabel = applyFactoryLabel;
+        Series = series;
+    }
 }
