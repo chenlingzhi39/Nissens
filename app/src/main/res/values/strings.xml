@@ -26,4 +26,5 @@
     <string name="address">address</string>
     <string name="tel">tel</string>
     <string name="please_select_city">please select city</string>
+    <string name="nissens_message">tel: +45 7626 2626\nfax: +45 7564 2205\ne-mail: nissens@nissens.com  </string>
 </resources>
