@@ -311,10 +311,11 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
 
     @Override
     public void showProgress() {
-        error.setVisibility(View.GONE);
+        if(oeDataAdapter.getCount()==0)
+        {error.setVisibility(View.GONE);
         empty.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        resultList.setVisibility(View.GONE);
+        resultList.setVisibility(View.GONE);}
 
     }
 

@@ -3,12 +3,15 @@ package com.nissens.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.view.View;
+import android.widget.TextView;
 
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -18,11 +21,13 @@ import butterknife.OnClick;
 )
 public class MainActivity extends BaseActivity {
 
+    @BindView(R.id.message)
+    TextView message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-
     }
 
     @OnClick({R.id.straight, R.id.car, R.id.agency, R.id.type})
@@ -32,13 +37,13 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, StraightSearchActivity.class));
                 break;
             case R.id.car:
-                startActivity(new Intent(MainActivity.this,SearchByCarActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchByCarActivity.class));
                 break;
             case R.id.agency:
-                startActivity(new Intent(MainActivity.this,SearchOrganizationActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchOrganizationActivity.class));
                 break;
             case R.id.type:
-                startActivity(new Intent(MainActivity.this,SearchByTypeActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchByTypeActivity.class));
                 break;
         }
     }
