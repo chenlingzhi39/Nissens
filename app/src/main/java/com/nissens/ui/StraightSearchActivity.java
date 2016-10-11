@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -89,7 +90,6 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     private QuickSearchDao quickSearchDao;
     private InitiateSearch initiateSearch;
     private OEDataRequest oeDataRequest;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -278,9 +278,11 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                 @Override
                 public void onLoadMore() {
                     if (oeDataAdapter.getCount() > 0) {
-                        page += 1;
+                        if(oeDataAdapter.getCount()>15)
+                        {page += 1;
                         oeDataRequest = new OEDataRequest("15", page + "", getSupportActionBar().getTitle().toString());
                         mPresenter.requestData(gson.toJson(oeDataRequest));
+                        }else oeDataAdapter.stopMore();
                     }
                 }
             });
@@ -296,8 +298,14 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     @Override
     public void showEmpty() {
         if (oeDataAdapter.getCount() == 0) {
+            if(TextUtils.isEmpty(oeDataRequest.getOriginalFactoryID()))
+            {
+                oeDataRequest.setOriginalFactoryID(oeDataRequest.getFactoryID());
+                oeDataRequest.setFactoryID(null);
+                mPresenter.requestData(gson.toJson(oeDataRequest));
+            }else{
             oeDataAdapter.clear();
-            empty.setVisibility(View.VISIBLE);
+            empty.setVisibility(View.VISIBLE);}
         } else oeDataAdapter.stopMore();
     }
 

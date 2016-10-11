@@ -306,6 +306,19 @@ public class OEDataRequest extends Request {
         Capacity = capacity;
     }
 
+    public String getFactoryID() {
+        return FactoryID;
+    }
+
+    public void setFactoryID(String factoryID) {
+        FactoryID = factoryID;
+    }
+
+    public OEDataRequest(String itemsPerPage, String pageIndex) {
+        ItemsPerPage = itemsPerPage;
+        PageIndex=pageIndex;
+    }
+
     public OEDataRequest(String itemsPerPage, String pageIndex, String factoryID) {
         ItemsPerPage = itemsPerPage;
         PageIndex = pageIndex;
@@ -318,4 +331,6 @@ public class OEDataRequest extends Request {
         ApplyFactoryLabel = applyFactoryLabel;
         Series = series;
     }
+
+
 }

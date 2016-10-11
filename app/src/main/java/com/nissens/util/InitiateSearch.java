@@ -24,7 +24,7 @@ public class InitiateSearch {
         if (search.getVisibility() == View.VISIBLE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final Animator animatorHide = ViewAnimationUtils.createCircularReveal(search,
-                    search.getWidth() - (int) convertDpToPixel(28, context),
+                    search.getWidth() - (int) convertDpToPixel(20, context),
                     (int) convertDpToPixel(23, context),
                     (float) Math.hypot(search.getWidth(), search.getHeight()),
                     0);
@@ -74,7 +74,7 @@ public class InitiateSearch {
             editText.requestFocus();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final Animator animator = ViewAnimationUtils.createCircularReveal(search,
-                    search.getWidth() - (int) convertDpToPixel(28, context),
+                    search.getWidth() - (int) convertDpToPixel(20, context),
                     (int) convertDpToPixel(23, context),
                     0,
                     (float) Math.hypot(search.getWidth(), search.getHeight()));
