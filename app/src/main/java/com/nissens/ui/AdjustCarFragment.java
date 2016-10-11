@@ -21,11 +21,13 @@ import com.nissens.bean.OEDataRequest;
 import com.nissens.module.presenter.AdjustCarPresenter;
 import com.nissens.module.presenter.AdjustCarPresenterImpl;
 import com.nissens.module.view.AdjustCarView;
+import com.nissens.widget.DividerItemDecoration;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by PC-20160514 on 2016/9/26.
@@ -43,6 +45,7 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
     @BindView(R.id.error)
     TextView error;
     private CarAdapter carAdapter;
+    private  CarRequest carRequest;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -53,10 +56,11 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
         ButterKnife.bind(this, fragmentRootView);
         carAdapter=new CarAdapter(getActivity());
         list.setAdapter(carAdapter);
+         list.addItemDecoration(new DividerItemDecoration(
+               getActivity(), DividerItemDecoration.VERTICAL_LIST));
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPresenter=new AdjustCarPresenterImpl(this);
-        CarRequest carRequest=new CarRequest(getArguments().getString("factory_id"),"1","15");
-        carRequest.setFactoryID(getArguments().getString("factory_id"));
+        carRequest=new CarRequest(getArguments().getString("factory_id"),"1","15");
         mPresenter.requestData(gson.toJson(carRequest));
     }
 
@@ -73,7 +77,7 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
     public void showError() {
         if(carAdapter.getCount()==0)
         {carAdapter.clear();
-            empty.setVisibility(View.VISIBLE);}
+            error.setVisibility(View.VISIBLE);}
         else carAdapter.pauseMore();
     }
     @Override
@@ -92,8 +96,8 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
                 public void onLoadMore() {
                     if (carAdapter.getCount() > 0)
                     {   page += 1;
-                        CarRequest oeDataRequest = new  CarRequest(getArguments().getString("factory_id"),page + "","15");
-                        mPresenter.requestData(gson.toJson(oeDataRequest));
+                        carRequest = new  CarRequest(getArguments().getString("factory_id"),page + "","15");
+                        mPresenter.requestData(gson.toJson(carRequest));
                     }
                 }
             });
@@ -118,5 +122,9 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+    @OnClick(R.id.error)
+    public void onClick() {
+        mPresenter.requestData(gson.toJson(carRequest));
     }
 }

@@ -29,4 +29,8 @@
     <string name="please_select_city">请选择城市</string>
     <string name="nissens_message">尼盛斯电话: +45 7626 2626\n传真: +45 7564 2205\n电子邮件: nissens@nissens.com  </string>
     <string name="search_in_type_results">按类型查询结果</string>
+    <string name="length">长</string>
+    <string name="width">宽</string>
+    <string name="height">高</string>
+    <string name="capacity">容量</string>
 </resources>

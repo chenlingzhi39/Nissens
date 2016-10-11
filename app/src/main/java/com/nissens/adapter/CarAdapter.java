@@ -15,6 +15,6 @@ public class CarAdapter extends RecyclerArrayAdapter<Car>{
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return new CarViewHolder(parent);
     }
 }

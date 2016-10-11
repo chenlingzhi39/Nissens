@@ -28,4 +28,8 @@
     <string name="please_select_city">please select city</string>
     <string name="nissens_message">tel: +45 7626 2626\nfax: +45 7564 2205\ne-mail: nissens@nissens.com  </string>
     <string name="search_in_type_results">search in type results</string>
+    <string name="length">length</string>
+    <string name="width">width</string>
+    <string name="height">height</string>
+    <string name="capacity">capacity</string>
 </resources>
