@@ -29,7 +29,7 @@ public class CarViewHolder extends BaseViewHolder<Car> {
     @Override
     public void setData(Car data) {
      name.setText(data.getCarBrand());
-     id.setText(getContext().getString(R.string.factory_id)+":"+data.getLiYangID());
+     id.setText(getContext().getString(R.string.LiYang_id)+":"+data.getLiYangID());
      series.setText(getContext().getString(R.string.car_series)+":"+data.getCarSeries());
     }
 

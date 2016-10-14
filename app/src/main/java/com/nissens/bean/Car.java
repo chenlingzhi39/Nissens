@@ -1,9 +1,11 @@
 package com.nissens.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by PC-20160514 on 2016/9/18.
  */
-public class Car {
+public class Car implements Serializable{
     private String LiYangID,
             CarFactoryName,
             CarBrand,

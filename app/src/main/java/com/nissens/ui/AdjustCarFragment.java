@@ -1,5 +1,6 @@
 package com.nissens.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,8 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
     @BindView(R.id.error)
     TextView error;
     private CarAdapter carAdapter;
-    private  CarRequest carRequest;
+    private CarRequest carRequest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -54,32 +56,41 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
     @Override
     protected void initView(View fragmentRootView) {
         ButterKnife.bind(this, fragmentRootView);
-        carAdapter=new CarAdapter(getActivity());
+        carAdapter = new CarAdapter(getActivity());
+        carAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent=new Intent(getActivity(),CarInfoActivity.class);
+                intent.putExtra("car",carAdapter.getData().get(position));
+                startActivity(intent);
+            }
+        });
         list.setAdapter(carAdapter);
-         list.addItemDecoration(new DividerItemDecoration(
-               getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        list.addItemDecoration(new DividerItemDecoration(
+                getActivity(), DividerItemDecoration.VERTICAL_LIST));
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mPresenter=new AdjustCarPresenterImpl(this);
-        carRequest=new CarRequest(getArguments().getString("factory_id"),"1","15");
+        mPresenter = new AdjustCarPresenterImpl(this);
+        carRequest = new CarRequest(getArguments().getString("factory_id"),"15", page+"");
         mPresenter.requestData(gson.toJson(carRequest));
     }
 
     @Override
     public void showEmpty() {
-        if(carAdapter.getCount()==0)
-        {carAdapter.clear();
-            empty.setVisibility(View.VISIBLE);}
-        else carAdapter.stopMore();
+        if (carAdapter.getCount() == 0) {
+            carAdapter.clear();
+            empty.setVisibility(View.VISIBLE);
+        } else carAdapter.stopMore();
     }
 
 
     @Override
     public void showError() {
-        if(carAdapter.getCount()==0)
-        {carAdapter.clear();
-            error.setVisibility(View.VISIBLE);}
-        else carAdapter.pauseMore();
+        if (carAdapter.getCount() == 0) {
+            carAdapter.clear();
+            error.setVisibility(View.VISIBLE);
+        } else carAdapter.pauseMore();
     }
+
     @Override
     public void showResult(List<Car> carList) {
         Log.i("showResult", carList.size() + "");
@@ -94,15 +105,17 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
             carAdapter.setMore(R.layout.view_more, new RecyclerArrayAdapter.OnLoadMoreListener() {
                 @Override
                 public void onLoadMore() {
-                    if (carAdapter.getCount() > 0)
-                    {   page += 1;
-                        carRequest = new  CarRequest(getArguments().getString("factory_id"),page + "","15");
-                        mPresenter.requestData(gson.toJson(carRequest));
+                    if (carAdapter.getCount() > 0) {
+                        if (carAdapter.getCount() > 15) {
+                            page += 1;
+                            carRequest = new CarRequest(getArguments().getString("factory_id"),"15", page + "");
+                            mPresenter.requestData(gson.toJson(carRequest));
+                        } else carAdapter.stopMore();
                     }
                 }
             });
             carAdapter.setNoMore(R.layout.view_nomore);
-            is_first=false;
+            is_first = false;
         }
         list.setVisibility(View.VISIBLE);
         empty.setVisibility(View.GONE);
@@ -112,17 +125,19 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
 
     @Override
     public void showProgress() {
-        if(carAdapter.getCount()==0)
-        {error.setVisibility(View.GONE);
+        if (carAdapter.getCount() == 0) {
+            error.setVisibility(View.GONE);
             empty.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            list.setVisibility(View.GONE);}
+            list.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
     }
+
     @OnClick(R.id.error)
     public void onClick() {
         mPresenter.requestData(gson.toJson(carRequest));

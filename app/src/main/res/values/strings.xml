@@ -32,4 +32,14 @@
     <string name="width">width</string>
     <string name="height">height</string>
     <string name="capacity">capacity</string>
+    <string name="LiYang_id">LiYang ID</string>
+    <string name="factory">factory</string>
+    <string name="brand">brand</string>
+    <string name="car_model">car model</string>
+    <string name="name_of_sales">name of sales</string>
+    <string name="year">year</string>
+    <string name="displacement">displacement</string>
+    <string name="gear_box_type">gear box type</string>
+    <string name="engine_model">engine model</string>
+    <string name="year_in_produce">year in produce</string>
 </resources>

@@ -157,6 +157,8 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                     oeDataAdapter.clear();
                     resultList.scrollToPosition(0);
                     getSupportActionBar().setTitle(quickSearchAdapter.getData().get(position).getContent());
+                    oeDataRequest = new OEDataRequest("15", page + "", quickSearchAdapter.getItem(position).getContent());
+                    mPresenter.requestData(gson.toJson(oeDataRequest));
                     if (position != 0) {
                         QuickSearch quickSearch = new QuickSearch();
                         quickSearch.setAdd_time(new Date(System.currentTimeMillis()));
@@ -172,8 +174,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                     params.put("EncryptCode", Constants.ENCRYPT_CODE);
                     params.put("PageIndex", "0");
                     params.put("OriginalFactoryID", editTextSearch.getText().toString());*/
-                    oeDataRequest = new OEDataRequest("15", page + "", quickSearchAdapter.getItem(position).getContent());
-                    mPresenter.requestData(gson.toJson(oeDataRequest));
+
                 }
             });
             listView.setLayoutManager(new MyLayoutManager(this));

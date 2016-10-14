@@ -33,4 +33,14 @@
     <string name="width">宽</string>
     <string name="height">高</string>
     <string name="capacity">容量</string>
+    <string name="LiYang_id">力洋ID</string>
+    <string name="factory">厂家</string>
+    <string name="brand">品牌</string>
+    <string name="car_model">车型</string>
+    <string name="name_of_sales">销售名称</string>
+    <string name="year">年款</string>
+    <string name="displacement">排量</string>
+    <string name="gear_box_type">变速箱类型</string>
+    <string name="engine_model">发动机型号</string>
+    <string name="year_in_produce">生产年份</string>
 </resources>
