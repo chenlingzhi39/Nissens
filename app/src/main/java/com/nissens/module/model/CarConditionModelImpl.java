@@ -9,6 +9,7 @@ import com.nissens.bean.CarResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import android.util.Log;
@@ -21,7 +22,7 @@ import rx.schedulers.Schedulers;
  * Created by PC-20160514 on 2016/10/17.
  */
 
-public class CarConditionModelImpl implements BaseModel {
+public class CarConditionModelImpl implements BaseModel<List<String>> {
     @Inject
     ApiService apiService;
 
@@ -30,7 +31,7 @@ public class CarConditionModelImpl implements BaseModel {
     }
 
     @Override
-    public Subscription requestSearchData(final RequestCallback callback, String requestPara) {
+    public Subscription requestSearchData(final RequestCallback<List<String>> callback, String requestPara) {
         return apiService.queryCarCondition(requestPara).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
@@ -52,11 +53,14 @@ public class CarConditionModelImpl implements BaseModel {
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    Log.i("car",(String)o);
                     System.out.print(((CarModelDataResult) o).getResult());
                     if (((CarModelDataResult) o).getResult().equals("00")) {
-                        //ArrayList<Car> cars = ((CarModelDataResult) o).getData();
-                        //callback.requestSuccess(cars);
+                        ArrayList<Car> cars = ((CarModelDataResult) o).getData();
+                        String[] array=cars.get(0).getCarFactoryName().split("\\|");
+                        ArrayList<String> types=new ArrayList<>();
+                        for(String str:array)
+                        {types.add(str);}
+                        callback.requestSuccess(types);
                     } else callback.requestError(((CarModelDataResult) o).getDescription());
                 } else {
                     callback.requestError("");

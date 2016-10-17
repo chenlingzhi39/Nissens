@@ -13,9 +13,9 @@ import java.util.List;
  * Created by PC-20160514 on 2016/10/17.
  */
 
-public class CarConditionPreasenterImpl extends BasePresenterImpl<SearchByCarView,List<Car>> implements CarConditionPresenter {
+public class CarConditionPresenterImpl extends BasePresenterImpl<SearchByCarView,List<String>> implements CarConditionPresenter {
 BaseModel carConditionModel;
-    public CarConditionPreasenterImpl(SearchByCarView view) {
+    public CarConditionPresenterImpl(SearchByCarView view) {
         super(view);
         carConditionModel=new CarConditionModelImpl();
     }
@@ -23,5 +23,17 @@ BaseModel carConditionModel;
     @Override
     public void requestData(String requestData) {
      carConditionModel.requestSearchData(this,requestData);
+    }
+    @Override
+    public void requestError(String msg) {
+        super.requestError(msg);
+        mView.showError();
+    }
+
+    @Override
+    public void requestSuccess(List<String> data) {
+        if(data.size()==0)
+            mView.showEmpty();
+        else mView.showResult(data);
     }
 }

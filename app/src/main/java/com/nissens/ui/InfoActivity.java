@@ -85,8 +85,8 @@ public class InfoActivity extends BaseActivity {
                     ImageFragment imageFragment1 = new ImageFragment();
                     return imageFragment1;
                 case 3:
-                    ImageFragment imageFragment2 = new ImageFragment();
-                    return imageFragment2;
+                    AgencyFragment agencyFragment = new AgencyFragment();
+                    return agencyFragment;
                 default:
                     return null;
 
