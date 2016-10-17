@@ -48,4 +48,6 @@ dependencies {
     }
     compile 'cn.qqtheme.framework:WheelPicker:latest.release'
     compile 'com.alibaba:fastjson:1.1.54.android'
+    compile 'com.alexvasilkov:gesture-views:2.1.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }

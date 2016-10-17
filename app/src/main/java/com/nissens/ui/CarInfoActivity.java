@@ -19,8 +19,6 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_car_info
 )
 public class CarInfoActivity extends BaseActivity {
-    @BindView(R.id.liyang_id)
-    TextView liyangId;
     @BindView(R.id.factory)
     TextView factory;
     @BindView(R.id.brand)
@@ -50,7 +48,6 @@ public class CarInfoActivity extends BaseActivity {
         car = (Car) getIntent().getExtras().get("car");
         getSupportActionBar().setTitle(car.getCarBrand());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        liyangId.setText(getString(R.string.LiYang_id) + ":" + car.getLiYangID());
         factory.setText(getString(R.string.factory) + ":" + car.getCarFactoryName());
         brand.setText(getString(R.string.brand) + ":" + car.getCarBrand());
         carSeries.setText(getString(R.string.car_series) + ":" + car.getCarSeries());

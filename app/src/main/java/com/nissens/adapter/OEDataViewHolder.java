@@ -19,6 +19,8 @@ public class OEDataViewHolder extends BaseViewHolder<OEData> {
     TextView factory_id;
     @BindView(R.id.original_factory_id)
     TextView originalFactoryId;
+    @BindView(R.id.price)
+    TextView price;
 
     public OEDataViewHolder(ViewGroup parent) {
         super(parent, R.layout.item_oedata);
@@ -29,7 +31,8 @@ public class OEDataViewHolder extends BaseViewHolder<OEData> {
     public void setData(OEData data) {
         name.setText(data.getPartName());
         factory_id.setText(getContext().getString(R.string.factory_id) + ":" + data.getFactoryID());
-        originalFactoryId.setText(getContext().getString(R.string.original_factory_id)+ ":" +data.getOriginalFactoryID());
+        originalFactoryId.setText(getContext().getString(R.string.original_factory_id) + ":" + data.getOriginalFactoryID());
+        price.setText(getContext().getString(R.string.retail_price)+":¥"+data.getRetailPrice());
     }
 
 }

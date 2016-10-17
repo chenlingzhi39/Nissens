@@ -45,7 +45,8 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_search_by_type,
-        toolbarTitle = R.string.search_by_type
+        toolbarTitle = R.string.search_by_type,
+        menuId = R.menu.normal
 )
 public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> implements SearchByTypeView, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener {
@@ -137,8 +138,8 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
             @Override
             public void OnClick(Type group, Type child) {
                 Intent intent = new Intent(SearchByTypeActivity.this, SelectCarActivity.class);
-                intent.putExtra("series", header + "\t|\t" + group.getName() + "\t|\t" + child.getName());
-                Log.i("series", header + "\t|\t" + group.getName() + "\t|\t" + child.getName());
+                intent.putExtra("series", header + " | " + group.getName() + " | " + child.getName());
+                Log.i("series", header + " | " + group.getName() + " | " + child.getName());
                 startActivity(intent);
                 finish();
             }

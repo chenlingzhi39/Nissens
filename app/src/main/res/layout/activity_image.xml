@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-    <ImageView
+    android:gravity="center"
+    android:background="#55000000">
+    <com.alexvasilkov.gestures.views.GestureImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/image"
-        android:src="@drawable/example"
-        android:clickable="true"/>
+        android:layout_height="match_parent"
+        android:id="@+id/image" />
 </LinearLayout>

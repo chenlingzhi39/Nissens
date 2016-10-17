@@ -43,7 +43,8 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_select_car,
-        toolbarTitle = R.string.select_car
+        toolbarTitle = R.string.select_car,
+        menuId = R.menu.normal
 )
 public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements CarXmlView, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener {

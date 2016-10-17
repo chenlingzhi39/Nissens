@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import android.util.Log;
 import com.nissens.R;
 import com.nissens.adapter.OEDataAdapter;
 import com.nissens.adapter.RecyclerArrayAdapter;
@@ -32,7 +32,8 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_oedatas,
-        toolbarTitle = R.string.search_in_type_results
+        toolbarTitle = R.string.search_in_type_results,
+        menuId = R.menu.normal
 )
 public class OEDatasActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView {
     @BindView(R.id.result_list)
@@ -63,7 +64,9 @@ public class OEDatasActivity extends BaseActivity<StraightSearchPresenter> imple
         resultList.addItemDecoration(new DividerItemDecoration(
                 this, DividerItemDecoration.VERTICAL_LIST));
         mPresenter = new StraightSearchPresenterImpl(this);
-       oeDataRequest = new OEDataRequest("15", page + "", getIntent().getStringExtra("label"), getIntent().getStringExtra("series"));
+        Log.i("label",getIntent().getStringExtra("label"));
+        Log.i("series",getIntent().getStringExtra("series"));
+        oeDataRequest = new OEDataRequest("15", page + "", getIntent().getStringExtra("label"), getIntent().getStringExtra("series"));
         mPresenter.requestData(gson.toJson(oeDataRequest));
     }
 

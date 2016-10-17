@@ -1,10 +1,11 @@
 package com.nissens.bean;
 
 /**
- * Created by PC-20160514 on 2016/9/26.
+ * Created by PC-20160514 on 2016/10/17.
  */
-public class BrandBusinessRequest extends Request{
-    private String BrandBusinessID,BrandBusinessName;
+
+public class IntroductionResult extends Result{
+    private String CompanyIntroduction,BrandBusinessID,BrandBusinessName;
 
     public String getBrandBusinessID() {
         return BrandBusinessID;
@@ -20,5 +21,13 @@ public class BrandBusinessRequest extends Request{
 
     public void setBrandBusinessName(String brandBusinessName) {
         BrandBusinessName = brandBusinessName;
+    }
+
+    public String getCompanyIntroduction() {
+        return CompanyIntroduction;
+    }
+
+    public void setCompanyIntroduction(String companyIntroduction) {
+        CompanyIntroduction = companyIntroduction;
     }
 }

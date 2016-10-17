@@ -9,6 +9,7 @@
         <item name="backgroundColor">@color/background_color</item>
         <item name="itemBackgroundColor">@color/item_color</item>
     </style>
+
     <style name="BaseTheme.AppTheme">
 
     </style>

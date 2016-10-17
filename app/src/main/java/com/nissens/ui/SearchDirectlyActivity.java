@@ -14,8 +14,11 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -43,6 +46,8 @@ import com.nissens.util.InitiateSearch;
 import com.nissens.widget.DividerItemDecoration;
 import com.nissens.widget.IMMListenerRelativeLayout;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +65,7 @@ import de.greenrobot.dao.QuickSearchDao;
         toolbarTitle = R.string.search_directly,
         menuId = R.menu.menu_straight_search
 )
-public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView {
+public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView {
     @BindView(R.id.edit_text_search)
     EditText editTextSearch;
     @BindView(R.id.image_search_back)
@@ -94,15 +99,15 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        setOverflowShowingAlways();
         InitiateSearch();
         HandleSearch();
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
 
                 break;
             default:
@@ -122,14 +127,14 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             public void hide() {
                 Log.i("input", "hide");
                 if (cardSearch.getVisibility() == View.VISIBLE)
-                    InitiateSearch.handleToolBar1(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                    InitiateSearch.handleToolBar1(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         oeDataAdapter = new OEDataAdapter(this);
         oeDataAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(StraightSearchActivity.this, InfoActivity.class);
+                Intent intent = new Intent(SearchDirectlyActivity.this, InfoActivity.class);
                 intent.putExtra("oeData", oeDataAdapter.getData().get(position));
                 startActivity(intent);
             }
@@ -168,7 +173,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         quickSearchAdapter.remove(position);
                         quickSearchAdapter.add(0, quickSearch);
                     }
-                    initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                    initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
                  /*   Map<String, String> params = new HashMap<>();
                     params.put("UserID", Constants.USER_ID);
                     params.put("EncryptCode", Constants.ENCRYPT_CODE);
@@ -207,7 +212,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             public void onClick(View v) {
                 editTextSearch.setText("");
                 listView.setVisibility(View.VISIBLE);
-                ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                ((InputMethodManager) SearchDirectlyActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         });
 
@@ -218,7 +223,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
             @Override
             public void onClick(View v) {
                 Log.i("search", "back");
-                initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -254,7 +259,7 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                         quickSearch.setContent(editTextSearch.getText().toString());
                         quickSearchDao.insert(quickSearch);
                         quickSearchAdapter.add(0, quickSearch);
-                        initiateSearch.handleToolBar(StraightSearchActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                        initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
                     }
                     return true;
                 }
@@ -343,8 +348,36 @@ public class StraightSearchActivity extends BaseActivity<StraightSearchPresenter
                 break;
             case R.id.clearSearch:
                 listView.setVisibility(View.VISIBLE);
-                ((InputMethodManager) StraightSearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                ((InputMethodManager) SearchDirectlyActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 break;
         }
     }
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod(
+                            "setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    private void setOverflowShowingAlways() {
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class
+                    .getDeclaredField("sHasPermanentMenuKey");
+            menuKeyField.setAccessible(true);
+            menuKeyField.setBoolean(config, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

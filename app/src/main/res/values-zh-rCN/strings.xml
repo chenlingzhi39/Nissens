@@ -10,13 +10,13 @@
     <string name="no_result">没有结果</string>
     <string name="search">搜索</string>
     <string name="network_error">网络错误</string>
-    <string name="original_factory_id">原厂ID</string>
+    <string name="original_factory_id">原厂编码</string>
     <string name="factory_label">生产厂家</string>
     <string name="no_more">没有更多了</string>
     <string name="more_loading">更多加载中</string>
     <string name="standard">标准</string>
     <string name="normal">一般</string>
-    <string name="factory_id">厂家ID</string>
+    <string name="factory_id">厂家编码</string>
     <string name="car_series">车系</string>
     <string name="status">状态</string>
     <string name="weight">重量</string>
@@ -27,7 +27,7 @@
     <string name="address">地址</string>
     <string name="tel">电话</string>
     <string name="please_select_city">请选择城市</string>
-    <string name="nissens_message">尼盛斯电话: +45 7626 2626\n传真: +45 7564 2205\n电子邮件: nissens@nissens.com  </string>
+    <string name="nissens_message">尼盛斯电话: +45 7626 2626\n传真: +45 7564 2205\n电子邮件: nissens@nissens.com</string>
     <string name="search_in_type_results">按类型查询结果</string>
     <string name="length">长</string>
     <string name="width">宽</string>
@@ -43,4 +43,9 @@
     <string name="gear_box_type">变速箱类型</string>
     <string name="engine_model">发动机型号</string>
     <string name="year_in_produce">生产年份</string>
+    <string name="retail_price">指导零售价</string>
+    <string name="tech_support">车同轨公司提供技术支持</string>
+    <string name="company_introduction">公司介绍</string>
+    <string name="standard_specification">标准规格</string>
+    <string name="home_page">主页</string>
 </resources>

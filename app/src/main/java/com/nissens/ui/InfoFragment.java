@@ -36,7 +36,8 @@ public class InfoFragment extends BaseFragment {
     TextView height;
     @BindView(R.id.capacity)
     TextView capacity;
-
+    @BindView(R.id.specification)
+    TextView specification;
     @Override
     protected void initView(View fragmentRootView) {
         ButterKnife.bind(this, fragmentRootView);
@@ -48,6 +49,7 @@ public class InfoFragment extends BaseFragment {
         width.setText(oeData.getWidth());
         height.setText(oeData.getHeight());
         capacity.setText(oeData.getCapacity());
+        specification.setText(oeData.getStandardSpecification());
     }
 
     @Override

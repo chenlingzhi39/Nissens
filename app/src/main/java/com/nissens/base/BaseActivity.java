@@ -1,12 +1,16 @@
 package com.nissens.base;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,13 +21,14 @@ import com.nissens.app.MyApplication;
 import com.nissens.dagger.NissensComponent;
 import com.nissens.manager.SystemBarTintManager;
 import com.nissens.ui.MainActivity;
+import com.nissens.util.ScrimUtil;
 
 import javax.inject.Inject;
 
 /**
  * Created by PC-20160514 on 2016/9/21.
  */
-public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
+public class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
     /**
      * 布局的id
      */
@@ -38,8 +43,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
     private int mToolbarTitle;
     protected T mPresenter;
     public Gson gson;
-    public boolean is_first=true;
+    public boolean is_first = true;
     public int page = 1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,33 +61,50 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
         }
         setContentView(mContentViewId);
         initToolbar();
-        if(mToolbarTitle!=-1)
+        if (mToolbarTitle != -1)
             setToolbarTitle(mToolbarTitle);
-        SystemBarTintManager systemBarTintManager=new SystemBarTintManager(this);
+        SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
         systemBarTintManager.setStatusBarTintEnabled(true);
         systemBarTintManager.setStatusBarTintResource(R.color.colorPrimary);
-       gson=new Gson();
+        gson = new Gson();
+        initShadow();
     }
+
+    private void initShadow() {
+        View shadow = findViewById(R.id.shadow);
+        if (shadow != null)
+            if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT <= 19) {
+                shadow.setBackground(
+                        ScrimUtil.makeCubicGradientScrimDrawable(
+                                Color.parseColor("#55000000"), //颜色
+                                8, //渐变层数
+                                Gravity.TOP));
+                shadow.setVisibility(View.VISIBLE);
+            }
+    }
+
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
     }
-    public void setToolbarTitle(int strId){
-        if(this.getClass()!=MainActivity.class)
-        {getSupportActionBar().setTitle(getString(strId));
-         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-         }
-        else{
+
+    public void setToolbarTitle(int strId) {
+        if (this.getClass() != MainActivity.class) {
+            getSupportActionBar().setTitle(getString(strId));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } else {
             getSupportActionBar().setTitle("");
             TextView title = (TextView) findViewById(R.id.title);
             title.setText(getResources().getString(mToolbarTitle));
         }
     }
+
     public void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -93,12 +116,14 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         if (mMenuId != -1)
             getMenuInflater().inflate(mMenuId, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     protected void onResume() {
         super.onResume();

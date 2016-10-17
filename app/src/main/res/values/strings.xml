@@ -42,4 +42,9 @@
     <string name="gear_box_type">gear box type</string>
     <string name="engine_model">engine model</string>
     <string name="year_in_produce">year in produce</string>
+    <string name="retail_price">retail price</string>
+    <string name="tech_support"> </string>
+    <string name="company_introduction">company introduction</string>
+    <string name="standard_specification">standard specification</string>
+    <string name="home_page">home page</string>
 </resources>

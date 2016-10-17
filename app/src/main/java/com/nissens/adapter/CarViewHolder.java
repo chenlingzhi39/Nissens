@@ -16,8 +16,6 @@ public class CarViewHolder extends BaseViewHolder<Car> {
 
     @BindView(R.id.name)
     TextView name;
-    @BindView(R.id.id)
-    TextView id;
     @BindView(R.id.series)
     TextView series;
 
@@ -29,7 +27,6 @@ public class CarViewHolder extends BaseViewHolder<Car> {
     @Override
     public void setData(Car data) {
      name.setText(data.getCarBrand());
-     id.setText(getContext().getString(R.string.LiYang_id)+":"+data.getLiYangID());
      series.setText(getContext().getString(R.string.car_series)+":"+data.getCarSeries());
     }
 

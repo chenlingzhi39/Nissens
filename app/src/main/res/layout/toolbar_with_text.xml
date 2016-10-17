@@ -25,6 +25,12 @@
             android:id="@+id/title"
             android:textSize="20sp"
             />
+        <View
+            android:id="@+id/shadow"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:visibility="gone"
+            />
     </android.support.v7.widget.Toolbar>
 
 

@@ -7,9 +7,4 @@
         android:icon="@mipmap/ic_list_white_24dp"
         app:showAsAction="ifRoom"
         android:title=""/>
-    <item
-        android:id="@+id/action_search"
-        android:title="@string/search"
-        android:icon="@mipmap/ic_search_white_24dp"
-        app:showAsAction="ifRoom" />
 </menu>

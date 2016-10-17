@@ -35,7 +35,8 @@ import cn.qqtheme.framework.util.ConvertUtils;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_search_organization,
-        toolbarTitle = R.string.agency
+        toolbarTitle = R.string.agency,
+        menuId = R.menu.normal
 )
 public class SearchOrganizationActivity extends BaseActivity<OrganizationPresenter> implements OrganizationView {
     @BindView(R.id.progressBar)

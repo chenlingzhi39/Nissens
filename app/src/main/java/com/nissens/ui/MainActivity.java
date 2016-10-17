@@ -3,7 +3,6 @@ package com.nissens.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,20 +29,26 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.straight, R.id.car, R.id.agency, R.id.type})
+    @OnClick({R.id.straight, R.id.car, R.id.agency, R.id.type,R.id.settings,R.id.info})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.straight:
-                startActivity(new Intent(MainActivity.this, StraightSearchActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchDirectlyActivity.class));
                 break;
             case R.id.car:
-                startActivity(new Intent(MainActivity.this, SearchByCarActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchByVinActivity.class));
                 break;
             case R.id.agency:
                 startActivity(new Intent(MainActivity.this, SearchOrganizationActivity.class));
                 break;
             case R.id.type:
                 startActivity(new Intent(MainActivity.this, SearchByTypeActivity.class));
+                break;
+            case R.id.settings:
+
+                break;
+            case R.id.info:
+                startActivity(new Intent(MainActivity.this,IntroduceActivity.class));
                 break;
         }
     }

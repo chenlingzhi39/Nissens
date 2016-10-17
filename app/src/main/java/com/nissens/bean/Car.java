@@ -16,7 +16,9 @@ public class Car implements Serializable{
             GearBoxType,
             EngineModel,
             NameOfSales,
-            YearInProduce;
+            YearInProduce,
+            ChassisModel;
+
 
     public String getCarBrand() {
         return CarBrand;
@@ -104,5 +106,13 @@ public class Car implements Serializable{
 
     public void setYearInProduce(String yearInProduce) {
         YearInProduce = yearInProduce;
+    }
+
+    public String getChassisModel() {
+        return ChassisModel;
+    }
+
+    public void setChassisModel(String chassisModel) {
+        ChassisModel = chassisModel;
     }
 }

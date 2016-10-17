@@ -14,16 +14,21 @@
         android:minHeight="?attr/actionBarSize"
         android:id="@+id/toolbar"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title="" />
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_tab"
-        android:background="?attr/itemBackgroundColor"
-        app:tabIndicatorColor="?attr/colorPrimary"
-        app:tabSelectedTextColor="?attr/colorPrimary"
-        app:tabTextColor="@color/material_grey_500"
+        app:tabIndicatorColor="@color/material_white"
+        app:tabSelectedTextColor="@color/material_white"
+        app:tabTextColor="@color/material_white20"
+        />
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:visibility="gone"
         />
 </android.support.design.widget.AppBarLayout>

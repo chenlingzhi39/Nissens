@@ -3,10 +3,8 @@ package com.nissens.bean;
 
 import java.util.Map;
 
-import retrofit2.http.FieldMap;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -38,10 +36,10 @@ public interface ApiService {
     Observable<BrandOrganizationResult> queryBrandOrganization(@Query("requestPara")String requestPara);
 
     @POST("queryBrandIntroduction")
-    Observable<BrandIntroductionResult> queryBrandIntroduction(Map<String, String> params);
+    Observable<BrandIntroductionResult> queryBrandIntroduction(@Query("requestPara")Map<String, String> params);
 
     @POST("queryCompanyIntroduction")
-    Observable<CampanyIntroductionResult> queryCompanyIntroduction(Map<String, String> params);
+    Observable<IntroductionResult> queryCompanyIntroduction(@Query("requestPara")String requestPara);
 
     @POST("queryCarDataByLYVin")
     Observable<CarSingleResult> queryCarDataByLYVin(@Query("requestPara")String requestPara);
@@ -49,4 +47,9 @@ public interface ApiService {
     @POST("queryCarBrandXml")
     Observable<CarBrandXmlResult> queryCarBrandXml(@Query("requestPara")String requestPara);
 
+    @POST("queryCarCondition")
+    Observable<CarModelDataResult> queryCarCondition(@Query("requestPara")String requestPara);
+
+    @POST("queryBlendCarModelData")
+    Observable<CarModelDataResult> queryBlendCarModelData(@Query("requestPara")String requestPara);
 }
