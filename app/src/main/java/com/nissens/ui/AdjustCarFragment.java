@@ -56,7 +56,7 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
     @Override
     protected void initView(View fragmentRootView) {
         ButterKnife.bind(this, fragmentRootView);
-        carAdapter = new CarAdapter(getActivity());
+        carAdapter = new CarAdapter(getActivity(),false);
         carAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {

@@ -61,9 +61,9 @@ import de.greenrobot.dao.QuickSearchDao;
  * Created by PC-20160514 on 2016/9/21.
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_straight_search,
+        contentViewId = R.layout.activity_search_directly,
         toolbarTitle = R.string.search_directly,
-        menuId = R.menu.menu_straight_search
+        menuId = R.menu.search_directly
 )
 public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView {
     @BindView(R.id.edit_text_search)
@@ -90,11 +90,14 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
     TextView empty;
     @BindView(R.id.error)
     TextView error;
+    @BindView(R.id.clear)
+    TextView clear;
     private QuickSearchAdapter quickSearchAdapter;
     private OEDataAdapter oeDataAdapter;
     private QuickSearchDao quickSearchDao;
     private InitiateSearch initiateSearch;
     private OEDataRequest oeDataRequest;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +106,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
         InitiateSearch();
         HandleSearch();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -150,6 +154,9 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
         Cursor cursor = MyApplication.getInstance().getDb().query(quickSearchDao.getTablename(), quickSearchDao.getAllColumns(), null, null, null, null, orderBy);
         if (cursor != null) {
             quickSearchAdapter = new QuickSearchAdapter(this);
+            if(cursor.getCount()>0){
+                clear.setVisibility(View.VISIBLE);
+            }
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 QuickSearch quickSearch = new QuickSearch();
                 quickSearchDao.readEntity(cursor, quickSearch, 0);
@@ -184,7 +191,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
             });
             listView.setLayoutManager(new MyLayoutManager(this));
             listView.setAdapter(quickSearchAdapter);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemHelper<QuickSearch>(quickSearchDao, quickSearchAdapter));
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemHelper<>(quickSearchDao, quickSearchAdapter,clear));
             itemTouchHelper.attachToRecyclerView(listView);
         }
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -215,7 +222,14 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
                 ((InputMethodManager) SearchDirectlyActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         });
-
+clear.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        quickSearchDao.deleteAll();
+        quickSearchAdapter.clear();
+        clear.setVisibility(View.GONE);
+    }
+});
     }
 
     private void HandleSearch() {
@@ -259,6 +273,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
                         quickSearch.setContent(editTextSearch.getText().toString());
                         quickSearchDao.insert(quickSearch);
                         quickSearchAdapter.add(0, quickSearch);
+                        clear.setVisibility(View.VISIBLE);
                         initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
                     }
                     return true;
@@ -284,11 +299,11 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
                 @Override
                 public void onLoadMore() {
                     if (oeDataAdapter.getCount() > 0) {
-                        if(oeDataAdapter.getCount()>15)
-                        {page += 1;
-                        oeDataRequest = new OEDataRequest("15", page + "", getSupportActionBar().getTitle().toString());
-                        mPresenter.requestData(gson.toJson(oeDataRequest));
-                        }else oeDataAdapter.stopMore();
+                        if (oeDataAdapter.getCount() > 15) {
+                            page += 1;
+                            oeDataRequest = new OEDataRequest("15", page + "", getSupportActionBar().getTitle().toString());
+                            mPresenter.requestData(gson.toJson(oeDataRequest));
+                        } else oeDataAdapter.stopMore();
                     }
                 }
             });
@@ -304,14 +319,14 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
     @Override
     public void showEmpty() {
         if (oeDataAdapter.getCount() == 0) {
-            if(TextUtils.isEmpty(oeDataRequest.getOriginalFactoryID()))
-            {
+            if (TextUtils.isEmpty(oeDataRequest.getOriginalFactoryID())) {
                 oeDataRequest.setOriginalFactoryID(oeDataRequest.getFactoryID());
                 oeDataRequest.setFactoryID(null);
                 mPresenter.requestData(gson.toJson(oeDataRequest));
-            }else{
-            oeDataAdapter.clear();
-            empty.setVisibility(View.VISIBLE);}
+            } else {
+                oeDataAdapter.clear();
+                empty.setVisibility(View.VISIBLE);
+            }
         } else oeDataAdapter.stopMore();
     }
 
@@ -352,6 +367,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
                 break;
         }
     }
+
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {

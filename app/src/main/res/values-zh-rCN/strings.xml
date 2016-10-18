@@ -58,4 +58,9 @@
     <string name="search_by_car_result">按车型搜索结果</string>
     <string name="please_select_specific_car">请选择具体车型</string>
     <string name="clear_all_search_records">清除所有搜索记录</string>
+    <string name="search_by_vin">按vin码搜索</string>
+    <string name="vin">vin</string>
+    <string name="search_result">搜索结果</string>
+    <string name="settings">设置</string>
+    <string name="clear">清空</string>
 </resources>

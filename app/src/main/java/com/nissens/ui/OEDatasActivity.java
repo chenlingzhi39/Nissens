@@ -32,7 +32,7 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_oedatas,
-        toolbarTitle = R.string.search_in_type_results,
+        toolbarTitle = R.string.search_result,
         menuId = R.menu.normal
 )
 public class OEDatasActivity extends BaseActivity<StraightSearchPresenter> implements StraightSearchView {

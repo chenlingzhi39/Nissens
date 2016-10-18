@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_plus"
+        app:actionProviderClass="com.nissens.provider.MainActionProvider"
+        android:icon="@mipmap/ic_list_white_24dp"
+        app:showAsAction="ifRoom"
+        android:title=""/>
+    <item
+        android:id="@+id/search_by_vin"
+        android:title="vin"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -89,6 +89,15 @@
                     android:padding="12dp"
                     android:src="@mipmap/ic_close"
                     android:visibility="gone" />
+                <TextView
+                    android:id="@+id/clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="12dp"
+                    android:visibility="gone"
+                    android:text="@string/clear"/>
             </LinearLayout>
 
             <View

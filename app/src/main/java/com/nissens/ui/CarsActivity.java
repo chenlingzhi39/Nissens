@@ -51,13 +51,18 @@ public class CarsActivity extends BaseActivity<CarsPresenter> implements CarsVie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        carAdapter = new CarAdapter(this);
+        carAdapter = new CarAdapter(this,true);
         carAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent=new Intent(CarsActivity.this,CarInfoActivity.class);
+                /*Intent intent=new Intent(CarsActivity.this,CarInfoActivity.class);
                 intent.putExtra("car",carAdapter.getData().get(position));
+                startActivity(intent);*/
+                Intent intent=new Intent(CarsActivity.this,SearchByTypeActivity.class);
+                intent.putExtra("mode","car");
+                intent.putExtra("label",carAdapter.getItem(position).getCarFactoryName());
                 startActivity(intent);
+                finish();
             }
         });
         list.setAdapter(carAdapter);

@@ -57,4 +57,9 @@
     <string name="search_by_car_result">search by car result</string>
     <string name="please_select_specific_car">please select specific car</string>
     <string name="clear_all_search_records">clear all search records</string>
+    <string name="search_by_vin">search by vin</string>
+    <string name="vin">vin</string>
+    <string name="search_result">search result</string>
+    <string name="settings">settings</string>
+    <string name="clear">clear</string>
 </resources>

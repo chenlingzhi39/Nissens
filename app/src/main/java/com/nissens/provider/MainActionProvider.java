@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.nissens.R;
 import com.nissens.ui.MainActivity;
+import com.nissens.ui.SearchByCarActivity;
 import com.nissens.ui.SearchByVinActivity;
 import com.nissens.ui.SearchByTypeActivity;
 import com.nissens.ui.SearchDirectlyActivity;
@@ -58,7 +59,7 @@ public class MainActionProvider extends ActionProvider {
                 .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        context.startActivity(new Intent(context, SearchByVinActivity.class));
+                        context.startActivity(new Intent(context, SearchByCarActivity.class));
                         return false;
                     }
                 });
@@ -76,7 +77,7 @@ public class MainActionProvider extends ActionProvider {
                 .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        context.startActivity(new Intent(context, SearchByTypeActivity.class));
+                        context.startActivity(new Intent(context, SearchByTypeActivity.class).putExtra("mode","type"));
                         return false;
                     }
                 });

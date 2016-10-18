@@ -45,7 +45,7 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_search_by_type,
-        toolbarTitle = R.string.search_by_type,
+        toolbarTitle = R.string.select_type,
         menuId = R.menu.normal
 )
 public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> implements SearchByTypeView, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
@@ -137,10 +137,17 @@ public class SearchByTypeActivity extends BaseActivity<SearchByTypePresenter> im
         typeAdapter.setOnItemClickListener(new TypeAdapter.OnItemClickListener() {
             @Override
             public void OnClick(Type group, Type child) {
-                Intent intent = new Intent(SearchByTypeActivity.this, SelectCarActivity.class);
+                if(getIntent().getStringExtra("mode").equals("type"))
+                {Intent intent = new Intent(SearchByTypeActivity.this, SelectCarActivity.class);
                 intent.putExtra("series", header + " | " + group.getName() + " | " + child.getName());
                 Log.i("series", header + " | " + group.getName() + " | " + child.getName());
-                startActivity(intent);
+                startActivity(intent);}else{
+                    Intent intent = new Intent(SearchByTypeActivity.this, OEDatasActivity.class);
+                    intent.putExtra("series", header + " | " + group.getName() + " | " + child.getName());
+                    intent.putExtra("label",getIntent().getStringExtra("label"));
+                    Log.i("series", header + " | " + group.getName() + " | " + child.getName());
+                    startActivity(intent);
+                }
                 finish();
             }
         });

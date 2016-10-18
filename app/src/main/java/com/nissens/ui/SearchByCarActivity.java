@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -49,7 +50,8 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_search_by_car,
-        toolbarTitle = R.string.search_by_car
+        toolbarTitle = R.string.search_by_car,
+        menuId = R.menu.search_by_car
 )
 
 public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> implements SearchByCarView {
@@ -327,6 +329,16 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
             carTypeAdapter.clear();
             carTypeAdapter.addAll((ArrayList<String>) results.values);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.search_by_vin:
+                startActivity(new Intent(SearchByCarActivity.this,SearchByVinActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

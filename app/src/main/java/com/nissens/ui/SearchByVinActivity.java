@@ -26,7 +26,7 @@ import butterknife.OnClick;
  */
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_search_by_vin,
-        toolbarTitle = R.string.search_by_car,
+        toolbarTitle = R.string.search_by_vin,
         menuId = R.menu.normal
 )
 public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implements CarSingleView {

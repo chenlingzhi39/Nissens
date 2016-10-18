@@ -3,6 +3,7 @@ package com.nissens.helper;
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 
 import com.nissens.adapter.RecyclerArrayAdapter;
@@ -15,11 +16,12 @@ import de.greenrobot.dao.AbstractDao;
 public class ItemHelper<T> extends ItemTouchHelper.SimpleCallback{
     private AbstractDao<T,Long> abstractDao;
     private RecyclerArrayAdapter<T> recyclerArrayAdapter;
-
-    public ItemHelper(final AbstractDao<T, Long> abstractDao, final RecyclerArrayAdapter<T> recyclerArrayAdapter) {
+    private View clear;
+    public ItemHelper(final AbstractDao<T, Long> abstractDao, final RecyclerArrayAdapter<T> recyclerArrayAdapter,View clear) {
         super(0, ItemTouchHelper.RIGHT| ItemTouchHelper.LEFT);
         this.abstractDao = abstractDao;
         this.recyclerArrayAdapter=recyclerArrayAdapter;
+        this.clear=clear;
     }
 
     @Override
@@ -30,7 +32,9 @@ public class ItemHelper<T> extends ItemTouchHelper.SimpleCallback{
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        abstractDao.delete(recyclerArrayAdapter.getData().get(position));
+        if(recyclerArrayAdapter.getCount()==1)
+            clear.setVisibility(View.GONE);
+        abstractDao.delete(recyclerArrayAdapter.getItem(position));
         recyclerArrayAdapter.remove(position);
     }
     @Override

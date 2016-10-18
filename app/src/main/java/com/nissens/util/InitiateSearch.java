@@ -71,6 +71,7 @@ public class InitiateSearch {
             //toolbarMain.setTitle("");
             //toolbarMain.getMenu().clear();
            // toolbarMain.setNavigationIcon(null);
+            listView.setVisibility(View.VISIBLE);
             editText.requestFocus();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final Animator animator = ViewAnimationUtils.createCircularReveal(search,
@@ -114,7 +115,7 @@ public class InitiateSearch {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                     listView.setVisibility(View.VISIBLE);
+
                     }
 
                     @Override

@@ -9,12 +9,14 @@ import com.nissens.bean.Car;
  * Created by PC-20160514 on 2016/9/26.
  */
 public class CarAdapter extends RecyclerArrayAdapter<Car>{
-    public CarAdapter(Context context) {
+    private boolean has_info;
+    public CarAdapter(Context context,boolean has_info) {
         super(context);
+        this.has_info=has_info;
     }
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CarViewHolder(parent);
+        return new CarViewHolder(parent,has_info);
     }
 }

@@ -42,10 +42,10 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, SearchOrganizationActivity.class));
                 break;
             case R.id.type:
-                startActivity(new Intent(MainActivity.this, SearchByTypeActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchByTypeActivity.class).putExtra("mode","type"));
                 break;
             case R.id.settings:
-
+                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
                 break;
             case R.id.info:
                 startActivity(new Intent(MainActivity.this,IntroduceActivity.class));
