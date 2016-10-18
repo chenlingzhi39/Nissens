@@ -51,5 +51,5 @@ public interface ApiService {
     Observable<CarModelDataResult> queryCarCondition(@Query("requestPara")String requestPara);
 
     @POST("queryBlendCarModelData")
-    Observable<CarModelDataResult> queryBlendCarModelData(@Query("requestPara")String requestPara);
+    Observable<CarResult> queryBlendCarModelData(@Query("requestPara")String requestPara);
 }

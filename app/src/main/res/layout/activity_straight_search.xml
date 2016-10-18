@@ -78,7 +78,7 @@
                     android:inputType="textCapWords"
                     android:paddingLeft="12dp"
                     android:paddingRight="8dp"
-                    android:singleLine="true" />
+                    android:maxLines="1" />
 
                 <ImageView
                     android:id="@+id/clearSearch"

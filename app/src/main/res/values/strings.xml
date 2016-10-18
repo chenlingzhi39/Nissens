@@ -47,4 +47,14 @@
     <string name="company_introduction">company introduction</string>
     <string name="standard_specification">standard specification</string>
     <string name="home_page">home page</string>
+    <string name="select_type">select type</string>
+    <string name="select_factory">select factory</string>
+    <string name="select_brand">select brand</string>
+    <string name="select_displacement">select displacement</string>
+    <string name="select_year">select year</string>
+    <string name="must_select_factory">you must select factory firstly!</string>
+    <string name="confirm">confirm</string>
+    <string name="search_by_car_result">search by car result</string>
+    <string name="please_select_specific_car">please select specific car</string>
+    <string name="clear_all_search_records">clear all search records</string>
 </resources>

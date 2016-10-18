@@ -37,7 +37,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.SelectCarActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity android:name=".ui.SearchOrganizationActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
@@ -57,7 +57,11 @@
             />
         <activity android:name=".ui.SearchByCarActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.CarsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许程序打开网络套接字-->

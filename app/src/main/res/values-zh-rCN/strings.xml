@@ -48,4 +48,14 @@
     <string name="company_introduction">公司介绍</string>
     <string name="standard_specification">标准规格</string>
     <string name="home_page">主页</string>
+    <string name="select_type">选择分类</string>
+    <string name="select_factory">选择厂家</string>
+    <string name="select_brand">选择品牌</string>
+    <string name="select_displacement">选择排量</string>
+    <string name="select_year">选择年款</string>
+    <string name="must_select_factory">必须先选择厂家！</string>
+    <string name="confirm">确认</string>
+    <string name="search_by_car_result">按车型搜索结果</string>
+    <string name="please_select_specific_car">请选择具体车型</string>
+    <string name="clear_all_search_records">清除所有搜索记录</string>
 </resources>

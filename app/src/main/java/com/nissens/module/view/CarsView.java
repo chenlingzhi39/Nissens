@@ -6,11 +6,11 @@ import com.nissens.bean.Car;
 import java.util.List;
 
 /**
- * Created by PC-20160514 on 2016/10/17.
+ * Created by PC-20160514 on 2016/10/18.
  */
 
-public interface SearchByCarView extends BaseView {
-    void showResult(Car car);
+public interface CarsView extends BaseView {
+    void showResult(List<Car> cars);
     void showError();
     void showEmpty();
 }

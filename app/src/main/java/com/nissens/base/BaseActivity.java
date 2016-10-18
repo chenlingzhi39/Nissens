@@ -104,7 +104,9 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
     public void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-
+    public void toast(int id) {
+        Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

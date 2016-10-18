@@ -1,23 +1,48 @@
 package com.nissens.ui;
 
+
+import android.content.Context;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.nissens.R;
 import com.nissens.adapter.CarTypeAdapter;
+import com.nissens.adapter.RecyclerArrayAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
-import com.nissens.bean.CarModelDataRequest;
+import com.nissens.bean.Car;
+import com.nissens.bean.CarConditionRequest;
+import com.nissens.callback.InputWindowListener;
 import com.nissens.module.presenter.CarConditionPresenter;
 import com.nissens.module.presenter.CarConditionPresenterImpl;
 import com.nissens.module.view.SearchByCarView;
+import com.nissens.util.InitiateSearch;
+import com.nissens.widget.IMMListenerRelativeLayout;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by PC-20160514 on 2016/10/17.
@@ -26,20 +51,47 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_search_by_car,
         toolbarTitle = R.string.search_by_car
 )
+
 public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> implements SearchByCarView {
-    @BindView(R.id.list)
-    RecyclerView list;
-    private CarTypeAdapter carTypeAdapter;
+    @BindView(R.id.factory)
+    Button factory;
+    @BindView(R.id.brand)
+    Button brand;
+    @BindView(R.id.displacement)
+    Button displacement;
+    @BindView(R.id.year)
+    Button year;
+    @BindView(R.id.card_search)
+    CardView cardSearch;
+    @BindView(R.id.view_search)
+    IMMListenerRelativeLayout viewSearch;
+    @BindView(R.id.image_search_back)
+    ImageView imageSearchBack;
+    @BindView(R.id.edit_text_search)
+    EditText editTextSearch;
+    @BindView(R.id.clearSearch)
+    ImageView clearSearch;
+    @BindView(R.id.linearLayout_search)
+    LinearLayout linearLayoutSearch;
+    @BindView(R.id.line_divider)
+    View lineDivider;
+    @BindView(R.id.listView)
+    RecyclerView listView;
+    CarTypeAdapter carTypeAdapter;
+    ArrayList<String> types;
+    private int state;
+    int[] titles = {R.string.select_factory, R.string.select_brand, R.string.select_displacement, R.string.select_year};
+    private InitiateSearch initiateSearch;
+    private SparseArray<String> map = new SparseArray<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         mPresenter = new CarConditionPresenterImpl(this);
-        mPresenter.requestData(gson.toJson(new CarModelDataRequest()));
-        carTypeAdapter=new CarTypeAdapter(this);
-        list.setLayoutManager(new GridLayoutManager(this,2));
-        list.setAdapter(carTypeAdapter);
-
+        types=new ArrayList<>();
+        InitiateSearch();
+        HandleSearch();
     }
 
     @Override
@@ -48,8 +100,27 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
     }
 
     @Override
-    public void showResult(List<String> strings) {
- carTypeAdapter.addAll(strings);
+    public void showResult(Car car) {
+
+        String[] array={};
+        switch (state){
+            case 0:
+                array=car.getCarFactoryName().split("\\|");
+                break;
+            case 1:
+                array=car.getCarBrand().split("\\|");
+                break;
+            case 2:
+                array=car.getDisplacement().split("\\|");
+                break;
+            case 3:
+                array=car.getYear().split("\\|");
+                break;
+        }
+        for(String str:array)
+        {if(!TextUtils.isEmpty(str))
+            types.add(str);}
+        carTypeAdapter.addAll(types);
     }
 
     @Override
@@ -66,4 +137,196 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
     public void hideProgress() {
 
     }
+
+    @OnClick({R.id.factory, R.id.brand, R.id.displacement, R.id.year,R.id.confirm})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.factory:
+                state = 0;
+                map.put(0,"");
+                map.put(1,"");
+                map.put(2,"");
+                map.put(3,"");
+                factory.setText(R.string.select_factory);
+                brand.setText(R.string.select_brand);
+                displacement.setText(R.string.select_displacement);
+                year.setText(R.string.select_year);
+                break;
+            case R.id.brand:
+                state = 1;
+                break;
+            case R.id.displacement:
+                state = 2;
+                break;
+            case R.id.year:
+                state = 3;
+                break;
+            case R.id.confirm:
+                Intent intent=new Intent(SearchByCarActivity.this,CarsActivity.class);
+                intent.putExtra("factory",map.get(0)!=null?map.get(0):"");
+                intent.putExtra("brand",map.get(1)!=null?map.get(1):"");
+                intent.putExtra("displacement",map.get(2)!=null?map.get(2):"");
+                intent.putExtra("year",map.get(3)!=null?map.get(3):"");
+                startActivity(intent);
+                return;
+        }
+        showDialog(getString(titles[state]));
+    }
+
+    private void InitiateSearch() {
+        viewSearch.setListener(new InputWindowListener() {
+            @Override
+            public void show() {
+
+            }
+
+            @Override
+            public void hide() {
+                Log.i("input", "hide");
+                if (cardSearch.getVisibility() == View.VISIBLE)
+                    InitiateSearch.handleToolBar1(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+            }
+        });
+        carTypeAdapter=new CarTypeAdapter(this);
+        carTypeAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                map.put(state, carTypeAdapter.getItem(position));
+                listView.scrollToPosition(0);
+                switch (state) {
+                    case 0:
+                        factory.setText(map.get(state));
+                        map.put(1,"");
+                        map.put(2,"");
+                        map.put(3,"");
+                        brand.setText(R.string.select_brand);
+                        displacement.setText(R.string.select_displacement);
+                        year.setText(R.string.select_year);
+                        break;
+                    case 1:
+                        brand.setText(map.get(state));
+                        break;
+                    case 2:
+                        displacement.setText(map.get(state));
+                        break;
+                    case 3:
+                        year.setText(map.get(state));
+                        break;
+                }
+                InitiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+            }
+        });
+        listView.setAdapter(carTypeAdapter);
+        listView.setLayoutManager(new GridLayoutManager(this, 2));
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                new MyFilter(types).filter(s);
+                if (editTextSearch.getText().toString().length() == 0) {
+                    clearSearch.setVisibility(View.GONE);
+                } else {
+                    clearSearch.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        clearSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextSearch.setText("");
+                listView.setVisibility(View.VISIBLE);
+                ((InputMethodManager) SearchByCarActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        });
+
+    }
+    private void HandleSearch() {
+        imageSearchBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("search", "back");
+                initiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+            }
+        });
+        editTextSearch.requestFocus();
+    }
+
+    public void showDialog(String title) {
+        types.clear();
+        carTypeAdapter.clear();
+        CarConditionRequest carConditionRequest = new CarConditionRequest();
+        if (!TextUtils.isEmpty(map.get(0)))
+            carConditionRequest.setCarFactoryName(map.get(0));
+        else if(!title.equals(getString(titles[0]))){
+            toast(R.string.must_select_factory);
+            return;
+        }
+        Log.i("request", gson.toJson(carConditionRequest));
+        mPresenter.requestData(gson.toJson(carConditionRequest));
+        editTextSearch.setHint(title);
+        initiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+    }
+    public class MyFilter extends Filter {
+        List<String> mOriginalList;
+
+        public MyFilter(List<String> messages) {
+            this.mOriginalList = messages;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            FilterResults results = new FilterResults();
+            if (mOriginalList == null) {
+                mOriginalList = new ArrayList<>();
+            }
+
+
+            if (prefix == null || prefix.length() == 0) {
+                results.values = mOriginalList;
+                results.count = mOriginalList.size();
+            } else {
+                String prefixString = prefix.toString();
+                final int count = mOriginalList.size();
+                final ArrayList<String> newValues = new ArrayList<>();
+                for (int i = 0; i < count; i++) {
+                    final String string = mOriginalList.get(i);
+
+
+                    if (string.startsWith(prefixString)) {
+                        newValues.add(string);
+                    } else {
+                        final String[] words = string.split(" ");
+                        final int wordCount = words.length;
+
+                        // Start at index 0, in case valueText starts with space(s)
+                        for (int k = 0; k < wordCount; k++) {
+                            if (words[k].startsWith(prefixString)) {
+                                newValues.add(string);
+                                break;
+                            }
+                        }
+                    }
+                }
+                results.values = newValues;
+                results.count = newValues.size();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            carTypeAdapter.clear();
+            carTypeAdapter.addAll((ArrayList<String>) results.values);
+        }
+    }
 }
+

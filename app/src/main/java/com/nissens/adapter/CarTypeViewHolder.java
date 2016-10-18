@@ -13,16 +13,16 @@ import butterknife.ButterKnife;
  */
 
 public class CarTypeViewHolder extends BaseViewHolder<String> {
-    @BindView(android.R.id.text1)
-    TextView text1;
+    @BindView(R.id.text)
+    TextView text;
 
     public CarTypeViewHolder(ViewGroup parent) {
-        super(parent, R.layout.list_item);
+        super(parent, R.layout.item_car_type);
         ButterKnife.bind(this,itemView);
     }
 
     @Override
     public void setData(String data) {
-       text1.setText(data);
+       text.setText(data);
     }
 }

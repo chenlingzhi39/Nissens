@@ -1,11 +1,9 @@
 package com.nissens.module.model;
 
-import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.Car;
-import com.nissens.bean.CarModelDataResult;
 import com.nissens.bean.CarResult;
 import com.nissens.callback.RequestCallback;
 
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import android.util.Log;
+
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -23,17 +21,16 @@ import rx.schedulers.Schedulers;
  * Created by PC-20160514 on 2016/10/17.
  */
 
-public class CarConditionModelImpl implements BaseModel<Car> {
+public class CarsModelImpl implements BaseModel<List<Car>> {
     @Inject
     ApiService apiService;
 
-    public CarConditionModelImpl() {
+    public CarsModelImpl() {
         MyApplication.getComponent().inject(this);
     }
-
     @Override
-    public Subscription requestSearchData(final RequestCallback<Car> callback, String requestPara) {
-        return apiService.queryCarCondition(requestPara).subscribeOn(Schedulers.io()).observeOn(
+    public Subscription requestSearchData(final RequestCallback<List<Car>> callback, String requestPara) {
+        return apiService.queryBlendCarModelData(requestPara).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
             public void onStart() {
@@ -54,14 +51,10 @@ public class CarConditionModelImpl implements BaseModel<Car> {
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-                    System.out.print(((CarModelDataResult) o).getResult());
-                    Gson gson=new Gson();
-                    Log.i("data",gson.toJson(o));
-                    if (((CarModelDataResult) o).getResult().equals("00")) {
-                        ArrayList<Car> cars = ((CarModelDataResult) o).getData();
-                        Car car=cars.get(0);
-                        callback.requestSuccess(car);
-                    } else callback.requestError(((CarModelDataResult) o).getDescription());
+                    if(((CarResult)o).getResult().equals("00"))
+                    {ArrayList<Car> cars=((CarResult)o).getData();
+                        callback.requestSuccess(cars);}
+                    else callback.requestError(((CarResult)o).getDescription());
                 } else {
                     callback.requestError("");
                 }

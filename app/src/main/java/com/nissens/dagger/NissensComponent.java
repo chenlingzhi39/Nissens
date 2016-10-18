@@ -2,6 +2,7 @@ package com.nissens.dagger;
 
 import com.nissens.module.model.AdjustCarModelImpl;
 import com.nissens.module.model.CarConditionModelImpl;
+import com.nissens.module.model.CarsModelImpl;
 import com.nissens.module.model.CarSingleModelImpl;
 import com.nissens.module.model.CarXmlModelImpl;
 import com.nissens.module.model.IntroduceModelImpl;
@@ -19,16 +20,26 @@ import dagger.Component;
 @Singleton
 @Component(modules = NissensModules.class)
 public interface NissensComponent {
-void inject(StraightSearchModelImpl straightSearchModel);
-void inject(AdjustCarModelImpl baseModel);
-void inject(CarSingleModelImpl carSingleModel);
-void inject(SearchByTypeModelImpl searchByTypeModel);
-void inject(OrganizationModelImpl organizationModel);
+    void inject(StraightSearchModelImpl straightSearchModel);
+
+    void inject(AdjustCarModelImpl baseModel);
+
+    void inject(CarSingleModelImpl carSingleModel);
+
+    void inject(SearchByTypeModelImpl searchByTypeModel);
+
+    void inject(OrganizationModelImpl organizationModel);
+
     void inject(IntroduceModelImpl introduceModel);
+
     void inject(CarXmlModelImpl searchByCarModel);
-   void inject(CarConditionModelImpl carConditionModel);
-    final class NissensInitialize{
-        public static NissensComponent init(){
+
+    void inject(CarConditionModelImpl carConditionModel);
+
+    void inject(CarsModelImpl carModelDataModel);
+
+    final class NissensInitialize {
+        public static NissensComponent init() {
             return DaggerNissensComponent.builder().build();
         }
     }
