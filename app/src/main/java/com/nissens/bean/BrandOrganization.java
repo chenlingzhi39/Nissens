@@ -13,7 +13,7 @@ public class BrandOrganization {
             OrgCity,
             OrgAddress,
             OrgTel,
-            OrgEmail,
+            OrgEMail,
             OrgWebUrl,
             OrgFax;
 
@@ -74,11 +74,11 @@ public class BrandOrganization {
     }
 
     public String getOrgEmail() {
-        return OrgEmail;
+        return OrgEMail;
     }
 
     public void setOrgEmail(String orgEmail) {
-        OrgEmail = orgEmail;
+        OrgEMail = orgEmail;
     }
 
     public String getOrgTel() {

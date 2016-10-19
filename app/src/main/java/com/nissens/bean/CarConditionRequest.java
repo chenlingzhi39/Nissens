@@ -1,5 +1,9 @@
 package com.nissens.bean;
 
+import android.util.SparseArray;
+
+import com.nissens.R;
+
 /**
  * Created by Administrator on 2016/10/17.
  */
@@ -16,6 +20,17 @@ public class CarConditionRequest extends Request {
             EngineModel,
             ChassisModel;
 
+    public CarConditionRequest() {
+    }
+
+    public CarConditionRequest(SparseArray<String> strings){
+    CarFactoryName=strings.get(0);
+    CarBrand= strings.get(1);
+    CarSeries= strings.get(2);
+    Displacement= strings.get(3);
+    GearBoxType=strings.get(4);
+    Year=strings.get(5);
+}
     public String getCarBrand() {
         return CarBrand;
     }

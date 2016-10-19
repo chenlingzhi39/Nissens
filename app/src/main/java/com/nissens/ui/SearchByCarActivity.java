@@ -2,13 +2,14 @@ package com.nissens.ui;
 
 
 import android.content.Context;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -34,12 +35,12 @@ import com.nissens.callback.InputWindowListener;
 import com.nissens.module.presenter.CarConditionPresenter;
 import com.nissens.module.presenter.CarConditionPresenterImpl;
 import com.nissens.module.view.SearchByCarView;
+import com.nissens.pinyin.CharacterParser;
 import com.nissens.util.InitiateSearch;
 import com.nissens.widget.IMMListenerRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,8 +82,18 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
     RecyclerView listView;
     CarTypeAdapter carTypeAdapter;
     ArrayList<String> types;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.mToolbarContainer)
+    AppBarLayout mToolbarContainer;
+    @BindView(R.id.series)
+    Button series;
+    @BindView(R.id.shadow)
+    View shadow;
+    @BindView(R.id.gear_box_type)
+    Button gearBoxType;
     private int state;
-    int[] titles = {R.string.select_factory, R.string.select_brand, R.string.select_displacement, R.string.select_year};
+    int[] titles = {R.string.select_factory, R.string.select_brand,R.string.select_car_series, R.string.select_displacement,R.string.select_gear_box_type, R.string.select_year};
     private InitiateSearch initiateSearch;
     private SparseArray<String> map = new SparseArray<>();
 
@@ -91,7 +102,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         mPresenter = new CarConditionPresenterImpl(this);
-        types=new ArrayList<>();
+        types = new ArrayList<>();
         InitiateSearch();
         HandleSearch();
     }
@@ -104,24 +115,31 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
     @Override
     public void showResult(Car car) {
 
-        String[] array={};
-        switch (state){
+        String[] array = {};
+        switch (state) {
             case 0:
-                array=car.getCarFactoryName().split("\\|");
+                array = car.getCarFactoryName().split("\\|");
                 break;
             case 1:
-                array=car.getCarBrand().split("\\|");
+                array = car.getCarBrand().split("\\|");
                 break;
             case 2:
-                array=car.getDisplacement().split("\\|");
+                array=car.getCarSeries().split("\\|");
                 break;
             case 3:
-                array=car.getYear().split("\\|");
+                array = car.getDisplacement().split("\\|");
+                break;
+            case 4:
+                array=car.getGearBoxType().split("\\|");
+                break;
+            case 5:
+                array = car.getYear().split("\\|");
                 break;
         }
-        for(String str:array)
-        {if(!TextUtils.isEmpty(str))
-            types.add(str);}
+        for (String str : array) {
+            if (!TextUtils.isEmpty(str))
+                types.add(str);
+        }
         carTypeAdapter.addAll(types);
     }
 
@@ -140,35 +158,77 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
 
     }
 
-    @OnClick({R.id.factory, R.id.brand, R.id.displacement, R.id.year,R.id.confirm})
+    @OnClick({R.id.factory, R.id.brand, R.id.displacement, R.id.year, R.id.confirm, R.id.series,R.id.gear_box_type})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.factory:
                 state = 0;
-                map.put(0,"");
-                map.put(1,"");
-                map.put(2,"");
-                map.put(3,"");
+                map.put(0, "");
+                map.put(1, "");
+                map.put(2, "");
+                map.put(3, "");
+                map.put(4, "");
+                map.put(5,"");
                 factory.setText(R.string.select_factory);
                 brand.setText(R.string.select_brand);
+                series.setText(R.string.select_car_series);
                 displacement.setText(R.string.select_displacement);
+                gearBoxType.setText(R.string.select_gear_box_type);
                 year.setText(R.string.select_year);
                 break;
             case R.id.brand:
                 state = 1;
+                map.put(1, "");
+                map.put(2, "");
+                map.put(3, "");
+                map.put(4, "");
+                map.put(5,"");
+                brand.setText(R.string.select_brand);
+                series.setText(R.string.select_car_series);
+                displacement.setText(R.string.select_displacement);
+                gearBoxType.setText(R.string.select_gear_box_type);
+                year.setText(R.string.select_year);
+                break;
+            case R.id.series:
+                state = 2;
+                map.put(2, "");
+                map.put(3, "");
+                map.put(4, "");
+                map.put(5,"");
+                series.setText(R.string.select_car_series);
+                displacement.setText(R.string.select_displacement);
+                gearBoxType.setText(R.string.select_gear_box_type);
+                year.setText(R.string.select_year);
                 break;
             case R.id.displacement:
-                state = 2;
+                state = 3;
+                map.put(3, "");
+                map.put(4, "");
+                map.put(5,"");
+                displacement.setText(R.string.select_displacement);
+                gearBoxType.setText(R.string.select_gear_box_type);
+                year.setText(R.string.select_year);
+                break;
+            case R.id.gear_box_type:
+                state = 4;
+                map.put(4, "");
+                map.put(5,"");
+                gearBoxType.setText(R.string.select_gear_box_type);
+                year.setText(R.string.select_year);
                 break;
             case R.id.year:
-                state = 3;
+                state =5;
+                map.put(5,"");
+                year.setText(R.string.select_year);
                 break;
             case R.id.confirm:
-                Intent intent=new Intent(SearchByCarActivity.this,CarsActivity.class);
-                intent.putExtra("factory",map.get(0)!=null?map.get(0):"");
-                intent.putExtra("brand",map.get(1)!=null?map.get(1):"");
-                intent.putExtra("displacement",map.get(2)!=null?map.get(2):"");
-                intent.putExtra("year",map.get(3)!=null?map.get(3):"");
+                Intent intent = new Intent(SearchByCarActivity.this, CarsActivity.class);
+                intent.putExtra("factory", map.get(0) != null ? map.get(0) : "");
+                intent.putExtra("brand", map.get(1) != null ? map.get(1) : "");
+                intent.putExtra("series", map.get(2) != null ? map.get(2) : "");
+                intent.putExtra("displacement", map.get(3) != null ? map.get(3) : "");
+                intent.putExtra("gear_box_type", map.get(4) != null ? map.get(4) : "");
+                intent.putExtra("year", map.get(5) != null ? map.get(5) : "");
                 startActivity(intent);
                 return;
         }
@@ -189,7 +249,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                     InitiateSearch.handleToolBar1(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
-        carTypeAdapter=new CarTypeAdapter(this);
+        carTypeAdapter = new CarTypeAdapter(this);
         carTypeAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -198,20 +258,50 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 switch (state) {
                     case 0:
                         factory.setText(map.get(state));
-                        map.put(1,"");
-                        map.put(2,"");
-                        map.put(3,"");
+                        map.put(1, "");
+                        map.put(2, "");
+                        map.put(3, "");
+                        map.put(4, "");
+                        map.put(5,"");
                         brand.setText(R.string.select_brand);
+                        series.setText(R.string.select_car_series);
                         displacement.setText(R.string.select_displacement);
+                        gearBoxType.setText(R.string.select_gear_box_type);
                         year.setText(R.string.select_year);
                         break;
                     case 1:
                         brand.setText(map.get(state));
+                        map.put(2, "");
+                        map.put(3, "");
+                        map.put(4, "");
+                        map.put(5,"");
+                        series.setText(R.string.select_car_series);
+                        displacement.setText(R.string.select_displacement);
+                        gearBoxType.setText(R.string.select_gear_box_type);
+                        year.setText(R.string.select_year);
                         break;
                     case 2:
-                        displacement.setText(map.get(state));
+                        series.setText(map.get(state));
+                        map.put(3, "");
+                        map.put(4, "");
+                        map.put(5,"");
+                        displacement.setText(R.string.select_displacement);
+                        gearBoxType.setText(R.string.select_gear_box_type);
+                        year.setText(R.string.select_year);
                         break;
                     case 3:
+                        displacement.setText(map.get(state));
+                        map.put(4, "");
+                        map.put(5,"");
+                        gearBoxType.setText(R.string.select_gear_box_type);
+                        year.setText(R.string.select_year);
+                        break;
+                    case 4:
+                        gearBoxType.setText(map.get(state));
+                        map.put(5,"");
+                        year.setText(R.string.select_year);
+                        break;
+                    case 5:
                         year.setText(map.get(state));
                         break;
                 }
@@ -251,6 +341,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
         });
 
     }
+
     private void HandleSearch() {
         imageSearchBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,8 +358,8 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
         carTypeAdapter.clear();
         CarConditionRequest carConditionRequest = new CarConditionRequest();
         if (!TextUtils.isEmpty(map.get(0)))
-            carConditionRequest.setCarFactoryName(map.get(0));
-        else if(!title.equals(getString(titles[0]))){
+            carConditionRequest = new CarConditionRequest(map);
+        else if (!title.equals(getString(titles[0]))) {
             toast(R.string.must_select_factory);
             return;
         }
@@ -277,6 +368,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
         editTextSearch.setHint(title);
         initiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
     }
+
     public class MyFilter extends Filter {
         List<String> mOriginalList;
 
@@ -303,7 +395,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                     final String string = mOriginalList.get(i);
 
 
-                    if (string.startsWith(prefixString)) {
+                    if (string.contains(prefixString)) {
                         newValues.add(string);
                     } else {
                         final String[] words = string.split(" ");
@@ -311,7 +403,21 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
 
                         // Start at index 0, in case valueText starts with space(s)
                         for (int k = 0; k < wordCount; k++) {
-                            if (words[k].startsWith(prefixString)) {
+                            if (words[k].contains(prefixString)) {
+                                newValues.add(string);
+                                break;
+                            }
+                        }
+                    }
+                    if (CharacterParser.getInstance().getSelling(string).contains(prefixString)) {
+                        newValues.add(string);
+                    } else {
+                        final String[] words = string.split(" ");
+                        final int wordCount = words.length;
+
+                        // Start at index 0, in case valueText starts with space(s)
+                        for (int k = 0; k < wordCount; k++) {
+                            if (CharacterParser.getInstance().getSelling(words[k]).contains(prefixString)) {
                                 newValues.add(string);
                                 break;
                             }
@@ -333,9 +439,9 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.search_by_vin:
-                startActivity(new Intent(SearchByCarActivity.this,SearchByVinActivity.class));
+                startActivity(new Intent(SearchByCarActivity.this, SearchByVinActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

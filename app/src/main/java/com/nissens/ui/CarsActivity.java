@@ -72,7 +72,9 @@ public class CarsActivity extends BaseActivity<CarsPresenter> implements CarsVie
         mPresenter = new CarsPresenterImpl(this);
         carRequest = new CarModelDataRequest(getIntent().getStringExtra("factory")
                 ,getIntent().getStringExtra("brand")
+                ,getIntent().getStringExtra("series")
                 ,getIntent().getStringExtra("displacement")
+                ,getIntent().getStringExtra("gear_box_type")
                 ,getIntent().getStringExtra("year"),"15",page+"");
         Log.i("factory",getIntent().getStringExtra("factory"));
         Log.i("brand",getIntent().getStringExtra("brand"));
@@ -118,8 +120,10 @@ public class CarsActivity extends BaseActivity<CarsPresenter> implements CarsVie
                             page += 1;
                             carRequest = new CarModelDataRequest(getIntent().getStringExtra("factory")
                                     ,getIntent().getStringExtra("brand")
-                            ,getIntent().getStringExtra("displacement")
-                            ,getIntent().getStringExtra("year"),"15",page+"");
+                                    ,getIntent().getStringExtra("series")
+                                    ,getIntent().getStringExtra("displacement")
+                                    ,getIntent().getStringExtra("gear_box_type")
+                                    ,getIntent().getStringExtra("year"),"15",page+"");
                             mPresenter.requestData(gson.toJson(carRequest));
                         } else carAdapter.stopMore();
                     }

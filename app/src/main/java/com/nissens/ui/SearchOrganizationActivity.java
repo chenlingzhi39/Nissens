@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.nissens.R;
 import com.nissens.adapter.OrganizationAdapter;
@@ -23,6 +23,7 @@ import com.nissens.widget.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +75,7 @@ public class SearchOrganizationActivity extends BaseActivity<OrganizationPresent
 
     @Override
     public void showResult(List<BrandOrganization> brandOrganizations) {
+        Log.i("result",gson.toJson(brandOrganizations));
         organizationList.setVisibility(View.VISIBLE);
         empty.setVisibility(View.GONE);
         error.setVisibility(View.GONE);

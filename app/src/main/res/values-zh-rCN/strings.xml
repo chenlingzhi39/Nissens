@@ -63,4 +63,9 @@
     <string name="search_result">搜索结果</string>
     <string name="settings">设置</string>
     <string name="clear">清空</string>
+    <string name="select_car_series">选择车系</string>
+    <string name="select_gear_box_type">选择变速箱类型</string>
+    <string name="mail">邮编</string>
+    <string name="e_mail">电子邮箱</string>
+    <string name="web">网址</string>
 </resources>

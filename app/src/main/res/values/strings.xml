@@ -16,7 +16,7 @@
     <string name="standard">standard</string>
     <string name="normal">normal</string>
     <string name="factory_id">factory ID</string>
-    <string name="car_series">CarSeries</string>
+    <string name="car_series">car series</string>
     <string name="status">status</string>
     <string name="weight">weight</string>
     <string name="info">info</string>
@@ -62,4 +62,9 @@
     <string name="search_result">search result</string>
     <string name="settings">settings</string>
     <string name="clear">clear</string>
+    <string name="select_car_series">select car series</string>
+    <string name="select_gear_box_type">select gear box type</string>
+    <string name="mail">mail</string>
+    <string name="e_mail">e-mail</string>
+    <string name="web">web</string>
 </resources>

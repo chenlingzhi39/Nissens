@@ -21,4 +21,8 @@ public class BrandOrganizationRequest extends Request {
         OrgCity = orgCity;
         OrgProvince = orgProvince;
     }
+
+    public BrandOrganizationRequest(String organizationID) {
+        OrganizationID = organizationID;
+    }
 }

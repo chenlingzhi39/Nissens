@@ -42,7 +42,7 @@ public class InfoActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewpager;
 
-    private String tabTitles[] = new String[]{"信息", "适用车型", "图片", "制造商"};
+    private String tabTitles[] = new String[]{"信息", "适用车型", "图片", "供应商"};
     private OEData oeData;
 
     @Override

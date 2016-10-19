@@ -25,12 +25,14 @@ public class CarModelDataRequest extends CarConditionRequest {
         PageIndex = pageIndex;
     }
 
-    public CarModelDataRequest(String factory,String brand,String displacement,String year,String itemsPerPage, String pageIndex) {
+    public CarModelDataRequest(String factory,String brand,String series,String displacement,String gearBoxType,String year,String itemsPerPage, String pageIndex) {
         ItemsPerPage = itemsPerPage;
         PageIndex = pageIndex;
         setCarFactoryName(factory);
         setCarBrand(brand);
+        setCarSeries(series);
         setDisplacement(displacement);
+        setGearBoxType(gearBoxType);
         setYear(year);
     }
 }
