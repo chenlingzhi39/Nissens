@@ -18,7 +18,8 @@ public class CarConditionRequest extends Request {
             Displacement,
             GearBoxType,
             EngineModel,
-            ChassisModel;
+            ChassisModel,
+            CheZu;
 
     public CarConditionRequest() {
     }
@@ -27,9 +28,10 @@ public class CarConditionRequest extends Request {
     CarFactoryName=strings.get(0);
     CarBrand= strings.get(1);
     CarSeries= strings.get(2);
-    Displacement= strings.get(3);
-    GearBoxType=strings.get(4);
-    Year=strings.get(5);
+        CheZu= strings.get(3);
+    Displacement= strings.get(4);
+    GearBoxType=strings.get(5);
+    Year=strings.get(6);
 }
     public String getCarBrand() {
         return CarBrand;
@@ -109,5 +111,13 @@ public class CarConditionRequest extends Request {
 
     public void setYear(String year) {
         Year = year;
+    }
+
+    public String getCheZu() {
+        return CheZu;
+    }
+
+    public void setCheZu(String cheZu) {
+        CheZu = cheZu;
     }
 }

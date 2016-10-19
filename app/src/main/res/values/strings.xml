@@ -67,4 +67,6 @@
     <string name="mail">mail</string>
     <string name="e_mail">e-mail</string>
     <string name="web">web</string>
+    <string name="car_group">car group</string>
+    <string name="select_car_group">select car group</string>
 </resources>

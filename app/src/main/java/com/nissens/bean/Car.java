@@ -17,8 +17,8 @@ public class Car implements Serializable{
             EngineModel,
             NameOfSales,
             YearInProduce,
-            ChassisModel;
-
+            ChassisModel,
+            CheZu;
 
     public String getCarBrand() {
         return CarBrand;
@@ -114,5 +114,13 @@ public class Car implements Serializable{
 
     public void setChassisModel(String chassisModel) {
         ChassisModel = chassisModel;
+    }
+
+    public String getCheZu() {
+        return CheZu;
+    }
+
+    public void setCheZu(String cheZu) {
+        CheZu = cheZu;
     }
 }
