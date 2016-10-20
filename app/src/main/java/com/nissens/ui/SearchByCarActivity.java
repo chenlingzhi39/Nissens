@@ -92,8 +92,12 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
     View shadow;
     @BindView(R.id.gear_box_type)
     Button gearBoxType;
+    @BindView(R.id.group)
+    Button group;
+    @BindView(R.id.confirm)
+    Button confirm;
     private int state;
-    int[] titles = {R.string.select_factory, R.string.select_brand,R.string.select_car_series, R.string.select_displacement,R.string.select_gear_box_type, R.string.select_year};
+    int[] titles = {R.string.select_factory, R.string.select_brand, R.string.select_car_series, R.string.select_car_group,R.string.select_displacement, R.string.select_gear_box_type, R.string.select_year};
     private InitiateSearch initiateSearch;
     private SparseArray<String> map = new SparseArray<>();
 
@@ -124,15 +128,18 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 array = car.getCarBrand().split("\\|");
                 break;
             case 2:
-                array=car.getCarSeries().split("\\|");
+                array = car.getCarSeries().split("\\|");
                 break;
             case 3:
-                array = car.getDisplacement().split("\\|");
+                array = car.getCheZu().split("\\|");
                 break;
             case 4:
-                array=car.getGearBoxType().split("\\|");
+                array = car.getDisplacement().split("\\|");
                 break;
             case 5:
+                array = car.getGearBoxType().split("\\|");
+                break;
+            case 6:
                 array = car.getYear().split("\\|");
                 break;
         }
@@ -158,7 +165,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
 
     }
 
-    @OnClick({R.id.factory, R.id.brand, R.id.displacement, R.id.year, R.id.confirm, R.id.series,R.id.gear_box_type})
+    @OnClick({R.id.factory, R.id.brand,R.id.group,R.id.displacement, R.id.year, R.id.confirm, R.id.series, R.id.gear_box_type})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.factory:
@@ -168,10 +175,12 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 map.put(2, "");
                 map.put(3, "");
                 map.put(4, "");
-                map.put(5,"");
+                map.put(5, "");
+                map.put(6, "");
                 factory.setText(R.string.select_factory);
                 brand.setText(R.string.select_brand);
                 series.setText(R.string.select_car_series);
+                group.setText(R.string.select_car_group);
                 displacement.setText(R.string.select_displacement);
                 gearBoxType.setText(R.string.select_gear_box_type);
                 year.setText(R.string.select_year);
@@ -182,9 +191,11 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 map.put(2, "");
                 map.put(3, "");
                 map.put(4, "");
-                map.put(5,"");
+                map.put(5, "");
+                map.put(6, "");
                 brand.setText(R.string.select_brand);
                 series.setText(R.string.select_car_series);
+                group.setText(R.string.select_car_group);
                 displacement.setText(R.string.select_displacement);
                 gearBoxType.setText(R.string.select_gear_box_type);
                 year.setText(R.string.select_year);
@@ -194,31 +205,44 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 map.put(2, "");
                 map.put(3, "");
                 map.put(4, "");
-                map.put(5,"");
+                map.put(5, "");
+                map.put(6, "");
                 series.setText(R.string.select_car_series);
+                group.setText(R.string.select_car_group);
+                displacement.setText(R.string.select_displacement);
+                gearBoxType.setText(R.string.select_gear_box_type);
+                year.setText(R.string.select_year);
+                break;
+            case R.id.group:
+                state = 3;
+                map.put(3, "");
+                map.put(4, "");
+                map.put(5, "");
+                map.put(6, "");
+                group.setText(R.string.select_car_group);
                 displacement.setText(R.string.select_displacement);
                 gearBoxType.setText(R.string.select_gear_box_type);
                 year.setText(R.string.select_year);
                 break;
             case R.id.displacement:
-                state = 3;
-                map.put(3, "");
+                state = 4;
                 map.put(4, "");
-                map.put(5,"");
+                map.put(5, "");
+                map.put(6, "");
                 displacement.setText(R.string.select_displacement);
                 gearBoxType.setText(R.string.select_gear_box_type);
                 year.setText(R.string.select_year);
                 break;
             case R.id.gear_box_type:
-                state = 4;
-                map.put(4, "");
-                map.put(5,"");
+                state = 5;
+                map.put(5, "");
+                map.put(6, "");
                 gearBoxType.setText(R.string.select_gear_box_type);
                 year.setText(R.string.select_year);
                 break;
             case R.id.year:
-                state =5;
-                map.put(5,"");
+                state = 6;
+                map.put(6, "");
                 year.setText(R.string.select_year);
                 break;
             case R.id.confirm:
@@ -226,9 +250,10 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 intent.putExtra("factory", map.get(0) != null ? map.get(0) : "");
                 intent.putExtra("brand", map.get(1) != null ? map.get(1) : "");
                 intent.putExtra("series", map.get(2) != null ? map.get(2) : "");
-                intent.putExtra("displacement", map.get(3) != null ? map.get(3) : "");
-                intent.putExtra("gear_box_type", map.get(4) != null ? map.get(4) : "");
-                intent.putExtra("year", map.get(5) != null ? map.get(5) : "");
+                intent.putExtra("group",map.get(3) != null ? map.get(3) : "");
+                intent.putExtra("displacement", map.get(4) != null ? map.get(4) : "");
+                intent.putExtra("gear_box_type", map.get(5) != null ? map.get(5) : "");
+                intent.putExtra("year", map.get(6) != null ? map.get(6) : "");
                 startActivity(intent);
                 return;
         }
@@ -258,50 +283,23 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 switch (state) {
                     case 0:
                         factory.setText(map.get(state));
-                        map.put(1, "");
-                        map.put(2, "");
-                        map.put(3, "");
-                        map.put(4, "");
-                        map.put(5,"");
-                        brand.setText(R.string.select_brand);
-                        series.setText(R.string.select_car_series);
-                        displacement.setText(R.string.select_displacement);
-                        gearBoxType.setText(R.string.select_gear_box_type);
-                        year.setText(R.string.select_year);
                         break;
                     case 1:
                         brand.setText(map.get(state));
-                        map.put(2, "");
-                        map.put(3, "");
-                        map.put(4, "");
-                        map.put(5,"");
-                        series.setText(R.string.select_car_series);
-                        displacement.setText(R.string.select_displacement);
-                        gearBoxType.setText(R.string.select_gear_box_type);
-                        year.setText(R.string.select_year);
                         break;
                     case 2:
                         series.setText(map.get(state));
-                        map.put(3, "");
-                        map.put(4, "");
-                        map.put(5,"");
-                        displacement.setText(R.string.select_displacement);
-                        gearBoxType.setText(R.string.select_gear_box_type);
-                        year.setText(R.string.select_year);
                         break;
                     case 3:
-                        displacement.setText(map.get(state));
-                        map.put(4, "");
-                        map.put(5,"");
-                        gearBoxType.setText(R.string.select_gear_box_type);
-                        year.setText(R.string.select_year);
+                        group.setText(map.get(state));
                         break;
                     case 4:
-                        gearBoxType.setText(map.get(state));
-                        map.put(5,"");
-                        year.setText(R.string.select_year);
+                        displacement.setText(map.get(state));
                         break;
                     case 5:
+                        gearBoxType.setText(map.get(state));
+                        break;
+                    case 6:
                         year.setText(map.get(state));
                         break;
                 }
@@ -357,8 +355,11 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
         types.clear();
         carTypeAdapter.clear();
         CarConditionRequest carConditionRequest = new CarConditionRequest();
+        carConditionRequest.setUserID("MobileApp");
         if (!TextUtils.isEmpty(map.get(0)))
-            carConditionRequest = new CarConditionRequest(map);
+        {carConditionRequest = new CarConditionRequest(map);
+            carConditionRequest.setUserID("MobileApp");
+        }
         else if (!title.equals(getString(titles[0]))) {
             toast(R.string.must_select_factory);
             return;
@@ -393,21 +394,8 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 final ArrayList<String> newValues = new ArrayList<>();
                 for (int i = 0; i < count; i++) {
                     final String string = mOriginalList.get(i);
-
-
                     if (string.contains(prefixString)||CharacterParser.getInstance().getSelling(string).contains(prefixString)) {
                         newValues.add(string);
-                    } else {
-                        final String[] words = string.split(" ");
-                        final int wordCount = words.length;
-
-                        // Start at index 0, in case valueText starts with space(s)
-                        for (int k = 0; k < wordCount; k++) {
-                            if (words[k].contains(prefixString)||CharacterParser.getInstance().getSelling(words[k]).contains(prefixString)) {
-                                newValues.add(string);
-                                break;
-                            }
-                        }
                     }
                 }
                 results.values = newValues;
