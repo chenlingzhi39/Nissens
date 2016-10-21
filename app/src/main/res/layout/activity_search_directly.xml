@@ -101,7 +101,7 @@
                     android:gravity="center_vertical"
                     android:hint="@string/please_input_search_content"
                     android:imeOptions="actionSearch"
-                    android:inputType="textCapWords"
+                    android:inputType="text"
                     android:paddingLeft="12dp"
                     android:paddingRight="8dp"
                     android:maxLines="1" />

@@ -39,7 +39,6 @@ public class InitiateSearch {
                         view.startAnimation(fade_out);
                         view.setVisibility(View.INVISIBLE);
                         search.setVisibility(View.GONE);
-                        ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
                         listView.setVisibility(View.GONE);
                     }
 
@@ -55,6 +54,7 @@ public class InitiateSearch {
                 });
                 animatorHide.setDuration(300);
                 animatorHide.start();
+                ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
             } else {
                 ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
                 view.startAnimation(fade_out);
