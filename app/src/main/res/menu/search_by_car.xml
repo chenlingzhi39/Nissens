@@ -7,8 +7,8 @@
         android:icon="@mipmap/ic_list_white_24dp"
         app:showAsAction="ifRoom"
         android:title=""/>
-    <item
+ <!--   <item
         android:id="@+id/search_by_vin"
         android:title="vin"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />-->
 </menu>

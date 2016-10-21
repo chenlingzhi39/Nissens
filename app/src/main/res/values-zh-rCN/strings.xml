@@ -70,4 +70,7 @@
     <string name="web">网址</string>
     <string name="car_group">车组</string>
     <string name="select_car_group">选择车组</string>
+    <string name="hot_type">热门分类</string>
+    <string name="radiator">散热器</string>
+    <string name="compressor">压缩机</string>
 </resources>

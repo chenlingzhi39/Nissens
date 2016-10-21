@@ -355,7 +355,7 @@ clear.setOnClickListener(new View.OnClickListener() {
     }
 
 
-    @OnClick({R.id.error, R.id.clearSearch})
+    @OnClick({R.id.error, R.id.clearSearch,R.id.radiator,R.id.compressor})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.error:
@@ -364,6 +364,12 @@ clear.setOnClickListener(new View.OnClickListener() {
             case R.id.clearSearch:
                 listView.setVisibility(View.VISIBLE);
                 ((InputMethodManager) SearchDirectlyActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                break;
+            case R.id.radiator:
+                startActivity(new Intent(SearchDirectlyActivity.this, SelectCarActivity.class).putExtra("series", "尼盛斯（Nissens) | 发动机冷却系统部件 | 散热器(水箱)"));
+                break;
+            case R.id.compressor:
+                startActivity(new Intent(SearchDirectlyActivity.this, SelectCarActivity.class).putExtra("series", "尼盛斯（Nissens) | 空调系统部件 | 空调压缩机"));
                 break;
         }
     }

@@ -69,4 +69,7 @@
     <string name="web">web</string>
     <string name="car_group">car group</string>
     <string name="select_car_group">select car group</string>
+    <string name="hot_type">hot type</string>
+    <string name="radiator">radiator</string>
+    <string name="compressor"></string>
 </resources>

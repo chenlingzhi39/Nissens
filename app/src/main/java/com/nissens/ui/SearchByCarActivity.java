@@ -165,7 +165,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
 
     }
 
-    @OnClick({R.id.factory, R.id.brand,R.id.group,R.id.displacement, R.id.year, R.id.confirm, R.id.series, R.id.gear_box_type})
+    @OnClick({R.id.factory, R.id.brand,R.id.group,R.id.displacement, R.id.year, R.id.confirm, R.id.series, R.id.gear_box_type,R.id.vin})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.factory:
@@ -256,6 +256,9 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 intent.putExtra("year", map.get(6) != null ? map.get(6) : "");
                 startActivity(intent);
                 return;
+            case R.id.vin:
+                startActivity(new Intent(SearchByCarActivity.this,SearchByVinActivity.class));
+                break;
         }
         showDialog(getString(titles[state]));
     }
@@ -413,11 +416,11 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+       /* switch (item.getItemId()) {
             case R.id.search_by_vin:
                 startActivity(new Intent(SearchByCarActivity.this, SearchByVinActivity.class));
                 break;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 }
