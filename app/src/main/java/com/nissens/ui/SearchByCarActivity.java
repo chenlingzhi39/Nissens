@@ -306,7 +306,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                         year.setText(map.get(state));
                         break;
                 }
-                InitiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                InitiateSearch.handleToolBar1(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         listView.setAdapter(carTypeAdapter);
