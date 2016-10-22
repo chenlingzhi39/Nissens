@@ -423,5 +423,10 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
         }*/
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(cardSearch.getWindowToken(), 0);
+    }
 }
 
