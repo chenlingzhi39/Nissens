@@ -28,6 +28,9 @@ import java.util.logging.Logger;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 
@@ -109,14 +112,14 @@ public class SearchOrganizationActivity extends BaseActivity<OrganizationPresent
         switch (view.getId()) {
             case R.id.select_city:
                 try {
-                    ArrayList<AddressPicker.Province> data = new ArrayList<>();
+                    ArrayList<Province> data = new ArrayList<>();
                     final String json = ConvertUtils.toString(getAssets().open("city.json"));
-                    data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
+                    data.addAll(JSON.parseArray(json, Province.class));
                     AddressPicker picker = new AddressPicker(this, data);
                     picker.setSelectedItem("江苏", "无锡", "惠山");
                     picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
                         @Override
-                        public void onAddressPicked(AddressPicker.Province province, AddressPicker.City city, AddressPicker.County county) {
+                        public void onAddressPicked(Province province, City city, County county) {
                             if (county == null) {
                                 selectCity.setText(province.getAreaName() + " " + city.getAreaName());
                             } else {
