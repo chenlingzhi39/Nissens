@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-
-
 import com.nissens.BuildConfig;
 import com.nissens.R;
 

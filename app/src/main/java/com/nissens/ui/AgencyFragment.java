@@ -1,11 +1,8 @@
 package com.nissens.ui;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,7 +11,6 @@ import com.nissens.adapter.OrganizationAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseFragment;
 import com.nissens.bean.BrandOrganization;
-import com.nissens.bean.BrandOrganizationRequest;
 import com.nissens.bean.Request;
 import com.nissens.module.presenter.OrganizationPresenter;
 import com.nissens.module.presenter.OrganizationPresenterImpl;
@@ -51,7 +47,7 @@ public class AgencyFragment extends BaseFragment<OrganizationPresenter> implemen
         organizationList.addItemDecoration(new DividerItemDecoration(
                 getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mPresenter = new OrganizationPresenterImpl(this);
-        mPresenter.requestData(gson.toJson(new BrandOrganizationRequest("e17405745-0ce6-4fa0-ae7e-1051cc70f1e1")));
+        mPresenter.requestData(gson.toJson(new Request()));
     }
 
     @Override

@@ -3,10 +3,8 @@ package com.nissens.module.presenter;
 import com.nissens.base.BaseModel;
 import com.nissens.base.BasePresenterImpl;
 import com.nissens.bean.BrandSeriesXml;
-import com.nissens.bean.OEData;
 import com.nissens.module.model.SearchByTypeModelImpl;
 import com.nissens.module.view.SearchByTypeView;
-import com.nissens.module.view.StraightSearchView;
 
 import java.util.List;
 

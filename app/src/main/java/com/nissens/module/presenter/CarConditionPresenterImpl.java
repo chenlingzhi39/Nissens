@@ -1,13 +1,10 @@
 package com.nissens.module.presenter;
 
 import com.nissens.base.BaseModel;
-import com.nissens.base.BasePresenter;
 import com.nissens.base.BasePresenterImpl;
 import com.nissens.bean.Car;
 import com.nissens.module.model.CarConditionModelImpl;
 import com.nissens.module.view.SearchByCarView;
-
-import java.util.List;
 
 /**
  * Created by PC-20160514 on 2016/10/17.

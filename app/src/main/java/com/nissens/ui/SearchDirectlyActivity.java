@@ -131,7 +131,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
             public void hide() {
                 Log.i("input", "hide");
                 if (cardSearch.getVisibility() == View.VISIBLE)
-                    InitiateSearch.handleToolBar1(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                    InitiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         oeDataAdapter = new OEDataAdapter(this);

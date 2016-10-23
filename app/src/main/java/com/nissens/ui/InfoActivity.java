@@ -1,8 +1,6 @@
 package com.nissens.ui;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -12,14 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.View;
 
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
 import com.nissens.bean.OEData;
-import com.nissens.util.ScrimUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

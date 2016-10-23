@@ -2,7 +2,6 @@ package com.nissens.module.view;
 
 import com.nissens.base.BaseView;
 import com.nissens.bean.BrandSeriesXml;
-import com.nissens.bean.OEData;
 
 import java.util.List;
 

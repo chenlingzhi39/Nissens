@@ -1,7 +1,6 @@
 package com.nissens.module.presenter;
 
 import com.nissens.base.BaseModel;
-import com.nissens.base.BasePresenter;
 import com.nissens.base.BasePresenterImpl;
 import com.nissens.bean.Car;
 import com.nissens.module.model.AdjustCarModelImpl;

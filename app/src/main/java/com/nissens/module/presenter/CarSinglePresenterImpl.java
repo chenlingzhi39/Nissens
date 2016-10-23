@@ -3,7 +3,6 @@ package com.nissens.module.presenter;
 import com.nissens.base.BaseModel;
 import com.nissens.base.BasePresenterImpl;
 import com.nissens.bean.Car;
-import com.nissens.bean.CarSingleResult;
 import com.nissens.module.model.CarSingleModelImpl;
 import com.nissens.module.view.CarSingleView;
 

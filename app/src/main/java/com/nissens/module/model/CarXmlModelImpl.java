@@ -5,12 +5,9 @@ import android.util.Log;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
-import com.nissens.bean.BrandSeriesXml;
 import com.nissens.bean.BrandSeriesXmlResult;
 import com.nissens.bean.CarBrandXmlResult;
 import com.nissens.callback.RequestCallback;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 

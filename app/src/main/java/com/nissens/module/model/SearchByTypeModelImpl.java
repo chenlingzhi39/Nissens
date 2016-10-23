@@ -1,19 +1,14 @@
 package com.nissens.module.model;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.BrandSeriesXml;
 import com.nissens.bean.BrandSeriesXmlResult;
-import com.nissens.bean.OEData;
-import com.nissens.bean.OEDataResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.LoggingMXBean;
 
 import javax.inject.Inject;
 

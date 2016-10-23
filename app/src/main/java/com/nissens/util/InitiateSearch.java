@@ -17,10 +17,12 @@ import android.widget.EditText;
 
 
 public class InitiateSearch {
-
+    public static boolean is_used=true;
     public static void handleToolBar(final Context context, final CardView search, final View view, final RecyclerView listView, final EditText editText, final View line_divider) {
-        final Animation fade_in = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_in);
+       if(is_used)
+       { final Animation fade_in = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_in);
         final Animation fade_out = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_out);
+        is_used=false;
         if (search.getVisibility() == View.VISIBLE) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 final Animator animatorHide = ViewAnimationUtils.createCircularReveal(search,
@@ -40,7 +42,7 @@ public class InitiateSearch {
                         view.startAnimation(fade_out);
                         view.setVisibility(View.INVISIBLE);
                         search.setVisibility(View.GONE);
-
+                        is_used=true;
                     }
 
                     @Override
@@ -61,6 +63,7 @@ public class InitiateSearch {
                 view.startAnimation(fade_out);
                 view.setVisibility(View.INVISIBLE);
                 search.setVisibility(View.GONE);
+                is_used=true;
             }
             editText.setText("");
             //toolbarMain.setNavigationIcon(R.mipmap.ic_menu);
@@ -116,6 +119,7 @@ public class InitiateSearch {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         listView.setVisibility(View.VISIBLE);
+                        is_used=true;
                     }
 
                     @Override
@@ -128,9 +132,10 @@ public class InitiateSearch {
                 search.setEnabled(true);
                 listView.setVisibility(View.VISIBLE);
                 ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                is_used=true;
             }
         }
-    }
+    }}
     public static void handleToolBar1(final Context context, final CardView search, final View view, final RecyclerView listView, final EditText editText, final View line_divider) {
         final Animation fade_in = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_in);
         final Animation fade_out = AnimationUtils.loadAnimation(context.getApplicationContext(), android.R.anim.fade_out);

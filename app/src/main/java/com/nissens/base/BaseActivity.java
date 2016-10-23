@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,13 +16,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
-import com.nissens.app.MyApplication;
-import com.nissens.dagger.NissensComponent;
 import com.nissens.manager.SystemBarTintManager;
 import com.nissens.ui.MainActivity;
 import com.nissens.util.ScrimUtil;
-
-import javax.inject.Inject;
 
 /**
  * Created by PC-20160514 on 2016/9/21.

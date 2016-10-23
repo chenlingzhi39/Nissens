@@ -1,19 +1,19 @@
 package com.nissens.module.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.Car;
 import com.nissens.bean.CarModelDataResult;
-import com.nissens.bean.CarResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
-import android.util.Log;
+
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

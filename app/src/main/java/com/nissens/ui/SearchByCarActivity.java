@@ -274,7 +274,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
             public void hide() {
                 Log.i("input", "hide");
                 if (cardSearch.getVisibility() == View.VISIBLE)
-                    InitiateSearch.handleToolBar1(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                    InitiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         carTypeAdapter = new CarTypeAdapter(this);
@@ -306,7 +306,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                         year.setText(map.get(state));
                         break;
                 }
-                InitiateSearch.handleToolBar1(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                InitiateSearch.handleToolBar(SearchByCarActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         listView.setAdapter(carTypeAdapter);

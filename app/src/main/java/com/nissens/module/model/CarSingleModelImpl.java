@@ -4,15 +4,8 @@ import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.Car;
-import com.nissens.bean.CarRequest;
-import com.nissens.bean.CarResult;
 import com.nissens.bean.CarSingleResult;
-import com.nissens.bean.OEData;
-import com.nissens.bean.OEDataResult;
 import com.nissens.callback.RequestCallback;
-import com.nissens.module.presenter.CarSinglePresenter;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 

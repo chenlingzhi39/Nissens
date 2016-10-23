@@ -2,8 +2,6 @@ package com.nissens.bean;
 
 import android.util.SparseArray;
 
-import com.nissens.R;
-
 /**
  * Created by Administrator on 2016/10/17.
  */

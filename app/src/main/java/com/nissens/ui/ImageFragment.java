@@ -2,6 +2,7 @@ package com.nissens.ui;
 
 import android.content.Intent;
 import android.view.View;
+
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseFragment;

@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-
 import com.nissens.adapter.RecyclerArrayAdapter;
 
 import de.greenrobot.dao.AbstractDao;

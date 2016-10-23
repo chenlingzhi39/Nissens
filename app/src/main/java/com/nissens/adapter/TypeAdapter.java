@@ -1,4 +1,5 @@
 package com.nissens.adapter;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemVie
 import com.nissens.R;
 import com.nissens.bean.Type;
 import com.nissens.widget.ExpandableItemIndicator;
+
 import java.util.List;
 
 /**

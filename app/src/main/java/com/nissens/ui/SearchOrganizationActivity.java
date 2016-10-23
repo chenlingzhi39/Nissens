@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.nissens.R;
 import com.nissens.adapter.OrganizationAdapter;
@@ -23,7 +24,6 @@ import com.nissens.widget.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

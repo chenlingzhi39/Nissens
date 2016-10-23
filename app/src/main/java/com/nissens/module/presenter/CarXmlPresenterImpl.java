@@ -3,7 +3,6 @@ package com.nissens.module.presenter;
 import com.nissens.base.BaseModel;
 import com.nissens.base.BasePresenterImpl;
 import com.nissens.module.model.CarXmlModelImpl;
-import com.nissens.module.model.SearchByTypeModelImpl;
 import com.nissens.module.view.CarXmlView;
 
 /**

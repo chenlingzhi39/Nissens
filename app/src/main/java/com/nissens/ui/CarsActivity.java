@@ -16,7 +16,6 @@ import com.nissens.adapter.RecyclerArrayAdapter;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
 import com.nissens.bean.Car;
-import com.nissens.bean.CarConditionRequest;
 import com.nissens.bean.CarModelDataRequest;
 import com.nissens.module.presenter.CarsPresenter;
 import com.nissens.module.presenter.CarsPresenterImpl;

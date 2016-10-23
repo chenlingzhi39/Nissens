@@ -7,7 +7,6 @@ import com.nissens.config.Constants;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-
 import javax.inject.Singleton;
 
 import dagger.Module;

@@ -8,13 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-
 import com.google.gson.Gson;
 import com.nissens.annotation.ActivityFragmentInject;
-
-import java.net.UnknownHostException;
-
-import rx.Subscription;
 
 /**
  * Created by PC-20160514 on 2016/5/18.

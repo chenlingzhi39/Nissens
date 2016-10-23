@@ -18,7 +18,6 @@ import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseFragment;
 import com.nissens.bean.Car;
 import com.nissens.bean.CarRequest;
-import com.nissens.bean.OEDataRequest;
 import com.nissens.module.presenter.AdjustCarPresenter;
 import com.nissens.module.presenter.AdjustCarPresenterImpl;
 import com.nissens.module.view.AdjustCarView;

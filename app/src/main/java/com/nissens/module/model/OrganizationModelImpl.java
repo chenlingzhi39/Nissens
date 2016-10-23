@@ -5,8 +5,6 @@ import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
 import com.nissens.bean.BrandOrganization;
 import com.nissens.bean.BrandOrganizationResult;
-import com.nissens.bean.BrandSeriesXml;
-import com.nissens.bean.BrandSeriesXmlResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;

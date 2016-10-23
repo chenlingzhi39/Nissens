@@ -3,7 +3,6 @@ package com.nissens.adapter;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.nissens.R;
 
 import butterknife.BindView;

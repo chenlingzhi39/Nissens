@@ -1,7 +1,6 @@
 package com.nissens.provider;
 
 import android.content.Context;
-
 import android.content.Intent;
 import android.support.v4.view.ActionProvider;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.view.View;
 import com.nissens.R;
 import com.nissens.ui.MainActivity;
 import com.nissens.ui.SearchByCarActivity;
-import com.nissens.ui.SearchByVinActivity;
 import com.nissens.ui.SearchByTypeActivity;
 import com.nissens.ui.SearchDirectlyActivity;
 import com.nissens.ui.SearchOrganizationActivity;

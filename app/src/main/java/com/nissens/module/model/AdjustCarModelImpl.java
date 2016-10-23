@@ -1,5 +1,4 @@
 package com.nissens.module.model;
-import android.util.Log;
 
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
