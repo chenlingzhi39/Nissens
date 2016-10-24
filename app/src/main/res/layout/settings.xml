@@ -6,7 +6,12 @@
     android:fitsSystemWindows="true">
 
     <include layout="@layout/toolbar" />
-
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:visibility="gone"
+        />
     <FrameLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"

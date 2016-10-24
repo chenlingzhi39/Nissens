@@ -71,5 +71,5 @@
     <string name="select_car_group">select car group</string>
     <string name="hot_type">hot type</string>
     <string name="radiator">radiator</string>
-    <string name="compressor"></string>
+    <string name="compressor">compressor</string>
 </resources>

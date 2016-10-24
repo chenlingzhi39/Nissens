@@ -88,8 +88,6 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
     AppBarLayout mToolbarContainer;
     @BindView(R.id.series)
     Button series;
-    @BindView(R.id.shadow)
-    View shadow;
     @BindView(R.id.gear_box_type)
     Button gearBoxType;
     @BindView(R.id.group)
@@ -258,7 +256,7 @@ public class SearchByCarActivity extends BaseActivity<CarConditionPresenter> imp
                 return;
             case R.id.vin:
                 startActivity(new Intent(SearchByCarActivity.this,SearchByVinActivity.class));
-                break;
+               return;
         }
         showDialog(getString(titles[state]));
     }

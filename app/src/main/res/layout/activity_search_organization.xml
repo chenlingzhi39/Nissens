@@ -4,22 +4,26 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
     <include layout="@layout/toolbar"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="?attr/colorAccent"
-        android:text="@string/please_select_city"
-        android:id="@+id/select_city"
-        android:textColor="@color/material_white"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/organization_list"
+            android:layout_below="@+id/select_city"
             />
         <include layout="@layout/state_layout"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="?attr/colorAccent"
+            android:text="@string/please_select_city"
+            android:id="@+id/select_city"
+            android:textColor="@color/material_white"/>
     </RelativeLayout>
 </LinearLayout>
