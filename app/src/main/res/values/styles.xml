@@ -18,10 +18,4 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@mipmap/welcome</item>
     </style>
-    <style name="commonListItemStyle">
-    </style>
-    <style name="AppTheme.Widget.TextView" parent="android:Widget.TextView">
-        <!--<item name="fontPath">fonts/STXIHEI.TTF</item>-->
-        <item name="android:textColor">@color/material_black</item>
-    </style>
 </resources>
