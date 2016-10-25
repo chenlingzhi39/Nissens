@@ -37,6 +37,6 @@ public class ImageActivity extends Activity {
                 .setFillViewport(false)
                 .setFitMethod(Settings.Fit.INSIDE)
                 .setGravity(Gravity.CENTER);
-        Glide.with(this).load(R.drawable.example).into(image);
+        Glide.with(this).load(getIntent().getStringExtra("path")).into(image);
     }
 }

@@ -52,4 +52,7 @@ public interface ApiService {
 
     @POST("queryBlendCarModelData")
     Observable<CarResult> queryBlendCarModelData(@Query("requestPara")String requestPara);
+
+    @POST("queryOEPartImage")
+    Observable<ImageResult> queryOEPartImage(@Query("requestPara")String requestPara);
 }

@@ -8,7 +8,6 @@ public class CarModelDataRequest extends CarConditionRequest {
     private String PageIndex,
             ItemsPerPage;
 
-
     public String getItemsPerPage() {
         return ItemsPerPage;
     }
@@ -31,6 +30,7 @@ public class CarModelDataRequest extends CarConditionRequest {
         setCarFactoryName(factory);
         setCarBrand(brand);
         setCarSeries(series);
+        setCarModel(series);
         setCheZu(group);
         setDisplacement(displacement);
         setGearBoxType(gearBoxType);

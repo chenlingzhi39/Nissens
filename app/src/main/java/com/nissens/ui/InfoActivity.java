@@ -77,8 +77,10 @@ public class InfoActivity extends BaseActivity {
                     adjustCarFragment.setArguments(bundle);
                     return adjustCarFragment;
                 case 2:
-                    ImageFragment imageFragment1 = new ImageFragment();
-                    return imageFragment1;
+                    bundle.putString("id",oeData.getOriginalFactoryID());
+                    ImageFragment imageFragment = new ImageFragment();
+                    imageFragment.setArguments(bundle);
+                    return imageFragment;
                 case 3:
                     AgencyFragment agencyFragment = new AgencyFragment();
                     return agencyFragment;

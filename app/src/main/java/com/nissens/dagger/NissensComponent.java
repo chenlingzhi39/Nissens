@@ -5,6 +5,7 @@ import com.nissens.module.model.CarConditionModelImpl;
 import com.nissens.module.model.CarSingleModelImpl;
 import com.nissens.module.model.CarXmlModelImpl;
 import com.nissens.module.model.CarsModelImpl;
+import com.nissens.module.model.ImageModelImpl;
 import com.nissens.module.model.IntroduceModelImpl;
 import com.nissens.module.model.OrganizationModelImpl;
 import com.nissens.module.model.SearchByTypeModelImpl;
@@ -38,6 +39,7 @@ public interface NissensComponent {
 
     void inject(CarsModelImpl carModelDataModel);
 
+    void inject(ImageModelImpl imageModel);
     final class NissensInitialize {
         public static NissensComponent init() {
             return DaggerNissensComponent.builder().build();

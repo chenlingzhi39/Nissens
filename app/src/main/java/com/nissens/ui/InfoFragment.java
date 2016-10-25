@@ -51,11 +51,4 @@ public class InfoFragment extends BaseFragment {
         capacity.setText(oeData.getCapacity());
         specification.setText(oeData.getStandardSpecification());
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
 }
