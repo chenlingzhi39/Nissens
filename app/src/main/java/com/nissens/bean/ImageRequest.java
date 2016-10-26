@@ -5,7 +5,7 @@ package com.nissens.bean;
  */
 
 public class ImageRequest extends Request {
-    String OriginalFactoryID,OriginalFactoryName,OEPartImageID;
+    String OriginalFactoryID,OriginalFactoryName,OEPartImageID,PartType="2";
 
     public ImageRequest(String originalFactoryID) {
         OriginalFactoryID = originalFactoryID;
