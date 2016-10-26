@@ -9,6 +9,7 @@ import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -51,6 +52,7 @@ public class CarsModelImpl implements BaseModel<List<Car>> {
             @Override
             public void onNext(Object o) {
                 if (null != o) {
+                    Log.i("count",((CarResult)o).getAllItemsCount());
                     if(((CarResult)o).getResult().equals("00"))
                     {ArrayList<Car> cars=((CarResult)o).getData();
                         callback.requestSuccess(cars);}

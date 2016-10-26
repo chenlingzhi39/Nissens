@@ -285,7 +285,7 @@ clear.setOnClickListener(new View.OnClickListener() {
     }
 
     @Override
-    public void showResult(List<OEData> oeDatas) {
+    public void showResult(final List<OEData> oeDatas) {
         Log.i("showResult", oeDatas.size() + "");
         if (is_first) {
             oeDataAdapter.setError(R.layout.view_more_error).setOnClickListener(new View.OnClickListener() {
@@ -299,7 +299,7 @@ clear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onLoadMore() {
                     if (oeDataAdapter.getCount() > 0) {
-                        if (oeDataAdapter.getCount() > 15) {
+                        if (oeDatas.size() >= 15) {
                             page += 1;
                             oeDataRequest = new OEDataRequest("15", page + "", getSupportActionBar().getTitle().toString());
                             mPresenter.requestData(gson.toJson(oeDataRequest));

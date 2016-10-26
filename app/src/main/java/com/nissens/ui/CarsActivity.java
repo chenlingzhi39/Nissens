@@ -23,6 +23,7 @@ import com.nissens.module.view.CarsView;
 import com.nissens.widget.DividerItemDecoration;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,7 +104,7 @@ public class CarsActivity extends BaseActivity<CarsPresenter> implements CarsVie
     }
 
     @Override
-    public void showResult(List<Car> carList) {
+    public void showResult(final List<Car> carList) {
         Log.i("showResult", carList.size() + "");
         if (is_first) {
             carAdapter.setError(R.layout.view_more_error).setOnClickListener(new View.OnClickListener() {
@@ -117,7 +118,7 @@ public class CarsActivity extends BaseActivity<CarsPresenter> implements CarsVie
                 @Override
                 public void onLoadMore() {
                     if (carAdapter.getCount() > 0) {
-                        if (carAdapter.getCount() > 15) {
+                        if (carList.size() >= 15) {
                             page += 1;
                             carRequest = new CarModelDataRequest(getIntent().getStringExtra("factory")
                                     ,getIntent().getStringExtra("brand")

@@ -78,6 +78,7 @@ public class InfoActivity extends BaseActivity {
                     return adjustCarFragment;
                 case 2:
                     bundle.putString("id",oeData.getOriginalFactoryID());
+                    bundle.putString("name",oeData.getOriginalFactoryName());
                     ImageFragment imageFragment = new ImageFragment();
                     imageFragment.setArguments(bundle);
                     return imageFragment;

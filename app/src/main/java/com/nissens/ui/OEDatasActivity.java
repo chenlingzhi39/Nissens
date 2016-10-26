@@ -80,7 +80,7 @@ public class OEDatasActivity extends BaseActivity<StraightSearchPresenter> imple
     }
 
     @Override
-    public void showResult(List<OEData> oeDatas) {
+    public void showResult(final List<OEData> oeDatas) {
         if (is_first) {
             oeDataAdapter.setError(R.layout.view_more_error).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,9 +93,10 @@ public class OEDatasActivity extends BaseActivity<StraightSearchPresenter> imple
                 @Override
                 public void onLoadMore() {
                     if (oeDataAdapter.getCount() > 0) {
-                        page += 1;
+                        if(oeDatas.size()>=15)
+                        {page += 1;
                         OEDataRequest oeDataRequest = new OEDataRequest("15", page + "", getSupportActionBar().getTitle().toString());
-                        mPresenter.requestData(gson.toJson(oeDataRequest));
+                        mPresenter.requestData(gson.toJson(oeDataRequest));}else oeDataAdapter.stopMore();
                     }
                 }
             });
