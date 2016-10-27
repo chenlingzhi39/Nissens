@@ -1,18 +1,19 @@
 package com.nissens.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
-import com.nissens.bean.Car;
 import com.nissens.bean.CarSingleResult;
 import com.nissens.bean.VinRequest;
 import com.nissens.module.presenter.CarSinglePresenter;
@@ -41,8 +42,21 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
     @BindView(R.id.error)
     TextView error;
     VinRequest vinRequest;
-    @BindView(R.id.result)
-    TextView result;
+    @BindView(R.id.factory)
+    TextView factory;
+    @BindView(R.id.brand)
+    TextView brand;
+    @BindView(R.id.car_model)
+    TextView carModel;
+    @BindView(R.id.year)
+    TextView year;
+    @BindView(R.id.engine_model)
+    TextView engineModel;
+    @BindView(R.id.name_of_sales)
+    TextView nameOfSales;
+    @BindView(R.id.content)
+    LinearLayout content;
+    CarSingleResult carSingleResult;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,20 +84,26 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
     @Override
     public void showError() {
         error.setVisibility(View.VISIBLE);
-        empty.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showResult(CarSingleResult car) {
-         result.setText(gson.toJson(car));
+        carSingleResult=car;
         progressBar.setVisibility(View.GONE);
+        content.setVisibility(View.VISIBLE);
+        factory.setText(getString(R.string.factory) + ":" + car.getCarFactoryName());
+        brand.setText(getString(R.string.brand) + ":" + car.getCarBrand());
+        carModel.setText(getString(R.string.car_model) + ":" + car.getCarModel());
+        year.setText(getString(R.string.year) + ":" + car.getYear());
+        engineModel.setText(getString(R.string.engine_model) + ":" + car.getEngineModel());
+        nameOfSales.setText(getString(R.string.name_of_sales) + ":" + car.getNameOfSales());
     }
 
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
         error.setVisibility(View.GONE);
+        content.setVisibility(View.GONE);
     }
 
     @Override
@@ -115,8 +135,20 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
         return super.onCreateOptionsMenu(menu);
     }
 
-    @OnClick(R.id.error)
-    public void onClick() {
-        mPresenter.requestData(gson.toJson(vinRequest));
+
+    @OnClick({R.id.error, R.id.content})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.error:
+                mPresenter.requestData(gson.toJson(vinRequest));
+                break;
+            case R.id.content:
+                Intent intent=new Intent(SearchByVinActivity.this,SearchByTypeActivity.class);
+                intent.putExtra("mode","car");
+                intent.putExtra("label",carSingleResult.getCarFactoryName());
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 }

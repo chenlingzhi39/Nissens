@@ -49,7 +49,7 @@ public class CarSingleModelImpl implements BaseModel<CarSingleResult>{
             public void onNext(Object o) {
                 if (null != o) {
                     CarSingleResult carSingleResult=(CarSingleResult) o;
-                    if(carSingleResult.getResult().equals("0"))
+                    if(carSingleResult.getResult().equals("1"))
                     callback.requestSuccess(carSingleResult);
                     else
                         callback.requestError(carSingleResult.getDescription());
