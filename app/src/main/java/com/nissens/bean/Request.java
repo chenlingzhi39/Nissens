@@ -4,7 +4,7 @@ package com.nissens.bean;
  * Created by PC-20160514 on 2016/9/26.
  */
 public class Request {
-    private String UserID="terry",
+    private String UserID="MobileApp",
             EncryptCode="123456";
 
     public String getEncryptCode() {

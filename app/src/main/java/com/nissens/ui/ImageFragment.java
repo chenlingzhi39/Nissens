@@ -22,7 +22,7 @@ import com.nissens.module.presenter.ImagePresenterImpl;
 import com.nissens.module.view.OEPartImageView;
 
 import java.util.List;
-
+import android.util.Log;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,6 +59,7 @@ public class ImageFragment extends BaseFragment<ImagePresenter> implements OEPar
             }
         });
         mPresenter = new ImagePresenterImpl(this);
+        Log.i("request",gson.toJson(new ImageRequest(getArguments().getString("id"))));
         mPresenter.requestData(gson.toJson(new ImageRequest(getArguments().getString("id"))));
     }
 
@@ -80,7 +81,10 @@ public class ImageFragment extends BaseFragment<ImagePresenter> implements OEPar
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        if(imageAdapter.getCount()==0)
+        {error.setVisibility(View.GONE);
+        empty.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);}
     }
 
     @Override
