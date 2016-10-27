@@ -5,21 +5,21 @@ package com.nissens.bean;
  */
 
 public class Image {
-    private String OEPartImageID,OEPartImagePath;
+    private String OepartImageID,OepartImagePath;
 
     public String getOEPartImageID() {
-        return OEPartImageID;
+        return OepartImageID;
     }
 
     public void setOEPartImageID(String OEPartImageID) {
-        this.OEPartImageID = OEPartImageID;
+        this.OepartImageID = OEPartImageID;
     }
 
     public String getOEPartImagePath() {
-        return OEPartImagePath;
+        return OepartImagePath;
     }
 
     public void setOEPartImagePath(String OEPartImagePath) {
-        this.OEPartImagePath = OEPartImagePath;
+        this.OepartImagePath = OEPartImagePath;
     }
 }

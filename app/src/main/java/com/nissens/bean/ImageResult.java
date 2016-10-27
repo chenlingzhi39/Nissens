@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class ImageResult extends Result {
-    String OriginalFactoryID, OriginalFactoryName, AllItemsCount;
+    private String OriginalFactoryID, OriginalFactoryName, AllItemsCount;
     private ArrayList<Image> data;
 
     public String getAllItemsCount() {

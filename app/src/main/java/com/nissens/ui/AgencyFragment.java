@@ -1,8 +1,11 @@
 package com.nissens.ui;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016/10/17.
@@ -38,9 +42,10 @@ public class AgencyFragment extends BaseFragment<OrganizationPresenter> implemen
     @BindView(R.id.error)
     TextView error;
     OrganizationAdapter organizationAdapter;
+
     @Override
     protected void initView(View fragmentRootView) {
-     ButterKnife.bind(this,fragmentRootView);
+        ButterKnife.bind(this, fragmentRootView);
         organizationAdapter = new OrganizationAdapter(getActivity());
         organizationList.setAdapter(organizationAdapter);
         organizationList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -85,5 +90,18 @@ public class AgencyFragment extends BaseFragment<OrganizationPresenter> implemen
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @OnClick(R.id.error)
+    public void onClick() {
+        mPresenter.requestData(gson.toJson(new Request()));
     }
 }
