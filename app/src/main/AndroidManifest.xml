@@ -29,7 +29,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.SearchByVinActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateVisible"/>
         <activity android:name=".ui.SearchByTypeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>

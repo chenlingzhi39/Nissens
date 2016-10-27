@@ -3,6 +3,7 @@ package com.nissens.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -12,6 +13,7 @@ import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseActivity;
 import com.nissens.bean.Car;
+import com.nissens.bean.CarSingleResult;
 import com.nissens.bean.VinRequest;
 import com.nissens.module.presenter.CarSinglePresenter;
 import com.nissens.module.presenter.CarSinglePresenterImpl;
@@ -39,6 +41,9 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
     @BindView(R.id.error)
     TextView error;
     VinRequest vinRequest;
+    @BindView(R.id.result)
+    TextView result;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +54,8 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                vinRequest = new VinRequest("");
+                vinRequest = new VinRequest(query);
+                Log.i("request", gson.toJson(vinRequest));
                 mPresenter.requestData(gson.toJson(vinRequest));
                 return false;
             }
@@ -63,19 +69,21 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
 
     @Override
     public void showError() {
-        error.setVisibility(View.GONE);
+        error.setVisibility(View.VISIBLE);
         empty.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
-    public void showResult(Car car) {
-
+    public void showResult(CarSingleResult car) {
+         result.setText(gson.toJson(car));
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
+        error.setVisibility(View.GONE);
     }
 
     @Override

@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by PC-20160514 on 2016/9/28.
  */
-public class CarSingleModelImpl implements BaseModel<Car>{
+public class CarSingleModelImpl implements BaseModel<CarSingleResult>{
     @Inject
     ApiService apiService;
 
@@ -26,7 +26,7 @@ public class CarSingleModelImpl implements BaseModel<Car>{
     }
 
     @Override
-    public Subscription requestSearchData(final RequestCallback<Car> callback, final String requestPara) {
+    public Subscription requestSearchData(final RequestCallback<CarSingleResult> callback, final String requestPara) {
         return apiService.queryCarDataByLYVin(requestPara).subscribeOn(Schedulers.io()).observeOn(
                 AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
             @Override
@@ -49,8 +49,8 @@ public class CarSingleModelImpl implements BaseModel<Car>{
             public void onNext(Object o) {
                 if (null != o) {
                     CarSingleResult carSingleResult=(CarSingleResult) o;
-                    if(carSingleResult.getResult().equals("1"))
-                    callback.requestSuccess((Car) o);
+                    if(carSingleResult.getResult().equals("0"))
+                    callback.requestSuccess(carSingleResult);
                     else
                         callback.requestError(carSingleResult.getDescription());
                 } else {

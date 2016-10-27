@@ -3,13 +3,14 @@ package com.nissens.module.presenter;
 import com.nissens.base.BaseModel;
 import com.nissens.base.BasePresenterImpl;
 import com.nissens.bean.Car;
+import com.nissens.bean.CarSingleResult;
 import com.nissens.module.model.CarSingleModelImpl;
 import com.nissens.module.view.CarSingleView;
 
 /**
  * Created by PC-20160514 on 2016/9/28.
  */
-public class CarSinglePresenterImpl extends BasePresenterImpl<CarSingleView,Car> implements CarSinglePresenter {
+public class CarSinglePresenterImpl extends BasePresenterImpl<CarSingleView,CarSingleResult> implements CarSinglePresenter {
     BaseModel carSingleModel;
     public CarSinglePresenterImpl(CarSingleView view) {
         super(view);
@@ -22,7 +23,7 @@ public class CarSinglePresenterImpl extends BasePresenterImpl<CarSingleView,Car>
     }
 
     @Override
-    public void requestSuccess(Car data) {
+    public void requestSuccess(CarSingleResult data) {
         mView.showResult(data);
     }
 
