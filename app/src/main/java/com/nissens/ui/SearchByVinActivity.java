@@ -68,9 +68,13 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                vinRequest = new VinRequest(query);
-                Log.i("request", gson.toJson(vinRequest));
-                mPresenter.requestData(gson.toJson(vinRequest));
+                if (query.length() == 17) {
+                    vinRequest = new VinRequest(query);
+                    Log.i("request", gson.toJson(vinRequest));
+                    mPresenter.requestData(gson.toJson(vinRequest));
+                } else {
+                    toast("vin码必须为17位！");
+                }
                 return false;
             }
 
@@ -88,7 +92,7 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
 
     @Override
     public void showResult(CarSingleResult car) {
-        carSingleResult=car;
+        carSingleResult = car;
         progressBar.setVisibility(View.GONE);
         content.setVisibility(View.VISIBLE);
         factory.setText(getString(R.string.factory) + ":" + car.getCarFactoryName());
@@ -136,16 +140,19 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
     }
 
 
-    @OnClick({R.id.error, R.id.content})
+    @OnClick({R.id.error, R.id.content,R.id.select_type})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.error:
                 mPresenter.requestData(gson.toJson(vinRequest));
                 break;
             case R.id.content:
-                Intent intent=new Intent(SearchByVinActivity.this,SearchByTypeActivity.class);
-                intent.putExtra("mode","car");
-                intent.putExtra("label",carSingleResult.getCarFactoryName());
+
+                break;
+            case R.id.select_type:
+                Intent intent = new Intent(SearchByVinActivity.this, SearchByTypeActivity.class);
+                intent.putExtra("mode", "car");
+                intent.putExtra("label", carSingleResult.getCarFactoryName());
                 startActivity(intent);
                 finish();
                 break;

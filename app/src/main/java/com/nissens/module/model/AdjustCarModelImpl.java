@@ -1,5 +1,6 @@
 package com.nissens.module.model;
 
+import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
+import android.util.Log;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -50,8 +51,7 @@ public class AdjustCarModelImpl implements BaseModel<List<Car>>{
             @Override
             public void onNext(Object o) {
                 if (null != o) {
-
-                    System.out.print(((CarResult)o).getResult());
+                    Log.i("car_result",new Gson().toJson(o));
                     if(((CarResult)o).getResult().equals("00"))
                     {ArrayList<Car> cars=((CarResult)o).getData();
                     callback.requestSuccess(cars);}
