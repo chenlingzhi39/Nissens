@@ -22,7 +22,7 @@ public class ImagePresenterImpl extends BasePresenterImpl<OEPartImageView, List<
 
     @Override
     public void requestData(String requestData) {
-        imageModel.requestSearchData(this, requestData);
+        mSubscription=imageModel.requestSearchData(this, requestData);
     }
     @Override
     public void requestError(String msg) {

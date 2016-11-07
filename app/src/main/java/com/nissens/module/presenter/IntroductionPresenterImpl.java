@@ -18,7 +18,7 @@ public class IntroductionPresenterImpl extends BasePresenterImpl<IntroductionVie
 
     @Override
     public void requestData(String requestData) {
-        introductionModel.requestSearchData(this,requestData);
+        mSubscription=introductionModel.requestSearchData(this,requestData);
     }
 
     @Override

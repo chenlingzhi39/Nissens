@@ -20,7 +20,7 @@ public class SearchByTypePresenterImpl extends BasePresenterImpl<SearchByTypeVie
 
     @Override
     public void requestData(String requestData) {
-        searchByTypeModel.requestSearchData(this,requestData);
+        mSubscription=searchByTypeModel.requestSearchData(this,requestData);
     }
 
     @Override

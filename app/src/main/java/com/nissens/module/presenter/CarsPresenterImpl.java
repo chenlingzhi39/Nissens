@@ -22,7 +22,7 @@ public class CarsPresenterImpl extends BasePresenterImpl<CarsView,List<Car>> imp
     @Override
     public void requestData(String requestData) {
 
-        carsModel.requestSearchData(this,requestData);
+        mSubscription=carsModel.requestSearchData(this,requestData);
     }
 
     @Override

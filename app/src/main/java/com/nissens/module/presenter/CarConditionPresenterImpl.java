@@ -19,7 +19,7 @@ BaseModel carConditionModel;
 
     @Override
     public void requestData(String requestData) {
-     carConditionModel.requestSearchData(this,requestData);
+     mSubscription=carConditionModel.requestSearchData(this,requestData);
     }
     @Override
     public void requestError(String msg) {

@@ -19,7 +19,7 @@ public class CarXmlPresenterImpl extends BasePresenterImpl<CarXmlView,String> im
 
     @Override
     public void requestData(String requestData) {
-      CarXmlModel.requestSearchData(this,requestData);
+      mSubscription=CarXmlModel.requestSearchData(this,requestData);
     }
 
     @Override

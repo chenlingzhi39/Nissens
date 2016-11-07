@@ -22,7 +22,7 @@ public class OrganizationPresenterImpl extends BasePresenterImpl<OrganizationVie
 
     @Override
     public void requestData(String requestData) {
-        organizationModel.requestSearchData(this,requestData);
+        mSubscription=organizationModel.requestSearchData(this,requestData);
     }
     @Override
     public void requestError(String msg) {
