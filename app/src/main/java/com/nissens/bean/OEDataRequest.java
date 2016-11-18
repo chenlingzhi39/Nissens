@@ -39,7 +39,7 @@ public class OEDataRequest extends Request {
             OEDataStatus,
             FactoryID,
             PartNameID,
-            Brand,
+            Brand="尼盛斯",
             Series,
             QualityClass,
             QualitySubclass,

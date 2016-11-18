@@ -1,11 +1,11 @@
 package com.nissens.ui;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
+import android.widget.TextView;
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
 import com.nissens.base.BaseFragment;
@@ -42,6 +42,7 @@ public class InfoFragment extends BaseFragment {
     protected void initView(View fragmentRootView) {
         ButterKnife.bind(this, fragmentRootView);
         oeData = (OEData) getArguments().get("oeData");
+        Log.i("oeData_result",new Gson().toJson(oeData));
         factoryId.setText(getString(R.string.factory_id) + ":" + oeData.getFactoryID());
         originalFactoryId.setText(getString(R.string.original_factory_id) + ":" + oeData.getOriginalFactoryID());
         weight.setText(oeData.getWeight());
