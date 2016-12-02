@@ -10,7 +10,7 @@ import com.nissens.module.view.CarXmlView;
  */
 
 public class CarXmlPresenterImpl extends BasePresenterImpl<CarXmlView,String> implements CarXmlPresenter {
-    BaseModel CarXmlModel;
+    private BaseModel<String> CarXmlModel;
 
     public CarXmlPresenterImpl(CarXmlView view) {
         super(view);

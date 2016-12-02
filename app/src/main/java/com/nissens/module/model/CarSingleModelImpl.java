@@ -28,7 +28,7 @@ public class CarSingleModelImpl implements BaseModel<CarSingleResult>{
     @Override
     public Subscription requestSearchData(final RequestCallback<CarSingleResult> callback, final String requestPara) {
         return apiService.queryCarDataByLYVin(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<CarSingleResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -46,13 +46,12 @@ public class CarSingleModelImpl implements BaseModel<CarSingleResult>{
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(CarSingleResult o) {
                 if (null != o) {
-                    CarSingleResult carSingleResult=(CarSingleResult) o;
-                    if(carSingleResult.getResult().equals("1"))
-                    callback.requestSuccess(carSingleResult);
+                    if(o.getResult().equals("1"))
+                    callback.requestSuccess(o);
                     else
-                        callback.requestError(carSingleResult.getDescription());
+                        callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

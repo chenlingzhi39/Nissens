@@ -11,7 +11,7 @@ import com.nissens.module.view.CarSingleView;
  * Created by PC-20160514 on 2016/9/28.
  */
 public class CarSinglePresenterImpl extends BasePresenterImpl<CarSingleView,CarSingleResult> implements CarSinglePresenter {
-    BaseModel carSingleModel;
+    private BaseModel<CarSingleResult> carSingleModel;
     public CarSinglePresenterImpl(CarSingleView view) {
         super(view);
          carSingleModel=new CarSingleModelImpl();

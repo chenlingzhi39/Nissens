@@ -12,7 +12,7 @@ import java.util.List;
  * Created by PC-20160514 on 2016/9/22.
  */
 public class StraightSearchPresenterImpl extends BasePresenterImpl<StraightSearchView,List<OEData>> implements StraightSearchPresenter{
-    BaseModel straightSearchModel;
+    private BaseModel<List<OEData>> straightSearchModel;
     public StraightSearchPresenterImpl(StraightSearchView view) {
         super(view);
         straightSearchModel=new StraightSearchModelImpl();

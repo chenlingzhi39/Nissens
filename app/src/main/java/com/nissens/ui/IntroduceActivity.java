@@ -71,6 +71,7 @@ public class IntroduceActivity extends BaseActivity<IntroductionPresenter> imple
 
     @OnClick(R.id.error)
     public void onClick() {
+        error.setVisibility(View.GONE);
         mPresenter.requestData(gson.toJson(new IntroductionRequest()));
     }
 }

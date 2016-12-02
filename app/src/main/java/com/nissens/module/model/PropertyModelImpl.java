@@ -1,37 +1,42 @@
 package com.nissens.module.model;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
-import com.nissens.bean.Car;
-import com.nissens.bean.CarResult;
+import com.nissens.bean.BrandOrganization;
+import com.nissens.bean.BrandOrganizationResult;
+import com.nissens.bean.CategoryPropertyName;
+import com.nissens.bean.CategoryPropertyNameResult;
 import com.nissens.callback.RequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import android.util.Log;
+
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by PC-20160514 on 2016/9/26.
+ * Created by Administrator on 2016/11/30.
  */
-public class AdjustCarModelImpl implements BaseModel<List<Car>>{
+
+public class PropertyModelImpl implements BaseModel<List<CategoryPropertyName>> {
     @Inject
     ApiService apiService;
 
-    public AdjustCarModelImpl() {
+    public PropertyModelImpl() {
         MyApplication.getComponent().inject(this);
     }
     @Override
-    public Subscription requestSearchData(final RequestCallback<List<Car>> callback, String requestPara) {
-        return apiService.queryBlendCarByBrandPartId(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber<CarResult>() {
+    public Subscription requestSearchData(final RequestCallback<List<CategoryPropertyName>> callback, String requestPara) {
+        return apiService.queryCategoryPropertyName(requestPara).subscribeOn(Schedulers.io()).observeOn(
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<CategoryPropertyNameResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -49,18 +54,14 @@ public class AdjustCarModelImpl implements BaseModel<List<Car>>{
             }
 
             @Override
-            public void onNext(CarResult carResult) {
-                if (null != carResult) {
-                    Log.i("car_result",new Gson().toJson(carResult));
-                    if(carResult.getResult().equals("00"))
-                    {ArrayList<Car> cars=carResult.getData();
-                    callback.requestSuccess(cars);}
-                    else callback.requestError(carResult.getDescription());
+            public void onNext(CategoryPropertyNameResult o) {
+                if (null != o) {
+                    if(o.getResult().equals("00"))
+                    {callback.requestSuccess(o.getData());}
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }
-            }
-        });
+            }});
     }
 }
-

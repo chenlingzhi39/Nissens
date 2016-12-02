@@ -31,7 +31,7 @@ public class CarXmlModelImpl implements BaseModel<String> {
     @Override
     public Subscription requestSearchData(final RequestCallback<String> callback, String requestPara) {
         return apiService.queryCarBrandXml(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<CarBrandXmlResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -49,12 +49,12 @@ public class CarXmlModelImpl implements BaseModel<String> {
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(CarBrandXmlResult o) {
                 if (null != o) {
-                    if(((CarBrandXmlResult)o).getResult().equals("00"))
-                    {  Log.i("showResult", ((CarBrandXmlResult)o).getCarBrandXml());
-                        callback.requestSuccess(((CarBrandXmlResult)o).getCarBrandXml());}
-                    else callback.requestError(((BrandSeriesXmlResult)o).getDescription());
+                    if(o.getResult().equals("00"))
+                    {  Log.i("showResult", o.getCarBrandXml());
+                        callback.requestSuccess(o.getCarBrandXml());}
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

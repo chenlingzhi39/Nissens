@@ -141,6 +141,7 @@ public class SearchOrganizationActivity extends BaseActivity<OrganizationPresent
                 }
                 break;
             case R.id.error:
+                error.setVisibility(View.GONE);
                 mPresenter.requestData(gson.toJson(brandOrganizationRequest));
                 break;
         }

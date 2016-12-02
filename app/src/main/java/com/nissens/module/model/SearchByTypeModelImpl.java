@@ -30,7 +30,7 @@ public class SearchByTypeModelImpl implements BaseModel<List<BrandSeriesXml>>{
     @Override
     public Subscription requestSearchData(final RequestCallback<List<BrandSeriesXml>> callback, String requestPara) {
         return apiService.queryBrandSeriesXml(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<BrandSeriesXmlResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -48,12 +48,12 @@ public class SearchByTypeModelImpl implements BaseModel<List<BrandSeriesXml>>{
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(BrandSeriesXmlResult o) {
                 if (null != o) {
-                    if(((BrandSeriesXmlResult)o).getResult().equals("00"))
-                    {ArrayList<BrandSeriesXml> brandSeriesXmls=((BrandSeriesXmlResult)o).getData();
+                    if(o.getResult().equals("00"))
+                    {ArrayList<BrandSeriesXml> brandSeriesXmls=o.getData();
                         callback.requestSuccess(brandSeriesXmls);}
-                    else callback.requestError(((BrandSeriesXmlResult)o).getDescription());
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

@@ -135,6 +135,7 @@ public class OEDatasActivity extends BaseActivity<StraightSearchPresenter> imple
 
     @OnClick(R.id.error)
     public void onClick() {
+        error.setVisibility(View.GONE);
         mPresenter.requestData(gson.toJson(oeDataRequest));
     }
 }

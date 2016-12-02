@@ -34,7 +34,7 @@ public class CarConditionModelImpl implements BaseModel<Car> {
     @Override
     public Subscription requestSearchData(final RequestCallback<Car> callback, String requestPara) {
         return apiService.queryCarCondition(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<CarModelDataResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -52,16 +52,16 @@ public class CarConditionModelImpl implements BaseModel<Car> {
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(CarModelDataResult o) {
                 if (null != o) {
-                    System.out.print(((CarModelDataResult) o).getResult());
+                    System.out.print(o.getResult());
                     Gson gson=new Gson();
                     Log.i("data",gson.toJson(o));
-                    if (((CarModelDataResult) o).getResult().equals("00")) {
-                        ArrayList<Car> cars = ((CarModelDataResult) o).getData();
+                    if (o.getResult().equals("00")) {
+                        ArrayList<Car> cars = o.getData();
                         Car car=cars.get(0);
                         callback.requestSuccess(car);
-                    } else callback.requestError(((CarModelDataResult) o).getDescription());
+                    } else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

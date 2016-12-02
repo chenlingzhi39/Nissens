@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public class ImagePresenterImpl extends BasePresenterImpl<OEPartImageView, List<Image>> implements ImagePresenter {
-    BaseModel imageModel;
+    private BaseModel<List<Image>> imageModel;
 
     public ImagePresenterImpl(OEPartImageView view) {
         super(view);

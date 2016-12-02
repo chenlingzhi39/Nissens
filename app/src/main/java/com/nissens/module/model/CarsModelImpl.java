@@ -32,7 +32,7 @@ public class CarsModelImpl implements BaseModel<List<Car>> {
     @Override
     public Subscription requestSearchData(final RequestCallback<List<Car>> callback, String requestPara) {
         return apiService.queryBlendCarModelData(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<CarResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -50,13 +50,13 @@ public class CarsModelImpl implements BaseModel<List<Car>> {
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(CarResult o) {
                 if (null != o) {
-                    Log.i("count",((CarResult)o).getAllItemsCount());
-                    if(((CarResult)o).getResult().equals("00"))
-                    {ArrayList<Car> cars=((CarResult)o).getData();
+                    Log.i("count",o.getAllItemsCount());
+                    if(o.getResult().equals("00"))
+                    {ArrayList<Car> cars=o.getData();
                         callback.requestSuccess(cars);}
-                    else callback.requestError(((CarResult)o).getDescription());
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

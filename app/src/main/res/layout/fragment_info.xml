@@ -55,7 +55,8 @@
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="@string/standard_specification"/>
+                android:text="@string/standard_specification"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,14 +97,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/standard_background"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:id="@+id/specification"/>
+                android:id="@+id/specification"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

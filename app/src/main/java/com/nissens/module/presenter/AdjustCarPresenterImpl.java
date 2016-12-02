@@ -12,7 +12,7 @@ import java.util.List;
  * Created by PC-20160514 on 2016/9/26.
  */
 public class AdjustCarPresenterImpl extends BasePresenterImpl<AdjustCarView,List<Car>> implements AdjustCarPresenter {
-    BaseModel adjustCarModel;
+    private BaseModel<List<Car>> adjustCarModel;
 
     public AdjustCarPresenterImpl(AdjustCarView view) {
         super(view);

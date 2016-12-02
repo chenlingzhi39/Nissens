@@ -32,7 +32,7 @@ public class OrganizationModelImpl implements BaseModel<List<BrandOrganization>>
     @Override
     public Subscription requestSearchData(final RequestCallback<List<BrandOrganization>> callback, String requestPara) {
         return apiService.queryBrandOrganization(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<BrandOrganizationResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -50,12 +50,12 @@ public class OrganizationModelImpl implements BaseModel<List<BrandOrganization>>
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(BrandOrganizationResult o) {
                 if (null != o) {
-                    if(((BrandOrganizationResult)o).getResult().equals("00"))
-                    {ArrayList<BrandOrganization> brandOrganizations=((BrandOrganizationResult)o).getData();
+                    if(o.getResult().equals("00"))
+                    {ArrayList<BrandOrganization> brandOrganizations=o.getData();
                         callback.requestSuccess(brandOrganizations);}
-                    else callback.requestError(((BrandOrganizationResult)o).getDescription());
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

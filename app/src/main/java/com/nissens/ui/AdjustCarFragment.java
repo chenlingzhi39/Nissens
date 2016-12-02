@@ -139,6 +139,7 @@ public class AdjustCarFragment extends BaseFragment<AdjustCarPresenter> implemen
 
     @OnClick(R.id.error)
     public void onClick() {
+        error.setVisibility(View.GONE);
         mPresenter.requestData(gson.toJson(carRequest));
     }
 }

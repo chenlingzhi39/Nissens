@@ -55,4 +55,14 @@ public interface ApiService {
 
     @POST("queryOEPartImage")
     Observable<ImageResult> queryOEPartImage(@Query("requestPara")String requestPara);
+
+    @POST("queryCategoryPropertyName")
+    Observable<CategoryPropertyNameResult> queryCategoryPropertyName(@Query("requestPara")String requestPara);
+
+    @POST("queryCategoryPropertyColumn")
+    Observable<CategoryPropertyColumnResult> queryCategoryPropertyColumn(@Query("requestPara")String requestPara);
+
+    @POST("queryCategoryPropertyContent")
+    Observable<CategoryPropertyContentResult> queryCategoryPropertyContent(@Query("requestPara")String requestPara);
+
 }

@@ -159,6 +159,7 @@ public class CarsActivity extends BaseActivity<CarsPresenter> implements CarsVie
 
     @OnClick(R.id.error)
     public void onClick() {
+        error.setVisibility(View.GONE);
         mPresenter.requestData(gson.toJson(carRequest));
     }
 }

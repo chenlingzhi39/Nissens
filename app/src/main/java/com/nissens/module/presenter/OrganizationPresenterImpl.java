@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public class OrganizationPresenterImpl extends BasePresenterImpl<OrganizationView,List<BrandOrganization>> implements OrganizationPresenter{
-    BaseModel organizationModel;
+   private BaseModel<List<BrandOrganization>> organizationModel;
 
     public OrganizationPresenterImpl(OrganizationView view) {
         super(view);

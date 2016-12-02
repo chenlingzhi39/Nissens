@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public class CarsPresenterImpl extends BasePresenterImpl<CarsView,List<Car>> implements CarsPresenter{
-    BaseModel carsModel;
+    private BaseModel<List<Car>> carsModel;
     public CarsPresenterImpl(CarsView view) {
         super(view);
         carsModel=new CarsModelImpl();

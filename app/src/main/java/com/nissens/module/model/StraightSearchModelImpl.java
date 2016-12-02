@@ -1,5 +1,8 @@
 package com.nissens.module.model;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
@@ -31,7 +34,7 @@ public class StraightSearchModelImpl implements BaseModel<List<OEData>> {
     @Override
     public Subscription requestSearchData(final RequestCallback<List<OEData>> callback, String requestPara) {
         return apiService.queryBrandPartOEData(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<OEDataResult>() {
             @Override
             public void onStart() {
              callback.beforeRequest();
@@ -49,12 +52,12 @@ public class StraightSearchModelImpl implements BaseModel<List<OEData>> {
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(OEDataResult o) {
                 if (null != o) {
-                    if(((OEDataResult)o).getResult().equals("00"))
-                    {ArrayList<OEData> oeDatas=((OEDataResult)o).getData();
+                    if(o.getResult().equals("00"))
+                    {ArrayList<OEData> oeDatas=o.getData();
                    callback.requestSuccess(oeDatas);}
-                    else callback.requestError(((OEDataResult)o).getDescription());
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

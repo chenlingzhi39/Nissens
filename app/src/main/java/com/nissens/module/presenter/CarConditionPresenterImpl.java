@@ -11,7 +11,7 @@ import com.nissens.module.view.SearchByCarView;
  */
 
 public class CarConditionPresenterImpl extends BasePresenterImpl<SearchByCarView,Car> implements CarConditionPresenter {
-BaseModel carConditionModel;
+   private BaseModel<Car> carConditionModel;
     public CarConditionPresenterImpl(SearchByCarView view) {
         super(view);
         carConditionModel=new CarConditionModelImpl();

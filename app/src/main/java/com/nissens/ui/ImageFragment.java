@@ -94,6 +94,7 @@ public class ImageFragment extends BaseFragment<ImagePresenter> implements OEPar
 
     @OnClick(R.id.error)
     public void onClick() {
+        error.setVisibility(View.GONE);
         mPresenter.requestData(gson.toJson(new ImageRequest(getArguments().getString("id"))));
     }
 }

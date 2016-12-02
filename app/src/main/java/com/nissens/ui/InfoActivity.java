@@ -37,7 +37,7 @@ public class InfoActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewpager;
 
-    private String tabTitles[] = new String[]{"信息", "适用车型", "图片", "供应商"};
+    private String tabTitles[] = new String[]{"信息", "适用车型", "图片", "供应商","主要规格","扩展规格"};
     private OEData oeData;
 
     @Override
@@ -52,7 +52,7 @@ public class InfoActivity extends BaseActivity {
 
     public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        final int PAGE_COUNT = 4;
+        final int PAGE_COUNT = 6;
 
         private Context context;
 
@@ -67,7 +67,7 @@ public class InfoActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             switch (position) {
                 case 0:
-                    bundle.putSerializable("oeData", oeData);
+                    bundle.putParcelable("oeData", oeData);
                     InfoFragment infoFragment = new InfoFragment();
                     infoFragment.setArguments(bundle);
                     return infoFragment;
@@ -83,8 +83,21 @@ public class InfoActivity extends BaseActivity {
                     imageFragment.setArguments(bundle);
                     return imageFragment;
                 case 3:
-                    AgencyFragment agencyFragment = new AgencyFragment();
-                    return agencyFragment;
+                    return new AgencyFragment();
+                case 4:
+                    PropertyFragment propertyFragment=new PropertyFragment();
+                    bundle.putBoolean("isExternal",false);
+                    bundle.putString("category_id",oeData.getCategoryID());
+                    bundle.putString("specification",oeData.getStandardSpecification());
+                    propertyFragment.setArguments(bundle);
+                    return propertyFragment;
+                case 5:
+                    PropertyFragment propertyFragment1=new PropertyFragment();
+                    bundle.putBoolean("isExternal",true);
+                    bundle.putString("category_id",oeData.getCategoryID());
+                    bundle.putString("specification",oeData.getStandardSpecification());
+                    propertyFragment1.setArguments(bundle);
+                    return propertyFragment1;
                 default:
                     return null;
 

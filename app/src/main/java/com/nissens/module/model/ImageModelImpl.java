@@ -34,7 +34,7 @@ public class ImageModelImpl implements BaseModel<List<Image>> {
     @Override
     public Subscription requestSearchData(final RequestCallback<List<Image>> callback, String requestPara) {
         return apiService.queryOEPartImage(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<ImageResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -52,14 +52,14 @@ public class ImageModelImpl implements BaseModel<List<Image>> {
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(ImageResult o) {
                 if (null != o) {
                     Gson gson=new Gson();
                     Log.i("imageResult",gson.toJson(o));
-                    if(((ImageResult)o).getResult().equals("00"))
-                    {ArrayList<Image> images=((ImageResult)o).getData();
+                    if(o.getResult().equals("00"))
+                    {ArrayList<Image> images=o.getData();
                         callback.requestSuccess(images);}
-                    else callback.requestError(((ImageResult)o).getDescription());
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }

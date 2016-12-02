@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nissens.R;
 import com.nissens.adapter.OEDataAdapter;
 import com.nissens.adapter.QuickSearchAdapter;
@@ -95,7 +96,6 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
     private QuickSearchAdapter quickSearchAdapter;
     private OEDataAdapter oeDataAdapter;
     private QuickSearchDao quickSearchDao;
-    private InitiateSearch initiateSearch;
     private OEDataRequest oeDataRequest;
 
     @Override
@@ -111,7 +111,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                InitiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
 
                 break;
             default:
@@ -180,7 +180,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
                         quickSearchAdapter.remove(position);
                         quickSearchAdapter.add(0, quickSearch);
                     }
-                    initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                    InitiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
                  /*   Map<String, String> params = new HashMap<>();
                     params.put("UserID", Constants.USER_ID);
                     params.put("EncryptCode", Constants.ENCRYPT_CODE);
@@ -237,7 +237,7 @@ clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("search", "back");
-                initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                InitiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
             }
         });
         editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -260,7 +260,6 @@ clear.setOnClickListener(new View.OnClickListener() {
                         for (int i = 0; i < quickSearchAdapter.getData().size(); i++) {
                             if (quickSearchAdapter.getData().get(i).getContent().equals(editTextSearch.getText().toString())) {
                                 if (i == 0) {
-
                                     return true;
                                 }
                                 quickSearchDao.delete(quickSearchAdapter.getData().get(i));
@@ -274,7 +273,7 @@ clear.setOnClickListener(new View.OnClickListener() {
                         quickSearchDao.insert(quickSearch);
                         quickSearchAdapter.add(0, quickSearch);
                         clear.setVisibility(View.VISIBLE);
-                        initiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
+                        InitiateSearch.handleToolBar(SearchDirectlyActivity.this, cardSearch, viewSearch, listView, editTextSearch, lineDivider);
                     }
                     return true;
                 }
@@ -359,6 +358,7 @@ clear.setOnClickListener(new View.OnClickListener() {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.error:
+                error.setVisibility(View.GONE);
                 mPresenter.requestData(gson.toJson(oeDataRequest));
                 break;
             case R.id.clearSearch:

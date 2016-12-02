@@ -196,6 +196,7 @@ public class SelectCarActivity extends BaseActivity<CarXmlPresenter> implements 
 
     @OnClick(R.id.error)
     public void onClick() {
+        error.setVisibility(View.GONE);
         mPresenter.requestData(gson.toJson(new Request()));
     }
 }

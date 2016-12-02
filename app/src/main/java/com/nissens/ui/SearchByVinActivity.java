@@ -144,6 +144,7 @@ public class SearchByVinActivity extends BaseActivity<CarSinglePresenter> implem
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.error:
+                error.setVisibility(View.GONE);
                 mPresenter.requestData(gson.toJson(vinRequest));
                 break;
             case R.id.content:

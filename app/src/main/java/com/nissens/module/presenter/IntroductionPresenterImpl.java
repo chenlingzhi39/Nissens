@@ -10,7 +10,7 @@ import com.nissens.module.view.IntroductionView;
  */
 
 public class IntroductionPresenterImpl extends BasePresenterImpl<IntroductionView,String> implements IntroductionPresenter {
-    BaseModel introductionModel;
+   private BaseModel<String> introductionModel;
     public IntroductionPresenterImpl(IntroductionView view) {
         super(view);
         introductionModel=new IntroduceModelImpl();

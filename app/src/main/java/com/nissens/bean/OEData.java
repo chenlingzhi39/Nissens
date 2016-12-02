@@ -1,11 +1,14 @@
 package com.nissens.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 /**
  * Created by PC-20160514 on 2016/9/18.
  */
-public class OEData implements Serializable{
+public class OEData implements Parcelable{
     private String OriginalFactoryID,
             OriginalFactoryName,
             FactoryID,
@@ -348,4 +351,107 @@ public class OEData implements Serializable{
     public void setWidth(String width) {
         Width = width;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.OriginalFactoryID);
+        dest.writeString(this.OriginalFactoryName);
+        dest.writeString(this.FactoryID);
+        dest.writeString(this.FactoryName);
+        dest.writeString(this.FactoryLabel);
+        dest.writeString(this.Brand);
+        dest.writeString(this.Series);
+        dest.writeString(this.QualityClass);
+        dest.writeString(this.QualitySubClass);
+        dest.writeString(this.CategoryID);
+        dest.writeString(this.Category);
+        dest.writeString(this.Unit);
+        dest.writeString(this.ObjectID);
+        dest.writeString(this.MatchBrand);
+        dest.writeString(this.SupportBrand);
+        dest.writeString(this.FactoryPrice);
+        dest.writeString(this.RetailPrice);
+        dest.writeString(this.WholesalePrice);
+        dest.writeString(this.StandardSpecification);
+        dest.writeString(this.SpecificationDes);
+        dest.writeString(this.Packaging);
+        dest.writeString(this.ApplyLabel);
+        dest.writeString(this.FactoryModel);
+        dest.writeString(this.IsReturn);
+        dest.writeString(this.Remarks);
+        dest.writeString(this.Length);
+        dest.writeString(this.Width);
+        dest.writeString(this.Height);
+        dest.writeString(this.Weight);
+        dest.writeString(this.CollisionDegree);
+        dest.writeString(this.CollisionSite);
+        dest.writeString(this.IsUniversal);
+        dest.writeString(this.Capacity);
+        dest.writeString(this.IsStopProduction);
+        dest.writeString(this.ProductType);
+        dest.writeString(this.ProduceClass);
+        dest.writeString(this.OedataStatus);
+        dest.writeString(this.PartName);
+    }
+
+    public OEData() {
+    }
+
+    protected OEData(Parcel in) {
+        this.OriginalFactoryID = in.readString();
+        this.OriginalFactoryName = in.readString();
+        this.FactoryID = in.readString();
+        this.FactoryName = in.readString();
+        this.FactoryLabel = in.readString();
+        this.Brand = in.readString();
+        this.Series = in.readString();
+        this.QualityClass = in.readString();
+        this.QualitySubClass = in.readString();
+        this.CategoryID = in.readString();
+        this.Category = in.readString();
+        this.Unit = in.readString();
+        this.ObjectID = in.readString();
+        this.MatchBrand = in.readString();
+        this.SupportBrand = in.readString();
+        this.FactoryPrice = in.readString();
+        this.RetailPrice = in.readString();
+        this.WholesalePrice = in.readString();
+        this.StandardSpecification = in.readString();
+        this.SpecificationDes = in.readString();
+        this.Packaging = in.readString();
+        this.ApplyLabel = in.readString();
+        this.FactoryModel = in.readString();
+        this.IsReturn = in.readString();
+        this.Remarks = in.readString();
+        this.Length = in.readString();
+        this.Width = in.readString();
+        this.Height = in.readString();
+        this.Weight = in.readString();
+        this.CollisionDegree = in.readString();
+        this.CollisionSite = in.readString();
+        this.IsUniversal = in.readString();
+        this.Capacity = in.readString();
+        this.IsStopProduction = in.readString();
+        this.ProductType = in.readString();
+        this.ProduceClass = in.readString();
+        this.OedataStatus = in.readString();
+        this.PartName = in.readString();
+    }
+
+    public static final Creator<OEData> CREATOR = new Creator<OEData>() {
+        @Override
+        public OEData createFromParcel(Parcel source) {
+            return new OEData(source);
+        }
+
+        @Override
+        public OEData[] newArray(int size) {
+            return new OEData[size];
+        }
+    };
 }

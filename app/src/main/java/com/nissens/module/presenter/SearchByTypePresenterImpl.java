@@ -12,7 +12,7 @@ import java.util.List;
  * Created by PC-20160514 on 2016/9/28.
  */
 public class SearchByTypePresenterImpl extends BasePresenterImpl<SearchByTypeView,List<BrandSeriesXml>> implements SearchByTypePresenter{
-    BaseModel searchByTypeModel;
+   private BaseModel<List<BrandSeriesXml>> searchByTypeModel;
     public SearchByTypePresenterImpl(SearchByTypeView view) {
         super(view);
         searchByTypeModel=new SearchByTypeModelImpl();

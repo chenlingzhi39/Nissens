@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers;
  * Created by PC-20160514 on 2016/10/17.
  */
 
-public class IntroduceModelImpl implements BaseModel {
+public class IntroduceModelImpl implements BaseModel<String> {
     @Inject
     ApiService apiService;
 
@@ -26,9 +26,9 @@ public class IntroduceModelImpl implements BaseModel {
     }
 
     @Override
-    public Subscription requestSearchData(final RequestCallback callback, String requestPara) {
+    public Subscription requestSearchData(final RequestCallback<String> callback, String requestPara) {
         return apiService.queryCompanyIntroduction(requestPara).subscribeOn(Schedulers.io()).observeOn(
-                AndroidSchedulers.mainThread()).subscribe(new Subscriber() {
+                AndroidSchedulers.mainThread()).subscribe(new Subscriber<IntroductionResult>() {
             @Override
             public void onStart() {
                 callback.beforeRequest();
@@ -46,12 +46,12 @@ public class IntroduceModelImpl implements BaseModel {
             }
 
             @Override
-            public void onNext(Object o) {
+            public void onNext(IntroductionResult o) {
                 if (null != o) {
-                    if(((IntroductionResult)o).getResult().equals("00"))
+                    if(o.getResult().equals("00"))
                     {
-                        callback.requestSuccess(((IntroductionResult)o).getCompanyIntroduction());}
-                    else callback.requestError(((IntroductionResult)o).getDescription());
+                        callback.requestSuccess(o.getCompanyIntroduction());}
+                    else callback.requestError(o.getDescription());
                 } else {
                     callback.requestError("");
                 }
