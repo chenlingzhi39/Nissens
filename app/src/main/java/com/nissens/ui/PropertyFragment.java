@@ -53,14 +53,14 @@ public class PropertyFragment extends BaseFragment<PropertyPresenter> implements
     protected void initView(View fragmentRootView) {
         ButterKnife.bind(this, fragmentRootView);
         mPresenter=new PropertyPresenterImpl(this);
-        mPresenter.requestData(gson.toJson(new CategoryPropertyNameRequest(getArguments().getString("category_id"), getArguments().getBoolean("isExternal") ? "Yes" : "No")));
+        mPresenter.requestData(gson.toJson(new CategoryPropertyNameRequest(getArguments().getString("category_id"), getArguments().getString("isExternal","No"))));
     }
 
 
 
     @OnClick(R.id.empty)
     public void onClick() {
-        mPresenter.requestData(gson.toJson(new CategoryPropertyNameRequest(getArguments().getString("category_id"), getArguments().getBoolean("isExternal") ? "Yes" : "No")));
+        mPresenter.requestData(gson.toJson(new CategoryPropertyNameRequest(getArguments().getString("category_id"), getArguments().getString("isExternal","No"))));
     }
 
     public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -75,7 +75,7 @@ public class PropertyFragment extends BaseFragment<PropertyPresenter> implements
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putString("specification",getArguments().getString("specification"));
-            bundle.putBoolean("isExternal",getArguments().getBoolean("isExternal"));
+            bundle.putString("isExternal",getArguments().getString("isExternal"));
             bundle.putString("property_id",categoryPropertyNames.get(position).getPropertyNameID());
             ContentFragment contentFragment=new ContentFragment();
             contentFragment.setArguments(bundle);

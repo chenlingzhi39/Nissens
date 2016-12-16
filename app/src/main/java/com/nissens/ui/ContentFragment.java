@@ -7,6 +7,7 @@ import android.support.v7.appcompat.BuildConfig;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,8 @@ public class ContentFragment extends BaseFragment<ContentPresenter> implements C
             columns=new ArrayList<>();
             specifications=new ArrayList<>();
             specifications.addAll(Arrays.asList(getArguments().getString("specification").split("\\|")));
-            mPresenter.requestData(gson.toJson(new CategoryPropertyContentRequest(getArguments().getBoolean("isExternal") ? "Yes" : "No", getArguments().getString("property_id"), "Yes")));
+            Log.i("category_request",gson.toJson(new CategoryPropertyContentRequest(getArguments().getString("isExternal","No"), getArguments().getString("property_id"), "Yes")));
+            mPresenter.requestData(gson.toJson(new CategoryPropertyContentRequest(getArguments().getString("isExternal","Yes"), getArguments().getString("property_id"), "Yes")));
         } else empty.setVisibility(View.VISIBLE);
     }
 
@@ -95,9 +97,12 @@ public class ContentFragment extends BaseFragment<ContentPresenter> implements C
             for (CategoryPropertyColumn categoryPropertyColumn : columns) {
                 for (CategoryPropertyContent categoryPropertyContent : contents) {
                     if (specifications.contains(categoryPropertyContent.getPropertyContentID())) {
-                        String[] strings = categoryPropertyContent.getPropertyContentArray().split("=");
-                        if (strings[0].equals(categoryPropertyColumn.getPropertyColumnID()))
-                            propertyAdapter.add(new Property(categoryPropertyColumn.getPropertyColumn(), strings[1]));
+                        String[] strings = categoryPropertyContent.getPropertyContentArray().split("\\|");
+                        for(int i=1;i<strings.length;i++){
+                            String[] strs=strings[i].split("=");
+                                if (strs[0].equals(categoryPropertyColumn.getPropertyColumnID()))
+                                    propertyAdapter.add(new Property(categoryPropertyColumn.getPropertyColumn(), strs[1]));
+                        }
                     }
                 }
             }
@@ -124,6 +129,6 @@ public class ContentFragment extends BaseFragment<ContentPresenter> implements C
     @OnClick(R.id.error)
     public void onClick() {
         error.setVisibility(View.GONE);
-        mPresenter.requestData(gson.toJson(new CategoryPropertyContentRequest(getArguments().getBoolean("isExternal") ? "Yes" : "No", getArguments().getString("property_id"), "Yes")));
+        mPresenter.requestData(gson.toJson(new CategoryPropertyContentRequest(getArguments().getString("isExternal","No"), getArguments().getString("property_id"), "Yes")));
     }
 }

@@ -154,7 +154,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
         Cursor cursor = MyApplication.getInstance().getDb().query(quickSearchDao.getTablename(), quickSearchDao.getAllColumns(), null, null, null, null, orderBy);
         if (cursor != null) {
             quickSearchAdapter = new QuickSearchAdapter(this);
-            if(cursor.getCount()>0){
+            if (cursor.getCount() > 0) {
                 clear.setVisibility(View.VISIBLE);
             }
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -191,7 +191,7 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
             });
             listView.setLayoutManager(new MyLayoutManager(this));
             listView.setAdapter(quickSearchAdapter);
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemHelper<>(quickSearchDao, quickSearchAdapter,clear));
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemHelper<>(quickSearchDao, quickSearchAdapter, clear));
             itemTouchHelper.attachToRecyclerView(listView);
         }
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -222,14 +222,14 @@ public class SearchDirectlyActivity extends BaseActivity<StraightSearchPresenter
                 ((InputMethodManager) SearchDirectlyActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
         });
-clear.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        quickSearchDao.deleteAll();
-        quickSearchAdapter.clear();
-        clear.setVisibility(View.GONE);
-    }
-});
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quickSearchDao.deleteAll();
+                quickSearchAdapter.clear();
+                clear.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void HandleSearch() {
@@ -285,7 +285,6 @@ clear.setOnClickListener(new View.OnClickListener() {
 
     @Override
     public void showResult(final List<OEData> oeDatas) {
-        Log.i("showResult", oeDatas.size() + "");
         if (is_first) {
             oeDataAdapter.setError(R.layout.view_more_error).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -354,7 +353,7 @@ clear.setOnClickListener(new View.OnClickListener() {
     }
 
 
-    @OnClick({R.id.error, R.id.clearSearch,R.id.radiator,R.id.compressor})
+    @OnClick({R.id.error, R.id.clearSearch, R.id.radiator, R.id.compressor})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.error:

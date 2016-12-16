@@ -90,7 +90,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
             getSupportActionBar().setTitle(getString(strId));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else {
-            getSupportActionBar().setTitle("");
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             TextView title = (TextView) findViewById(R.id.title);
             title.setText(getResources().getString(mToolbarTitle));
         }

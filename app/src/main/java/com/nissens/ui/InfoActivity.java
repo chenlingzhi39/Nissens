@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.nissens.R;
 import com.nissens.annotation.ActivityFragmentInject;
@@ -86,15 +87,15 @@ public class InfoActivity extends BaseActivity {
                     return new AgencyFragment();
                 case 4:
                     PropertyFragment propertyFragment=new PropertyFragment();
-                    bundle.putBoolean("isExternal",false);
-                    bundle.putString("category_id",oeData.getCategoryID());
+                    bundle.putString("isExternal","No");
+                    bundle.putString("category_id",oeData.getPartNameID());
                     bundle.putString("specification",oeData.getStandardSpecification());
                     propertyFragment.setArguments(bundle);
                     return propertyFragment;
                 case 5:
                     PropertyFragment propertyFragment1=new PropertyFragment();
-                    bundle.putBoolean("isExternal",true);
-                    bundle.putString("category_id",oeData.getCategoryID());
+                    bundle.putString("isExternal","Yes");
+                    bundle.putString("category_id",oeData.getPartNameID());
                     bundle.putString("specification",oeData.getStandardSpecification());
                     propertyFragment1.setArguments(bundle);
                     return propertyFragment1;

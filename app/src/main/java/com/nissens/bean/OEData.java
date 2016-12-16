@@ -46,7 +46,16 @@ public class OEData implements Parcelable{
             ProductType,
             ProduceClass,
             OedataStatus,
-            PartName;
+            PartName,
+            PartNameID;
+
+    public String getPartNameID() {
+        return PartNameID;
+    }
+
+    public void setPartNameID(String partNameID) {
+        PartNameID = partNameID;
+    }
 
     public String getPartName() {
         return PartName;
@@ -352,6 +361,9 @@ public class OEData implements Parcelable{
         Width = width;
     }
 
+    public OEData() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -397,9 +409,7 @@ public class OEData implements Parcelable{
         dest.writeString(this.ProduceClass);
         dest.writeString(this.OedataStatus);
         dest.writeString(this.PartName);
-    }
-
-    public OEData() {
+        dest.writeString(this.PartNameID);
     }
 
     protected OEData(Parcel in) {
@@ -441,6 +451,7 @@ public class OEData implements Parcelable{
         this.ProduceClass = in.readString();
         this.OedataStatus = in.readString();
         this.PartName = in.readString();
+        this.PartNameID = in.readString();
     }
 
     public static final Creator<OEData> CREATOR = new Creator<OEData>() {

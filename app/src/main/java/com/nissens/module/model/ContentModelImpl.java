@@ -1,5 +1,7 @@
 package com.nissens.module.model;
 
+import android.util.Log;
+
 import com.nissens.app.MyApplication;
 import com.nissens.base.BaseModel;
 import com.nissens.bean.ApiService;
@@ -54,12 +56,15 @@ public class ContentModelImpl implements BaseModel<Object> {
                     public void onNext(Object o) {
                         if (null != o) {
                             if(o instanceof CategoryPropertyColumnResult)
-                            {if(((CategoryPropertyColumnResult)o).getResult().equals("00"))
+                            {
+                                if(((CategoryPropertyColumnResult)o).getResult().equals("00"))
                             {callback.requestSuccess(((CategoryPropertyColumnResult)o).getData());}
                             else callback.requestError(((CategoryPropertyColumnResult)o).getDescription());}
                             else{
                                 if(((CategoryPropertyContentResult)o).getResult().equals("00"))
-                                {callback.requestSuccess(((CategoryPropertyContentResult)o).getData());}
+                                {
+                                    callback.requestSuccess(((CategoryPropertyContentResult)o).getData());
+                                }
                                 else callback.requestError(((CategoryPropertyContentResult)o).getDescription());
                             }
 
